@@ -1,0 +1,12 @@
+article{
+    a {
+        font-style:italic;
+        }
+}
+
+blockquote{
+    background: #ffc;
+    p,li{
+        color: var(--md-typeset-color);
+    }
+}
