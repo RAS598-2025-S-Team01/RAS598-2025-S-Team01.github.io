@@ -2,8 +2,6 @@ site_name: RAS598-2025-S-Team01.github.io
 site_url: https://RAS598-2025-S-Team01.github.io
 repo_url: https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01.github.io
 edit_uri: edit/main/docs/
-nav:
-  - Home: index.md
 theme:
   name: material
   custom_dir: custom_theme/
