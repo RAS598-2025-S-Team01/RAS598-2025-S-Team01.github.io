@@ -1,7 +1,9 @@
-site_name: EGR314 Report Template
-site_url: https://embedded-systems-design.github.io/template_report
-repo_url: https://github.com/embedded-systems-design/template_report
+site_name: RAS598-2025-S-Team01.github.io
+site_url: https://RAS598-2025-S-Team01.github.io
+repo_url: https://RAS598-2025-S-Team01.github.io
 edit_uri: edit/main/docs/
+nav:
+  - Home: index.md
 theme:
   name: material
   custom_dir: custom_theme/
@@ -10,8 +12,8 @@ theme:
     accent: indigo
   font:
     text: Roboto
-  logo: static/logo.svg
-  favicon: static/logo.png
+  logo: static/images/logo.svg
+  favicon: static/images/logo.png
 
   features:
     - navigation.tabs
