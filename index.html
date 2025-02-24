@@ -16,7 +16,7 @@
       
       
       
-        <link rel="next" href="charts/">
+        <link rel="next" href="RasPi-table/">
       
       
       <link rel="icon" href="static/images/logo.png">
@@ -81,7 +81,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -219,12 +219,12 @@
   
   
     <li class="md-tabs__item">
-      <a href="charts/" class="md-tabs__link">
+      <a href="RasPi-table/" class="md-tabs__link">
         
   
     
   
-  Charts
+  RasPi-Table
 
       </a>
     </li>
@@ -236,12 +236,12 @@
   
   
     <li class="md-tabs__item">
-      <a href="esp-32-table/" class="md-tabs__link">
+      <a href="charts/" class="md-tabs__link">
         
   
     
   
-  ESP32 Table
+  Charts
 
       </a>
     </li>
@@ -546,11 +546,11 @@
   
   
     <li class="md-nav__item">
-      <a href="charts/" class="md-nav__link">
+      <a href="RasPi-table/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Charts
+    RasPi-Table
     
   </span>
   
@@ -567,11 +567,11 @@
   
   
     <li class="md-nav__item">
-      <a href="esp-32-table/" class="md-nav__link">
+      <a href="charts/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    ESP32 Table
+    Charts
     
   </span>
   
@@ -900,9 +900,9 @@ Spring 2025</p>
 <p>Our project aims to integrate a UR5 robotic arm with a quadruped robot to facilitate advanced experimental setups. The central research question is: <strong>"How effectively can sensor data and simulation models be integrated to enhance the real-time control and autonomy of a hybrid robotic system?"</strong><br />
 The experiment involves using the UR5 to position the quadruped at a designated start point, triggering the quadruped to run in a specified direction, and collecting sensor data during its motion. We then broadcast this data to a server for analysis, comparing it with simulated data. The refined simulation results are subsequently applied back to the robot to evaluate improvements in performance forming a closed loop.</p>
 <blockquote>
-<p><strong>Figure 1:</strong> <em>High-Level System Concept</em><br />
-<a class="glightbox" href="./figures/system_concept.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="High-Level System Concept" src="./figures/system_concept.png" /></a><br />
-<em>Figure 1 illustrates the flow from UR5 positioning, quadruped movement, sensor data collection, data analysis, simulation refinement, and back to robotic control.</em></p>
+<p><strong>Figure 1:</strong> <em>Quadraped Design</em><br />
+<a class="glightbox" href="static/images/quadraped.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="High-Level System Concept" src="static/images/quadraped.png" /></a><br />
+<em>Figure 1 illustrates the the design of quadruped, which is used for sensor data collection.</em></p>
 </blockquote>
 <h3 id="32-sensor-integration">3.2 Sensor Integration</h3>
 <p>Sensor integration is critical to our experimental setup. We plan to collect a range of sensor data (e.g., IMU, LIDAR, joint encoders) during the quadruped’s run. This data will be processed and filtered in real time to remove noise and extract meaningful features. In testing, sensors will validate both the starting position and the dynamic state of the quadruped. In the final demonstration, real-time sensor feedback will be used to adjust simulation parameters and fine-tune control algorithms, ensuring the robot operates optimally even under environmental variations.</p>
@@ -913,9 +913,9 @@ The experiment involves using the UR5 to position the quadruped at a designated 
 2. <strong>Data Storage and Interaction:</strong><br />
    The system will log all sensor data and simulation outputs for post-experiment analysis. This will enable retrospective analysis and adjustments to the simulation model.</p>
 <blockquote>
-<p><strong>Figure 2:</strong> <em>Interface Mockup</em><br />
-<a class="glightbox" href="./figures/interface_mockup.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Interface Mockup" src="./figures/interface_mockup.png" /></a><br />
-<em>Figure 2 provides a professional rendering of our planned dashboard, illustrating data graphs, system status, and control parameters.</em></p>
+<p><strong>Figure 2:</strong> <em>Proposed Experimentation Components</em><br />
+<a class="glightbox" href="static/images/proposed_experimentaion.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Interface Mockup" src="static/images/proposed_experimentaion.png" /></a><br />
+<em>Figure 2 provides a rendering of our planned components (UR5 and Quadraped), illustrating quadraped and UR5.</em></p>
 </blockquote>
 <h3 id="34-control-and-autonomy">3.4 Control and Autonomy</h3>
 <p>To bridge sensor feedback with decision-making, we will integrate a control loop that uses sensor data to adjust the quadruped's trajectory in real time. The control architecture will be layered:
@@ -1036,13 +1036,13 @@ The experiment involves using the UR5 to position the quadruped at a designated 
         
         
           
-          <a href="charts/" class="md-footer__link md-footer__link--next" aria-label="Next: Charts">
+          <a href="RasPi-table/" class="md-footer__link md-footer__link--next" aria-label="Next: RasPi-Table">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Charts
+                RasPi-Table
               </div>
             </div>
             <div class="md-footer__button md-icon">
