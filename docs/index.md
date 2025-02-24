@@ -28,9 +28,9 @@ Spring 2025
 Our project aims to integrate a UR5 robotic arm with a quadruped robot to facilitate advanced experimental setups. The central research question is: **"How effectively can sensor data and simulation models be integrated to enhance the real-time control and autonomy of a hybrid robotic system?"**  
 The experiment involves using the UR5 to position the quadruped at a designated start point, triggering the quadruped to run in a specified direction, and collecting sensor data during its motion. We then broadcast this data to a server for analysis, comparing it with simulated data. The refined simulation results are subsequently applied back to the robot to evaluate improvements in performance forming a closed loop.
 
-> **Figure 1:** _High-Level System Concept_  
-> ![High-Level System Concept](./figures/system_concept.png)  
-> *Figure 1 illustrates the flow from UR5 positioning, quadruped movement, sensor data collection, data analysis, simulation refinement, and back to robotic control.*
+> **Figure 1:** _Quadraped Design_  
+> ![High-Level System Concept](./static/images/quadraped.png)  
+> *Figure 1 illustrates the the design of quadruped, which is used for sensor data collection.*
 
 ### 3.2 Sensor Integration
 
@@ -44,9 +44,9 @@ Interaction with the system will be two-fold:
 2. **Data Storage and Interaction:**  
    The system will log all sensor data and simulation outputs for post-experiment analysis. This will enable retrospective analysis and adjustments to the simulation model.
 
-> **Figure 2:** _Interface Mockup_  
-> ![Interface Mockup](./figures/interface_mockup.png)  
-> *Figure 2 provides a professional rendering of our planned dashboard, illustrating data graphs, system status, and control parameters.*
+> **Figure 2:** _Proposed Experimentation Components_  
+> ![Interface Mockup](./static/images/proposed_experimentaion.png)  
+> *Figure 2 provides a rendering of our planned components (UR5 and Quadraped), illustrating quadraped and UR5.*
 
 ### 3.4 Control and Autonomy
 
