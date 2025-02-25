@@ -405,6 +405,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="3.4 Control and Autonomy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#341-control-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.1 Control Architecture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#342-system-functionality" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.2 System Functionality
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -586,6 +610,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="3.4 Control and Autonomy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#341-control-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.1 Control Architecture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#342-system-functionality" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4.2 System Functionality
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -681,50 +729,78 @@ Spring 2025</p>
 <hr />
 <h2 id="3-project-plan">3. Project Plan</h2>
 <h3 id="31-high-level-concept-and-research-question">3.1 High-Level Concept and Research Question</h3>
-<p>Our project aims to integrate a UR5 robotic arm with a quadruped robot to facilitate advanced experimental setups. The central research question is: <strong>"How effectively can sensor data and simulation models be integrated to enhance the real-time control and autonomy of a hybrid robotic system?"</strong><br />
+<p>Our project aims to co-ordinate a UR5 robotic arm with a quadruped robot to facilitate advanced experimental setups. The central research question is: <strong>"How can the integration of sensor data and simulation models optimize the accuracy and efficiency of experimental setups in laboratories"</strong><br />
 The experiment involves using the UR5 to position the quadruped at a designated start point, triggering the quadruped to run in a specified direction, and collecting sensor data during its motion. We then broadcast this data to a server for analysis, comparing it with simulated data. The refined simulation results are subsequently applied back to the robot to evaluate improvements in performance forming a closed loop.</p>
 <blockquote>
-<p><strong>Figure 1:</strong> <em>Quadraped Design</em><br />
-<a class="glightbox" href="static/images/quadraped.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="High-Level System Concept" src="static/images/quadraped.png" /></a><br />
-<em>Figure 1 illustrates the the design of quadruped, which is used for sensor data collection.</em></p>
+<p><a class="glightbox" href="static/images/quadraped.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="High-Level System Concept" src="static/images/quadraped.png" /></a><br />
+<strong>Figure 1: Illustrates the the design of quadruped, which is used for sensor data collection.</strong></p>
 </blockquote>
 <h3 id="32-sensor-integration">3.2 Sensor Integration</h3>
-<p>Sensor integration is critical to our experimental setup. We plan to collect a range of sensor data (e.g., IMU, LIDAR, joint encoders) during the quadruped’s run. This data will be processed and filtered in real time to remove noise and extract meaningful features. In testing, sensors will validate both the starting position and the dynamic state of the quadruped. In the final demonstration, real-time sensor feedback will be used to adjust simulation parameters and fine-tune control algorithms, ensuring the robot operates optimally even under environmental variations.</p>
+<p>Sensor integration is critical to our experimental setup. We plan to collect a range of sensor data (e.g., IMU, Ultrasonic, joint encoders, Camera) during the quadruped’s run. This data will be processed and filtered in real time to remove noise and extract meaningful features. In testing, sensors will validate both the starting position and the dynamic state of the quadruped. In the final demonstration, real-time sensor feedback will be used to adjust simulation parameters and fine-tune control algorithms, ensuring the robot operates optimally even under environmental variations.</p>
 <h3 id="33-interaction-and-interface-development">3.3 Interaction and Interface Development</h3>
-<p>Interaction with the system will be two-fold:<br />
-1. <strong>Visualization &amp; Monitoring:</strong><br />
-   A user-friendly interface will display real-time sensor data, simulation comparisons, and status of hardware integration. This interface will allow operators to observe and intervene if necessary.<br />
-2. <strong>Data Storage and Interaction:</strong><br />
-   The system will log all sensor data and simulation outputs for post-experiment analysis. This will enable retrospective analysis and adjustments to the simulation model.</p>
+<p>Interaction with the system will be two-fold:  </p>
+<ol>
+<li><strong>Visualization &amp; Monitoring:</strong><br />
+   A user-friendly interface will display real-time sensor data, simulation comparisons, and status of hardware integration. This interface will allow operators to observe and intervene if necessary.  </li>
+<li><strong>Data Storage and Interaction:</strong><br />
+   The system will log all sensor data and simulation outputs for post-experiment analysis. This will enable retrospective analysis and adjustments to the simulation model.</li>
+</ol>
 <blockquote>
-<p><strong>Figure 2:</strong> <em>Proposed Experimentation Components</em><br />
-<a class="glightbox" href="static/images/proposed_experimentaion.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Interface Mockup" src="static/images/proposed_experimentaion.png" /></a><br />
-<em>Figure 2 provides a rendering of our planned components (UR5 and Quadraped), illustrating quadraped and UR5.</em></p>
+<p><a class="glightbox" href="static/images/proposed_experimentaion.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Interface Mockup" src="static/images/proposed_experimentaion.png" /></a><br />
+<strong>Figure 2: Experimental setup rendering.</strong></p>
 </blockquote>
 <h3 id="34-control-and-autonomy">3.4 Control and Autonomy</h3>
-<p>To bridge sensor feedback with decision-making, we will integrate a control loop that uses sensor data to adjust the quadruped's trajectory in real time. The control architecture will be layered:
-- <strong>Low-Level Control:</strong> Directly handles the robot's movement based on immediate sensor input.
-- <strong>High-Level Decision Making:</strong> Utilizes simulation data to predict future states and modify control strategies dynamically.</p>
-<p>This hierarchical approach ensures that both rapid responses and strategic planning are accommodated, increasing the robustness of the overall system.</p>
+<p>To enable efficient data collection and autonomous operation, we will implement a <strong>sensor-driven control loop</strong> that dynamically adjusts the quadruped’s trajectory based on real-time feedback. The control system consists of two layers:</p>
+<h4 id="341-control-architecture">3.4.1 <strong>Control Architecture</strong></h4>
+<ul>
+<li>
+<p><strong>Low-Level Control:</strong>  </p>
+<ul>
+<li>Regulates the quadruped’s locomotion using real-time sensor input.  </li>
+<li>Ensures stability and responsiveness as it traverses the path while collecting data.  </li>
+</ul>
+</li>
+<li>
+<p><strong>High-Level Decision Making:</strong>  </p>
+<ul>
+<li>Oversees the overall mission strategy.  </li>
+<li>Triggers the UR5 robotic arm to reset the quadruped’s position once it reaches the end of the path.  </li>
+</ul>
+</li>
+</ul>
+<h4 id="342-system-functionality">3.4.2 <strong>System Functionality</strong></h4>
+<ol>
+<li>The <strong>quadruped</strong> autonomously walks forward along a predefined path, continuously collecting sensor data.  </li>
+<li>Once it reaches the end of the path, the <strong>UR5 robotic arm</strong> lifts the quadruped and places it back at its starting position, enabling continuous operation.  </li>
+</ol>
+<p>By combining <strong>adaptive locomotion</strong> with <strong>robotic manipulation</strong>, this approach ensures an efficient and continuous workflow for autonomous operations.  </p>
 <h3 id="35-preparation-needs">3.5 Preparation Needs</h3>
-<p>Successful execution of this project requires a solid understanding of several topics:
-- <strong>Robotic Kinematics and Dynamics:</strong> To accurately control the UR5 and quadruped.
-- <strong>Sensor Fusion Techniques:</strong> To integrate and filter data from multiple sensor sources.
-- <strong>Control Systems and Autonomous Algorithms:</strong> To design robust feedback loops.</p>
-<p>Some of these topics will be reviewed in class; however, additional self-study and consultation with experts may be necessary to cover gaps, especially in advanced sensor fusion and real-time system integration.</p>
+<p>Successful execution of this project requires a solid understanding of several topics:</p>
+<ul>
+<li><strong>Robotic Kinematics and Dynamics:</strong> To accurately control the UR5 and quadruped.</li>
+<li><strong>Sensor Fusion Techniques:</strong> To integrate and filter data from multiple sensor sources.</li>
+<li><strong>Control Systems and Autonomous Algorithms:</strong> To design robust feedback loops.</li>
+</ul>
+<p>Some of these topics will be reviewed in class; however, additional self-study and consultation with experts may be necessary to cover gaps, especially in advanced sensor fusion.</p>
 <h3 id="36-final-demonstration">3.6 Final Demonstration</h3>
-<p>Our final demonstration will showcase the complete integration and functioning of the hybrid robotic system:
-- <strong>Resources Required:</strong><br />
-  - UR5 robotic arm and quadruped robot<br />
-  - Sensor suite (IMU, LIDAR, encoders, etc.)<br />
-  - High-performance computing for real-time data processing<br />
-- <strong>Classroom Setup Requirements:</strong><br />
-  - A designated space for robotic operation with ample room for the quadruped to maneuver<br />
-  - A projection system to display the interface and sensor data in real time<br />
-- <strong>Environmental Variability Handling:</strong><br />
-  The system will be tested under different lighting, surface textures, and obstacle conditions to ensure that the control algorithms are robust enough to handle variability.
-- <strong>Testing &amp; Evaluation Plan:</strong><br />
-  Multiple test runs will be conducted to verify system performance. We will compare sensor data and simulation outputs against known benchmarks, ensuring that our control strategies adapt correctly to environmental changes.</p>
+<p>Our final demonstration will showcase the complete integration and functioning of the hybrid robotic system:</p>
+<ul>
+<li><strong>Resources Required:</strong>  <ul>
+<li>UR5 robotic arm and quadruped robot  </li>
+<li>Sensor suite (IMU, Ultrasonic, Encoders, Camera etc.)  </li>
+<li>High-performance computing for data processing  </li>
+</ul>
+</li>
+<li><strong>Classroom Setup Requirements:</strong>  <ul>
+<li>A designated space for robotic operation with ample room for the quadruped to maneuver  </li>
+<li>A projection system to display the interface and sensor data  </li>
+</ul>
+</li>
+<li><strong>Environmental Variability Handling:</strong><br />
+    The system will be tested under different lighting and surface textures to ensure that the control algorithms are robust enough to handle variability.</li>
+<li><strong>Testing &amp; Evaluation Plan:</strong><br />
+    Multiple test runs will be conducted to verify system performance. We will compare sensor data and simulation outputs against known benchmarks, ensuring that our control strategies adapt correctly to environmental changes.</li>
+</ul>
 <h3 id="37-impact-of-the-work">3.7 Impact of the Work</h3>
 <p>This project has the potential to significantly enhance our understanding of real-time sensor integration and feedback control in hybrid robotic systems. By bridging experimental data with simulation, we expect to drive forward research in autonomous decision-making processes. Additionally, the project will provide valuable insights that can contribute to course development, encouraging further exploration into sensor fusion, control algorithms, and robotic autonomy.</p>
 <h3 id="38-advising">3.8 Advising</h3>
@@ -742,19 +818,19 @@ The experiment involves using the UR5 to position the quadruped at a designated 
 <tbody>
 <tr>
 <td><strong>7</strong></td>
-<td>Initiate quadruped hardware setup; perform basic mobility tests</td>
+<td>Initialize UR5 for positioning the quadruped at the start point</td>
 </tr>
 <tr>
 <td><strong>8</strong></td>
-<td>Continue quadruped calibration and mobility tuning</td>
+<td>Validate communication between UR5 and host machine</td>
 </tr>
 <tr>
 <td><strong>9</strong></td>
-<td>Integrate UR5 for positioning the quadruped at the start point</td>
+<td>Quadruped calibration and mobility tuning</td>
 </tr>
 <tr>
 <td><strong>10</strong></td>
-<td>Validate communication between UR5 and quadruped; adjust mounting and calibration</td>
+<td>Initiate quadruped hardware setup; perform basic mobility tests</td>
 </tr>
 <tr>
 <td><strong>11</strong></td>
@@ -770,11 +846,11 @@ The experiment involves using the UR5 to position the quadruped at a designated 
 </tr>
 <tr>
 <td><strong>14</strong></td>
-<td>Address hardware-software integration issues</td>
+<td>Final integration and system robustness testing</td>
 </tr>
 <tr>
 <td><strong>15</strong></td>
-<td>Final integration and system robustness testing</td>
+<td>Optimmizing communication</td>
 </tr>
 <tr>
 <td><strong>16</strong></td>
