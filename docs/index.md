@@ -38,6 +38,7 @@ Sensor integration is critical to our experimental setup. We plan to collect a r
 ### 3.3 Interaction and Interface Development
 
 Interaction with the system will be two-fold:  
+
 1. **Visualization & Monitoring:**  
    A user-friendly interface will display real-time sensor data, simulation comparisons, and status of hardware integration. This interface will allow operators to observe and intervene if necessary.  
 2. **Data Storage and Interaction:**  
@@ -48,15 +49,29 @@ Interaction with the system will be two-fold:
 
 ### 3.4 Control and Autonomy
 
-To bridge sensor feedback with decision-making, we will integrate a control loop that uses sensor data to adjust the quadruped's trajectory. The control architecture will be layered:
-- **Low-Level Control:** Directly handles the robot's movement based on immediate sensor input.
-- **High-Level Decision Making:** Returning the quadrupped to its original position.
+To enable efficient data collection and autonomous operation, we will implement a **sensor-driven control loop** that dynamically adjusts the quadruped’s trajectory based on real-time feedback. The control system consists of two layers:
 
-This hierarchical approach ensures that both rapid responses and strategic planning are accommodated.
+#### 3.4.1 **Control Architecture**  
+
+- **Low-Level Control:**  
+	- Regulates the quadruped’s locomotion using real-time sensor input.  
+	- Ensures stability and responsiveness as it traverses the path while collecting data.  
+
+- **High-Level Decision Making:**  
+	- Oversees the overall mission strategy.  
+	- Triggers the UR5 robotic arm to reset the quadruped’s position once it reaches the end of the path.  
+
+#### 3.4.2 **System Functionality**  
+
+1. The **quadruped** autonomously walks forward along a predefined path, continuously collecting sensor data.  
+2. Once it reaches the end of the path, the **UR5 robotic arm** lifts the quadruped and places it back at its starting position, enabling continuous operation.  
+
+By combining **adaptive locomotion** with **robotic manipulation**, this approach ensures an efficient and continuous workflow for autonomous operations.  
 
 ### 3.5 Preparation Needs
 
 Successful execution of this project requires a solid understanding of several topics:
+
 - **Robotic Kinematics and Dynamics:** To accurately control the UR5 and quadruped.
 - **Sensor Fusion Techniques:** To integrate and filter data from multiple sensor sources.
 - **Control Systems and Autonomous Algorithms:** To design robust feedback loops.
@@ -66,17 +81,18 @@ Some of these topics will be reviewed in class; however, additional self-study a
 ### 3.6 Final Demonstration
 
 Our final demonstration will showcase the complete integration and functioning of the hybrid robotic system:
+
 - **Resources Required:**  
-  - UR5 robotic arm and quadruped robot  
-  - Sensor suite (IMU, Ultrasonic, Encoders, Camera etc.)  
-  - High-performance computing for data processing  
+    - UR5 robotic arm and quadruped robot  
+    - Sensor suite (IMU, Ultrasonic, Encoders, Camera etc.)  
+    - High-performance computing for data processing  
 - **Classroom Setup Requirements:**  
-  - A designated space for robotic operation with ample room for the quadruped to maneuver  
-  - A projection system to display the interface and sensor data  
+	- A designated space for robotic operation with ample room for the quadruped to maneuver  
+	- A projection system to display the interface and sensor data  
 - **Environmental Variability Handling:**  
-  The system will be tested under different lighting and surface textures to ensure that the control algorithms are robust enough to handle variability.
+	The system will be tested under different lighting and surface textures to ensure that the control algorithms are robust enough to handle variability.
 - **Testing & Evaluation Plan:**  
-  Multiple test runs will be conducted to verify system performance. We will compare sensor data and simulation outputs against known benchmarks, ensuring that our control strategies adapt correctly to environmental changes.
+	Multiple test runs will be conducted to verify system performance. We will compare sensor data and simulation outputs against known benchmarks, ensuring that our control strategies adapt correctly to environmental changes.
 
 ### 3.7 Impact of the Work
 
