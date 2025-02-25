@@ -998,7 +998,7 @@
                                 features. In testing, sensors will validate both
                                 the starting position and the dynamic state of
                                 the quadruped. In the final demonstration,
-                                real-time sensor feedback will be used to adjust
+                                sensor feedback will be used to adjust
                                 simulation parameters and fine-tune control
                                 algorithms, ensuring the robot operates
                                 optimally even under environmental variations.
@@ -1161,69 +1161,40 @@
                                 autonomous operation, we will implement a
                                 <strong>sensor-driven control loop</strong> that
                                 dynamically adjusts the quadruped’s trajectory
-                                based on real-time feedback. The control system
+                                based on sensor feedback. The control system
                                 consists of two layers:
                             </p>
-                            <h4 id="341-control-architecture">
-                                3.4.1 <strong>Control Architecture</strong>
-                            </h4>
-                            <ul>
-                                <li>
-                                    <p><strong>Low-Level Control:</strong></p>
-                                    <ul>
-                                        <li>
-                                            Regulates the quadruped’s locomotion
-                                            using real-time sensor input.
-                                        </li>
-                                        <li>
-                                            Ensures stability and responsiveness
-                                            as it traverses the path while
-                                            collecting data.
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <p>
-                                        <strong
-                                            >High-Level Decision Making:</strong
-                                        >
-                                    </p>
-                                    <ul>
-                                        <li>
-                                            Oversees the overall mission
-                                            strategy.
-                                        </li>
-                                        <li>
-                                            Triggers the UR5 robotic arm to
-                                            reset the quadruped’s position once
-                                            it reaches the end of the path.
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <h4 id="342-system-functionality">
-                                3.4.2 <strong>System Functionality</strong>
-                            </h4>
-                            <ol>
-                                <li>
-                                    The <strong>quadruped</strong> autonomously
-                                    walks forward along a predefined path,
-                                    continuously collecting sensor data.
-                                </li>
-                                <li>
-                                    Once it reaches the end of the path, the
-                                    <strong>UR5 robotic arm</strong> lifts the
-                                    quadruped and places it back at its starting
-                                    position, enabling continuous operation.
-                                </li>
-                            </ol>
-                            <p>
-                                By combining
-                                <strong>adaptive locomotion</strong> with
-                                <strong>robotic manipulation</strong>, this
-                                approach ensures an efficient and continuous
-                                workflow for autonomous operations.
-                            </p>
+                            <h3 id="34-control-and-autonomy">
+    3.4 Control and Autonomy
+</h3>
+<p>
+    To enable efficient data collection and autonomous operation, we will implement a
+    <strong>sensor-driven control loop</strong> that dynamically adjusts the quadruped’s trajectory
+    based on sensor feedback. The control system consists of two layers:
+</p>
+<ul>
+    <li>
+        <p><strong>Low-Level Control:</strong></p>
+        <ul>
+            <li>Regulates the quadruped’s locomotion using sensor input.</li>
+            <li>Ensures stability and responsiveness as it traverses the path while collecting data.</li>
+        </ul>
+    </li>
+    <li>
+        <p><strong>High-Level Decision Making:</strong></p>
+        <ul>
+            <li>Oversees the overall mission strategy.</li>
+            <li>Triggers the UR5 robotic arm to reset the quadruped’s position once it reaches the end of the path.</li>
+        </ul>
+    </li>
+</ul>
+        <p><h4>3.4.1 System Functionality:</h4></p>
+        <ul>
+            <li>The <strong>quadruped</strong> autonomously walks forward along a predefined path, continuously collecting sensor data.</li>
+            <li>Once it reaches the end of the path, the <strong>UR5 robotic arm</strong> lifts the quadruped and places it back at its starting position, enabling continuous operation.</li>
+        </ul>
+        <p>By combining <strong>adaptive locomotion</strong> with <strong>robotic manipulation</strong>, this approach ensures an efficient and continuous workflow for autonomous operations.</p>
+
                             <h3 id="35-preparation-needs">
                                 3.5 Preparation Needs
                             </h3>
@@ -1253,10 +1224,7 @@
                                 </li>
                             </ul>
                             <p>
-                                Some of these topics will be reviewed in class;
-                                however, additional self-study and consultation
-                                with experts may be necessary to cover gaps,
-                                especially in advanced sensor fusion.
+                                Suggested topics for the class: <strong>UR5 and ROS 2 communication</strong> for control and <strong>sensor fusion (filtering)</strong> for accurate data integration.
                             </p>
                             <h3 id="36-final-demonstration">
                                 3.6 Final Demonstration
