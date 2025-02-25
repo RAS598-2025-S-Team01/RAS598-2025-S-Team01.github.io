@@ -25,16 +25,15 @@ Spring 2025
 
 ### 3.1 High-Level Concept and Research Question
 
-Our project aims to integrate a UR5 robotic arm with a quadruped robot to facilitate advanced experimental setups. The central research question is: **"How effectively can sensor data and simulation models be integrated to enhance the real-time control and autonomy of a hybrid robotic system?"**  
+Our project aims to co-ordinate a UR5 robotic arm with a quadruped robot to facilitate advanced experimental setups. The central research question is: **"How can the integration of sensor data and simulation models optimize the accuracy and efficiency of experimental setups in laboratories"**  
 The experiment involves using the UR5 to position the quadruped at a designated start point, triggering the quadruped to run in a specified direction, and collecting sensor data during its motion. We then broadcast this data to a server for analysis, comparing it with simulated data. The refined simulation results are subsequently applied back to the robot to evaluate improvements in performance forming a closed loop.
 
-> **Figure 1:** _Quadraped Design_  
 > ![High-Level System Concept](./static/images/quadraped.png)  
-> *Figure 1 illustrates the the design of quadruped, which is used for sensor data collection.*
+> **Figure 1: Illustrates the the design of quadruped, which is used for sensor data collection.**
 
 ### 3.2 Sensor Integration
 
-Sensor integration is critical to our experimental setup. We plan to collect a range of sensor data (e.g., IMU, LIDAR, joint encoders) during the quadruped’s run. This data will be processed and filtered in real time to remove noise and extract meaningful features. In testing, sensors will validate both the starting position and the dynamic state of the quadruped. In the final demonstration, real-time sensor feedback will be used to adjust simulation parameters and fine-tune control algorithms, ensuring the robot operates optimally even under environmental variations.
+Sensor integration is critical to our experimental setup. We plan to collect a range of sensor data (e.g., IMU, Ultrasonic, joint encoders, Camera) during the quadruped’s run. This data will be processed and filtered in real time to remove noise and extract meaningful features. In testing, sensors will validate both the starting position and the dynamic state of the quadruped. In the final demonstration, real-time sensor feedback will be used to adjust simulation parameters and fine-tune control algorithms, ensuring the robot operates optimally even under environmental variations.
 
 ### 3.3 Interaction and Interface Development
 
@@ -43,18 +42,17 @@ Interaction with the system will be two-fold:
    A user-friendly interface will display real-time sensor data, simulation comparisons, and status of hardware integration. This interface will allow operators to observe and intervene if necessary.  
 2. **Data Storage and Interaction:**  
    The system will log all sensor data and simulation outputs for post-experiment analysis. This will enable retrospective analysis and adjustments to the simulation model.
-
-> **Figure 2:** _Proposed Experimentation Components_  
+ 
 > ![Interface Mockup](./static/images/proposed_experimentaion.png)  
-> *Figure 2 provides a rendering of our planned components (UR5 and Quadraped), illustrating quadraped and UR5.*
+> **Figure 2: Experimental setup rendering.**
 
 ### 3.4 Control and Autonomy
 
-To bridge sensor feedback with decision-making, we will integrate a control loop that uses sensor data to adjust the quadruped's trajectory in real time. The control architecture will be layered:
+To bridge sensor feedback with decision-making, we will integrate a control loop that uses sensor data to adjust the quadruped's trajectory. The control architecture will be layered:
 - **Low-Level Control:** Directly handles the robot's movement based on immediate sensor input.
-- **High-Level Decision Making:** Utilizes simulation data to predict future states and modify control strategies dynamically.
+- **High-Level Decision Making:** Returning the quadrupped to its original position.
 
-This hierarchical approach ensures that both rapid responses and strategic planning are accommodated, increasing the robustness of the overall system.
+This hierarchical approach ensures that both rapid responses and strategic planning are accommodated.
 
 ### 3.5 Preparation Needs
 
@@ -63,20 +61,20 @@ Successful execution of this project requires a solid understanding of several t
 - **Sensor Fusion Techniques:** To integrate and filter data from multiple sensor sources.
 - **Control Systems and Autonomous Algorithms:** To design robust feedback loops.
 
-Some of these topics will be reviewed in class; however, additional self-study and consultation with experts may be necessary to cover gaps, especially in advanced sensor fusion and real-time system integration.
+Some of these topics will be reviewed in class; however, additional self-study and consultation with experts may be necessary to cover gaps, especially in advanced sensor fusion.
 
 ### 3.6 Final Demonstration
 
 Our final demonstration will showcase the complete integration and functioning of the hybrid robotic system:
 - **Resources Required:**  
   - UR5 robotic arm and quadruped robot  
-  - Sensor suite (IMU, LIDAR, encoders, etc.)  
-  - High-performance computing for real-time data processing  
+  - Sensor suite (IMU, Ultrasonic, Encoders, Camera etc.)  
+  - High-performance computing for data processing  
 - **Classroom Setup Requirements:**  
   - A designated space for robotic operation with ample room for the quadruped to maneuver  
-  - A projection system to display the interface and sensor data in real time  
+  - A projection system to display the interface and sensor data  
 - **Environmental Variability Handling:**  
-  The system will be tested under different lighting, surface textures, and obstacle conditions to ensure that the control algorithms are robust enough to handle variability.
+  The system will be tested under different lighting and surface textures to ensure that the control algorithms are robust enough to handle variability.
 - **Testing & Evaluation Plan:**  
   Multiple test runs will be conducted to verify system performance. We will compare sensor data and simulation outputs against known benchmarks, ensuring that our control strategies adapt correctly to environmental changes.
 
@@ -96,15 +94,15 @@ Below is a table outlining our weekly milestones, covering hardware integration,
 
 | **Week** | **Hardware Integration**                                                  |
 |----------|---------------------------------------------------------------------------|
-| **7**   | Initiate quadruped hardware setup; perform basic mobility tests           |
-| **8**   | Continue quadruped calibration and mobility tuning                        |
-| **9**   | Integrate UR5 for positioning the quadruped at the start point             |
-| **10**  | Validate communication between UR5 and quadruped; adjust mounting and calibration |
+| **7**   | Initialize UR5 for positioning the quadruped at the start point             |
+| **8**   | Validate communication between UR5 and host machine                        |
+| **9**   | Quadruped calibration and mobility tuning                                  |
+| **10**  | Initiate quadruped hardware setup; perform basic mobility tests            |
 | **11**  | Fine-tune mechanical alignment and sensor mounts                           |
 | **12**  | Full hardware integration test with dynamic movements                      |
 | **13**  | Begin integrated system tests (hardware + sensor + control)                |
-| **14**  | Address hardware-software integration issues                               |
-| **15**  | Final integration and system robustness testing                            |
+| **14**  | Final integration and system robustness testing                            |
+| **15**  | Optimmizing communication                                                  |
 | **16**  | Prepare hardware for final demonstration                                   |
 
 ---
