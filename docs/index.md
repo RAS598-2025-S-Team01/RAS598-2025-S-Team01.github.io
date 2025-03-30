@@ -122,4 +122,23 @@ Below is a table outlining our weekly milestones, covering hardware integration,
 | **16**  | Prepare hardware for final demonstration                                   |
 
 ---
+
+## 5. Goals and Aims
+
+Our project is dedicated to advancing robotic testing environments by integrating cutting-edge technologies for improved accuracy and reliability. The primary objectives of our work include:
+
+- **Enhancing Robotic Testing with Sensor Fusion and SLAM:**
+We aim to develop an experimental setup that enables roboticists to test their mechanisms with greater precision using sensor fusion techniques and Simultaneous Localization and Mapping (SLAM).
+
+- **Seamless Integration of Multiple Robots and Sensors Using ROS 2:**
+By leveraging the flexibility of ROS 2, our project facilitates smooth integration of multiple robots, systems, and sensors, creating a more cohesive and adaptable testing environment.
+
+- **Pose Estimation Validation with OptiTrack:**
+We focus on estimating robot poses using camera-based techniques and validating these results against a proven motion capture system, OptiTrack, to ensure accuracy.
+
+- **Comparing Camera Pose Estimation with IMU Data:**
+A key research aspect of our project is to determine whether camera-based pose estimation offers advantages over traditional Inertial Measurement Units (IMUs) in specific robotic applications.
+
+- **Sharing Knowledge and Supporting the Community:**
+Beyond documenting our project, this website serves as a resource for others looking to build a similar experimental setup in their own labs. We aim to foster collaboration and knowledge-sharing among roboticists and researchers.
 *This document outlines our comprehensive plan for the project and serves as the foundation for our website’s main page. Each section details the essential aspects of the project, ensuring clarity in execution and evaluation.*
