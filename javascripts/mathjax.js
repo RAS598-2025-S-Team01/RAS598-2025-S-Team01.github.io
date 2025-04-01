@@ -15,5 +15,4 @@
         x.parentElement.classList += 'has-jax'})
     });
 
-    
 
