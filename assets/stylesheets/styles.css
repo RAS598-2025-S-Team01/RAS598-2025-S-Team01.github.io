@@ -1,0 +1,58 @@
+/* Timeline Container */
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* Timeline Item */
+.timeline-item {
+    position: relative;
+    padding: 15px 40px;
+    margin-bottom: 20px;
+    border-left: 4px solid #007bff;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Highlight the current week */
+.timeline-item.active {
+    border-left: 6px solid #28a745;
+    background: #e3f2fd;
+    transform: scale(1.05);
+}
+
+/* Date Style */
+.timeline-date {
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Content Styling */
+.timeline-content h4 {
+    margin: 5px 0;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+/* Hover Effect */
+.timeline-item:hover {
+    transform: scale(1.03);
+    background: #ffffff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .timeline-item {
+        padding: 10px 20px;
+    }
+    .timeline-date {
+        font-size: 16px;
+    }
+    .timeline-content h4 {
+        font-size: 14px;
+    }
+}
