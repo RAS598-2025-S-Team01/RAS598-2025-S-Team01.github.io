@@ -1142,9 +1142,36 @@ Skip to content
                     </p>
                     <p>
                         <div style="text-align: center;">
+                            <video id="experimentVideo" width="80%" controls loop autoplay muted>
+                                <source src="static/videos/ur5.mp4" type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                            <br />
+                            <strong>Figure 4: UR5 Working</strong>
+                        </div>
+                    </p>
+                    <p>
+                        <div style="text-align: center;">
+                            <video id="experimentVideo" width="80%" controls loop autoplay muted>
+                                <source src="static/videos/webpage.mp4" type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                            <br />
+                            <strong>Figure 5: Live Preview Webpage</strong>
+                        </div>
+                    </p>
+                    <p>
+                        <div style="text-align: center;">
                             <img src="static/images/mockup.png" alt="Mock Up" style="width: 80%; height: auto;" />
                             <br />
-                            <strong>Figure 4: Mock Up</strong>
+                            <strong>Figure 6: Mock Up</strong>
+                        </div>
+                    </p>
+                    <p>
+                        <div style="text-align: center;">
+                            <img src="static/images/ros_topic_flow.jpg" alt="Mock Up" style="width: 80%; height: auto;" />
+                            <br />
+                            <strong>Figure 7: ROS Topic Graph</strong>
                         </div>
                     </p>
                     <!-- Refresh Rate Slider -->
@@ -1451,14 +1478,14 @@ based on sensor feedback. The control system consists of two layers:
 </div>
 </div>
 
-<div class="timeline-item current">
+<div class="timeline-item ">
 <div class="timeline-date">Week 8</div>
 <div class="timeline-content">
 <h4>Validate communication between UR5 and host machine</h4>
 </div>
 </div>
 
-<div class="timeline-item">
+<div class="timeline-item current">
 <div class="timeline-date">Week 9</div>
 <div class="timeline-content">
 <h4>Quadruped calibration and mobility tuning</h4>
@@ -1541,16 +1568,65 @@ A key research aspect of our project is to determine whether camera-based pose e
 <strong>Sharing Knowledge and Supporting the Community:</strong>
 Beyond documenting our project, this website serves as a resource for others looking to build a similar experimental setup in their own labs. We aim to foster collaboration and knowledge-sharing among roboticists and researchers.
 </li>
-</ul>                        <p>
-<em
->This document outlines our comprehensive
-plan for the project and serves as the
-foundation for our website’s main page. Each
-section details the essential aspects of the
-project, ensuring clarity in execution and
-evaluation.</em
->
-</p>
+</ul>                   
+<h2 id="assignment-4-updates">Assignment 4 – Project Goals and System Updates</h2>
+
+<h3>1. Updated Project Goals & Scope</h3>
+<p>Our primary objective of creating an autonomous robotic testbed remains unchanged. However, the current implementation cycle revealed the need to refine our integration timeline.</p>
+<ul>
+  <li>The full integration of UR5 and quadruped for autonomous reset has become the immediate milestone.</li>
+  <li>Additional focus has been placed on modular diagnostics and GUI features for better field usability.</li>
+</ul>
+<p>We are on track to meet the demonstration deadline, with control loops and GUI fully integrated and tested on hardware.</p>
+
+<h3>2. Sensor Data Conditioning & Filtering</h3>
+<p>To ensure high-quality data and stable behavior, each sensor stream is filtered or preprocessed before use:</p>
+<ul>
+  <li><strong>Camera:</strong> Pose estimates filtered using a <em>Kalman Filter</em> to improve tracking consistency.</li>
+  <li><strong>IMU:</strong> Acceleration and gyro values pass through a <em>Low-Pass Filter</em> to reduce noise from vibrations.</li>
+  <li><strong>LiDAR:</strong> Filtered with a rolling average window to smooth out range spikes.</li>
+  <li><strong>Ultrasonic & Encoders:</strong> Currently raw, planned for debouncing and thresholding in future stages.</li>
+</ul>
+
+<h3>3. Sensor Fusion for Decision-Making</h3>
+<p>We fuse camera and IMU data to estimate the robot's current pose. This fused result supports both:</p>
+<ul>
+  <li><strong>Low-Level Feedback Control:</strong> Real-time gait correction and stability via IMU + encoder feedback.</li>
+  <li><strong>High-Level Autonomy:</strong> Position awareness used by UR5 to reset the quadruped’s location after each trial.</li>
+</ul>
+
+<h3>4. ROS2 Controls, Autonomy & GUI Interaction</h3>
+<p>Our ROS2 architecture supports modularity across sensing, control, and GUI layers. Below is the updated implementation plan:</p>
+<ul>
+  <li><strong>ROS2 Nodes:</strong>
+    <ul>
+      <li><code>/ros2_listener</code> – Subscribes to all sensors (IMU, Camera, LiDAR)</li>
+      <li><code>/rpi_04/oakd_camera</code> – RGB video publishing</li>
+      <li><code>/rpi_04/imu</code> – IMU data (orientation, acceleration)</li>
+      <li><code>/rpi_04/scan</code> – LiDAR scan topic</li>
+      <li><code>/rpi_04/cmd_vel</code> – Velocity commands to Create3</li>
+    </ul>
+  </li>
+  <li><strong>GUI Integration:</strong> The Flask-based frontend connects to <code>/ros2_listener</code> and displays live sensor data with:
+    <ul>
+      <li>IMU charts (SSE)</li>
+      <li>LiDAR radial plots (SSE)</li>
+      <li>MJPEG-based camera feed</li>
+      <li>Manual control buttons triggering velocity via <code>/cmd_vel</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>
+    <em
+    >This document outlines our comprehensive
+    plan for the project and serves as the
+    foundation for our website’s main page. Each
+    section details the essential aspects of the
+    project, ensuring clarity in execution and
+    evaluation.</em
+    >
+    </p>
 </article>
 </div>
 
@@ -1565,22 +1641,6 @@ evaluation.</em
                         target.name.startsWith("__tabbed_"));
             </script>
         </div>
-
-        <button
-            type="button"
-            class="md-top md-icon"
-            data-md-component="top"
-            hidden
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path
-                    d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"
-                />
-            </svg>
-            Back to top
-        </button>
-    </main>
-
     <footer class="md-footer">
         <nav class="md-footer__inner md-grid" aria-label="Footer">
             <a
