@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ROS2 Live Dashboard</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f2f4f8; color: #333; }
+    header { background: #0055aa; padding: 1rem; text-align: center; font-size: 2rem; color: white; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    .container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 2rem; }
+    .full-width { grid-column: span 2; }
+    .card { background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 1.5rem; display: flex; flex-direction: column; align-items: center; }
+    .plot { width: 100%; height: 300px; }
+    .plot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; }
+    .cpg-controls, .cpg-sliders { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin: 1rem 0; }
+    .slider-card { min-width: 200px; flex: 1; background: #f9fafb; border: 1px solid #ccc; border-radius: 8px; padding: 1rem; }
+    button { background-color: #0055aa; color: white; border: none; padding: 0.7rem 1.2rem; font-size: 1rem; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease; }
+    button:hover { background-color: #003d80; }
+    input[type="range"], input[type="number"] { width: 100%; }
+    label { font-weight: bold; display: block; margin-bottom: 0.5rem; }
+    img#camera-feed { width: 100%; max-width: 480px; height: auto; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transform: rotate(180deg); }
+    h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+    #paused-badge { position: fixed; top: 10px; right: 10px; background: red; color: white; padding: 0.5rem 1rem; border-radius: 12px; font-weight: bold; opacity: 0; transition: opacity 0.4s ease; z-index: 999; }
+    @media (max-width: 1000px) { .container { grid-template-columns: 1fr; } }
+  </style>
+</head>
+
+<body>
+<header>ROS2 Live Dashboard</header>
+<div id="paused-badge">PAUSED</div>
+
+<div class="container">
+
+  <!-- Real-Time Plots -->
+  <div class="card">
+    <h2>Real-Time Plots</h2>
+    <div class="plot-grid">
+      <div class="plot" id="servo"></div>
+      <div class="plot" id="euler"></div>
+      <div class="plot" id="gyro"></div>
+      <div class="plot" id="accel"></div>
+      <div class="plot" id="pose"></div> 
+      <div class="plot" id="orientation_quat"></div> 
+    </div> 
+  </div>
+
+  <!-- Camera Feed -->
+  <div class="card">
+    <h2>Live Camera Feed</h2>
+    <img id="camera-feed" src="http://100.81.43.28:5000/video_feed" alt="Camera Feed">
+  </div>
+
+  <!-- Ultrasonic Sensor -->
+  <div class="card">
+    <h2>Ultrasonic Sensor</h2>
+    <div style="font-size: 3rem; font-weight: bold;" id="ultrasonic-value">--</div>
+    <div style="margin-top: 0.5rem;">Distance (cm)</div>
+  </div>
+
+  <!-- CPG Controller -->
+  <div class="card full-width">
+    <h2>CPG Controller</h2>
+    <div class="cpg-controls">
+      <button id="enable-btn">Enable</button>
+      <input type="number" id="time-input" placeholder="Time (s)" min="0" style="width: 100px;">
+      <button id="gait-btn">Change Gait</button>
+      <button id="reset-btn">Reset to Default</button>
+    </div>
+    <div class="cpg-sliders">
+      <div class="slider-card"><label>F</label><input type="range" min="0" max="5" step="0.01" id="slider-F"><span id="value-F">0.00</span></div>
+      <div class="slider-card"><label>DF</label><input type="range" min="0" max="1" step="0.01" id="slider-DF"><span id="value-DF">0.00</span></div>
+      <div class="slider-card"><label>FO</label><input type="range" min="-0.5" max="0.5" step="0.01" id="slider-FO"><span id="value-FO">0.00</span></div>
+      <div class="slider-card"><label>EO</label><input type="range" min="-0.5" max="0.5" step="0.01" id="slider-EO"><span id="value-EO">0.00</span></div>
+      <div class="slider-card"><label>HA</label><input type="range" min="-2" max="2" step="0.01" id="slider-HA"><span id="value-HA">0.00</span></div>
+      <div class="slider-card"><label>HO</label><input type="range" min="-0.5" max="0.5" step="0.01" id="slider-HO"><span id="value-HO">0.00</span></div>
+      <div class="slider-card"><label>KA</label><input type="range" min="0" max="2" step="0.01" id="slider-KA"><span id="value-KA">0.00</span></div>
+      <div class="slider-card"><label>KO</label><input type="range" min="-0.5" max="0.5" step="0.01" id="slider-KO"><span id="value-KO">0.00</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CPG Parameter Legend -->
+<div class="card full-width">
+  <h2>CPG Parameter Legend</h2>
+  <table style="width: 100%; border-collapse: collapse;">
+    <thead style="background-color: #0055aa; color: white;">
+      <tr><th style="padding: 0.5rem; text-align: left;">Parameter</th><th style="padding: 0.5rem; text-align: left;">Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td style="padding: 0.5rem;">F</td><td style="padding: 0.5rem;">Frequency of oscillation (controls step speed)</td></tr>
+      <tr><td style="padding: 0.5rem;">DF</td><td style="padding: 0.5rem;">Duty factor (portion of cycle foot is on ground)</td></tr>
+      <tr><td style="padding: 0.5rem;">FO</td><td style="padding: 0.5rem;">Foot Offset (lateral position offset)</td></tr>
+      <tr><td style="padding: 0.5rem;">EO</td><td style="padding: 0.5rem;">Elbow Offset (adjusts elbow position offset)</td></tr>
+      <tr><td style="padding: 0.5rem;">HA</td><td style="padding: 0.5rem;">Hip Amplitude (range of hip joint movement)</td></tr>
+      <tr><td style="padding: 0.5rem;">HO</td><td style="padding: 0.5rem;">Hip Offset (base angle shift for hip joint)</td></tr>
+      <tr><td style="padding: 0.5rem;">KA</td><td style="padding: 0.5rem;">Knee Amplitude (range of knee joint movement)</td></tr>
+      <tr><td style="padding: 0.5rem;">KO</td><td style="padding: 0.5rem;">Knee Offset (base angle shift for knee joint)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // ----------------- JavaScript Core -----------------
+  let mouseInsidePlot = false;
+  let cpgEnabled = false;
+  let cpgTimer = null;
+  const paramNames = ['F', 'DF', 'FO', 'EO', 'HA', 'HO', 'KA', 'KO'];
+  const defaultParams = { F: 4.0, DF: 0.30, FO: 0.0, EO: 0.0, HA: 0.0, HO: 0.0, KA: 1.20, KO: 0.0 };
+  
+  paramNames.forEach(name => {
+      const slider = document.getElementById(`slider-${name}`);
+      const valueLabel = document.getElementById(`value-${name}`);
+      slider.value = defaultParams[name];
+      valueLabel.innerText = defaultParams[name].toFixed(2);
+      slider.addEventListener('input', async () => {
+          valueLabel.innerText = parseFloat(slider.value).toFixed(2);
+          if (cpgEnabled) {
+              const params = {};
+              paramNames.forEach(param => {
+                  params[param] = parseFloat(document.getElementById(`slider-${param}`).value);
+              });
+              await fetch('/cpg/params', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ params }) });
+          }
+      });
+  });
+  
+  function showPausedBadge() { document.getElementById('paused-badge').style.opacity = '1'; }
+  function hidePausedBadge() { document.getElementById('paused-badge').style.opacity = '0'; }
+  function shouldPause() { if (mouseInsidePlot) { showPausedBadge(); return true; } hidePausedBadge(); return false; }
+  function attachHoverEvents() { document.querySelectorAll('.plot').forEach(card => { card.addEventListener('mouseenter', () => { mouseInsidePlot = true; shouldPause(); }); card.addEventListener('mouseleave', () => { mouseInsidePlot = false; shouldPause(); }); }); }
+  
+  async function fetchData() { const response = await fetch('/data'); return await response.json(); }
+  
+  // Modified createLayout with dynamic y-axis label
+  function createLayout(title, ytitle) {
+      return {
+          title,
+          margin: { t: 40 },
+          xaxis: { title: 'Time (s)' },
+          yaxis: { title: ytitle },
+          showlegend: true
+      };
+  }
+  
+  async function updatePlots() {
+      if (!shouldPause()) {
+          const data = await fetchData();
+          if (!data || !data.time || data.time.length === 0) return;
+          const t0 = data.time[0];
+          const t = data.time.map(x => x - t0);
+  
+          Plotly.react('servo', data.servo[0].map((_, idx) => ({ x: t, y: data.servo.map(s => s[idx]), name: `servo ${idx}`, mode: 'lines' })), createLayout('Servo Positions', 'Angle (rad)'));
+          Plotly.react('euler', ['roll', 'pitch', 'yaw'].map((n, idx) => ({ x: t, y: data.euler.map(e => e[idx]), name: n, mode: 'lines' })), createLayout('Orientation (Euler)', 'Angle (rad)'));
+          Plotly.react('gyro', ['x', 'y', 'z'].map((n, idx) => ({ x: t, y: data.gyro.map(g => g[idx]), name: n, mode: 'lines' })), createLayout('Angular Velocity', 'Angular Velocity (rad/s)'));
+          Plotly.react('accel', ['x', 'y', 'z'].map((n, idx) => ({ x: t, y: data.accel.map(a => a[idx]), name: n, mode: 'lines' })), createLayout('Acceleration', 'Acceleration (m/s²)'));
+          Plotly.react('pose', ['X', 'Y', 'Z'].map((n, idx) => ({ x: t, y: data.pose.map(p => p[idx]), name: n, mode: 'lines' })), createLayout('Pose Estimate', 'Position (meters)'));
+          Plotly.react('orientation_quat', ['w', 'x', 'y', 'z'].map((n, idx) => ({ x: t, y: data.orientation_quat.map(q => q[idx]), name: n, mode: 'lines' })), createLayout('Orientation (Quaternion)', 'Quaternion Components (unitless)'));
+      }
+      requestAnimationFrame(updatePlots);
+  }
+  
+  async function updateUltrasonic() {
+      try {
+          const response = await fetch('http://100.81.43.28:5000/ultrasonic_data');
+          if (!response.ok) throw new Error('Failed to fetch ultrasonic data');
+          const data = await response.json();
+          if (data && data.distance_cm !== undefined) {
+              document.getElementById('ultrasonic-value').innerText = data.distance_cm.toFixed(1);
+          }
+      } catch (error) {
+          console.error('Error fetching ultrasonic data:', error);
+          document.getElementById('ultrasonic-value').innerText = "--";
+      }
+  }
+  
+  attachHoverEvents();
+  updatePlots();
+  setInterval(updateUltrasonic, 200);
+  
+  // CPG Buttons
+  document.getElementById('enable-btn').onclick = async () => {
+      cpgEnabled = !cpgEnabled;
+      await fetch('/cpg/enable', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ enable: cpgEnabled })
+      });
+      document.getElementById('enable-btn').innerText = cpgEnabled ? 'Disable' : 'Enable';
+  
+      if (cpgEnabled) {
+          const timeValue = parseFloat(document.getElementById('time-input').value) || 0;
+          if (timeValue > 0) {
+              cpgTimer = setTimeout(async () => {
+                  cpgEnabled = false;
+                  await fetch('/cpg/enable', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ enable: false })
+                  });
+                  document.getElementById('enable-btn').innerText = 'Enable';
+              }, timeValue * 1000);
+          }
+      } else if (cpgTimer) {
+          clearTimeout(cpgTimer);
+          cpgTimer = null;
+      }
+  };
+  
+  document.getElementById('gait-btn').onclick = async () => {
+      const res = await fetch('/cpg/gait', { method: 'POST' });
+      const result = await res.json();
+      document.getElementById('gait-btn').innerText = result.new_gait.toUpperCase();
+  };
+  
+  document.getElementById('reset-btn').onclick = async () => {
+      paramNames.forEach(name => {
+          document.getElementById(`slider-${name}`).value = defaultParams[name];
+          document.getElementById(`value-${name}`).innerText = defaultParams[name].toFixed(2);
+      });
+  
+      if (cpgEnabled) {
+          await fetch('/cpg/params', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ params: defaultParams })
+          });
+      }
+  };
+  </script>
+  
+</body>
+</html>
