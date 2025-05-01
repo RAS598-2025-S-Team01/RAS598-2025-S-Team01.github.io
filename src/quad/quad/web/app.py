@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 from quad.nodes.plotter_node import PlotterNode, shared_data, data_lock
 from quad.nodes.controller_node import CPGControllerNode  # <--- Import your CPG controller here
+from quad.nodes.orb_pose_estimator_node import ORBPosePublisher  # Add this import
 
 import rclpy
 from rclpy.executors import MultiThreadedExecutor
@@ -48,15 +49,20 @@ def ros_spin():
     rclpy.init()
 
     plotter_node = PlotterNode()
-    cpg_controller = CPGControllerNode(plotter_node.servo_pub)  # just create it
+    cpg_controller = CPGControllerNode(plotter_node.servo_pub)
+    orb_pose_node = ORBPosePublisher()  # <- Create instance of your pose publisher
 
     executor = MultiThreadedExecutor()
-    executor.add_node(plotter_node)  # only add plotter_node
+    executor.add_node(plotter_node)
+    executor.add_node(orb_pose_node)  # <- Add it to the executor
 
-    executor.spin()
+    try:
+        executor.spin()
+    finally:
+        plotter_node.destroy_node()
+        orb_pose_node.destroy_node()
+        rclpy.shutdown()
 
-    plotter_node.destroy_node()
-    rclpy.shutdown()
 
 
 def main():

@@ -22,7 +22,8 @@ setup(
         'console_scripts': [
                 'connect = quad.nodes.load_esp32:main',
                 'plot = quad.nodes.load_plotter:main',
-		'app = quad.web.app:main',
+                'app = quad.web.app:main',
+                'ur5 = quad.nodes.ur5_node:main',
         ],
     },
 )

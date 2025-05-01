@@ -1,94 +1,168 @@
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import Image
-from std_msgs.msg import Float32
 from geometry_msgs.msg import PoseStamped
-from cv_bridge import CvBridge
-import cv2
 import numpy as np
-import time
+import cv2
+import requests
+from collections import deque
+from scipy.signal import savgol_filter
 
-class ORBFusionPoseEstimator(Node):
+VIDEO_URL = 'http://100.81.43.28:5000/video_feed'
+ULTRASONIC_URL = 'http://100.81.43.28:5000/ultrasonic_data'
+
+camera_matrix = np.array([[800, 0, 320],
+                          [0, 800, 240],
+                          [0,   0,   1]], dtype=np.float32)
+dist_coeffs = np.zeros((5, 1), dtype=np.float32)
+
+class ORBPosePublisher(Node):
     def __init__(self):
-        super().__init__('orb_pose_estimator')
+        super().__init__('optical_flow_pose_publisher')
+        self.publisher_ = self.create_publisher(PoseStamped, '/orb/pose', 10)
 
-        self.bridge = CvBridge()
-        self.prev_frame = None
-        self.orb = cv2.ORB_create(1000)
-        self.bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+        self.scale_z = 1.0
+        self.prev_gray = None
+        self.prev_pts = None
+        self.initialized = False
+        self.pose_R = np.eye(3)
+        self.pose_t = np.zeros((3, 1))
 
-        # State
-        self.position = np.zeros(3)  # x, y, z
+        self.buffer_size = 11  # Should be odd for savgol_filter
+        self.pose_buffer = deque(maxlen=self.buffer_size)
 
-        # Subscribers
-        self.create_subscription(Image, '/camera/image_raw', self.image_callback, 10)
-        self.create_subscription(Float32, '/ultrasonic/distance', self.ultrasonic_callback, 10)
+        self.cap = cv2.VideoCapture(VIDEO_URL)
+        if not self.cap.isOpened():
+            self.get_logger().error("Could not open video stream.")
+            exit(1)
 
-        # Publisher
-        self.pose_pub = self.create_publisher(PoseStamped, '/pose_estimate', 10)
+        self.set_initial_reference()
+        self.timer = self.create_timer(0.1, self.process_frame)
 
-        self.last_time = None
-        self.ultrasonic_distance = None  # In meters
+    def fetch_ultrasonic_distance(self):
+        try:
+            response = requests.get(ULTRASONIC_URL, timeout=1)
+            if response.status_code == 200:
+                data = response.json()
+                distance = float(data.get("distance_cm", 100.0))
+                return distance / 100.0 if distance != -1 else None
+        except:
+            pass
+        return None
 
-    def ultrasonic_callback(self, msg):
-        self.ultrasonic_distance = msg.data / 100.0  # Assuming cm → m
+    def set_initial_reference(self):
+        self.get_logger().info("Capturing initial reference frame...")
+        distance = self.fetch_ultrasonic_distance()
+        if distance:
+            self.scale_z = distance
 
-    def image_callback(self, msg):
-        curr_frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-        curr_gray = cv2.cvtColor(curr_frame, cv2.COLOR_BGR2GRAY)
+        while not self.initialized:
+            ret, frame = self.cap.read()
+            if not ret:
+                continue
 
-        if self.prev_frame is not None:
-            prev_gray = cv2.cvtColor(self.prev_frame, cv2.COLOR_BGR2GRAY)
-            kp1, des1 = self.orb.detectAndCompute(prev_gray, None)
-            kp2, des2 = self.orb.detectAndCompute(curr_gray, None)
+            frame = cv2.rotate(frame, cv2.ROTATE_180)
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            pts = cv2.goodFeaturesToTrack(gray, maxCorners=200, qualityLevel=0.01, minDistance=7)
 
-            if des1 is not None and des2 is not None:
-                matches = self.bf.match(des1, des2)
-                matches = sorted(matches, key=lambda x: x.distance)
+            if pts is not None and len(pts) >= 8:
+                self.prev_gray = gray
+                self.prev_pts = pts
+                self.initialized = True
+                self.get_logger().info(f"Initial keypoints: {len(pts)}")
 
-                pts1 = np.float32([kp1[m.queryIdx].pt for m in matches]).reshape(-1, 2)
-                pts2 = np.float32([kp2[m.trainIdx].pt for m in matches]).reshape(-1, 2)
+    def process_frame(self):
+        if not self.initialized:
+            return
 
-                if len(pts1) > 5:
-                    transform, _ = cv2.estimateAffinePartial2D(pts1, pts2)
-                    if transform is not None:
-                        dx = transform[0, 2]
-                        dy = transform[1, 2]
+        ret, frame = self.cap.read()
+        if not ret:
+            return
 
-                        # Scale translation
-                        scale = 0.001  # Tune this based on camera setup
-                        dt = (self.get_clock().now().nanoseconds * 1e-9) if self.last_time is None else (self.get_clock().now().nanoseconds * 1e-9 - self.last_time)
+        frame = cv2.rotate(frame, cv2.ROTATE_180)
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-                        self.position[0] += dx * scale
-                        self.position[1] += dy * scale
+        next_pts, status, _ = cv2.calcOpticalFlowPyrLK(self.prev_gray, gray, self.prev_pts, None)
+        good_prev = self.prev_pts[status.flatten() == 1]
+        good_next = next_pts[status.flatten() == 1]
 
-        # Z correction
-        if self.ultrasonic_distance is not None:
-            self.position[2] = self.ultrasonic_distance
+        if len(good_prev) < 8 or len(good_next) < 8:
+            return
 
-        # Publish Pose
-        pose_msg = PoseStamped()
-        pose_msg.header.stamp = self.get_clock().now().to_msg()
-        pose_msg.header.frame_id = 'map'
+        E, mask = cv2.findEssentialMat(good_next, good_prev, camera_matrix, method=cv2.RANSAC, prob=0.999, threshold=1.0)
+        if E is None:
+            return
 
-        pose_msg.pose.position.x = self.position[0]
-        pose_msg.pose.position.y = self.position[1]
-        pose_msg.pose.position.z = self.position[2]
+        _, R, t, mask_pose = cv2.recoverPose(E, good_next, good_prev, camera_matrix)
 
-        # No orientation for now
-        pose_msg.pose.orientation.w = 1.0
+        # Accumulate pose
+        self.pose_t += self.pose_R @ t * self.scale_z
+        self.pose_R = R @ self.pose_R
 
-        self.pose_pub.publish(pose_msg)
+        # Update buffer
+        self.pose_buffer.append(self.pose_t.copy())
 
-        self.prev_frame = curr_frame
-        self.last_time = self.get_clock().now().nanoseconds * 1e-9
+        # Apply smoothing if buffer full
+        if len(self.pose_buffer) < self.buffer_size:
+            smoothed_t = self.pose_t
+        else:
+            arr = np.array(self.pose_buffer).squeeze()  # shape: (N, 3)
+            smoothed = savgol_filter(arr, window_length=self.buffer_size, polyorder=2, axis=0)
+            smoothed_t = smoothed[-1].reshape(3, 1)
+
+        # Publish smoothed pose
+        quat = self.rotation_matrix_to_quaternion(self.pose_R)
+
+        msg = PoseStamped()
+        msg.header.stamp = self.get_clock().now().to_msg()
+        msg.header.frame_id = "camera_link"
+
+        msg.pose.position.x = float(smoothed_t[0])
+        msg.pose.position.y = float(smoothed_t[1])
+        msg.pose.position.z = float(smoothed_t[2])
+        msg.pose.orientation.x = quat[0]
+        msg.pose.orientation.y = quat[1]
+        msg.pose.orientation.z = quat[2]
+        msg.pose.orientation.w = quat[3]
+
+        self.publisher_.publish(msg)
+
+        self.prev_gray = gray
+        self.prev_pts = good_next.reshape(-1, 1, 2)
+
+    @staticmethod
+    def rotation_matrix_to_quaternion(R):
+        q = np.empty((4,), dtype=np.float64)
+        trace = np.trace(R)
+        if trace > 0:
+            s = 0.5 / np.sqrt(trace + 1.0)
+            q[3] = 0.25 / s
+            q[0] = (R[2, 1] - R[1, 2]) * s
+            q[1] = (R[0, 2] - R[2, 0]) * s
+            q[2] = (R[1, 0] - R[0, 1]) * s
+        else:
+            if R[0, 0] > R[1, 1] and R[0, 0] > R[2, 2]:
+                s = 2.0 * np.sqrt(1.0 + R[0, 0] - R[1, 1] - R[2, 2])
+                q[3] = (R[2, 1] - R[1, 2]) / s
+                q[0] = 0.25 * s
+                q[1] = (R[0, 1] + R[1, 0]) / s
+                q[2] = (R[0, 2] + R[2, 0]) / s
+            elif R[1, 1] > R[2, 2]:
+                s = 2.0 * np.sqrt(1.0 + R[1, 1] - R[0, 0] - R[2, 2])
+                q[3] = (R[0, 2] - R[2, 0]) / s
+                q[0] = (R[0, 1] + R[1, 0]) / s
+                q[1] = 0.25 * s
+                q[2] = (R[1, 2] + R[2, 1]) / s
+            else:
+                s = 2.0 * np.sqrt(1.0 + R[2, 2] - R[0, 0] - R[1, 1])
+                q[3] = (R[1, 0] - R[0, 1]) / s
+                q[0] = (R[0, 2] + R[2, 0]) / s
+                q[1] = (R[1, 2] + R[2, 1]) / s
+                q[2] = 0.25 * s
+        return q[[0, 1, 2, 3]]
 
 def main(args=None):
     rclpy.init(args=args)
-    node = ORBFusionPoseEstimator()
+    node = OpticalFlowPosePublisher()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
-
-if __name__ == '__main__':
-    main()
