@@ -18,28 +18,27 @@
         <nav id="nav">
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li>
-              <a href="#">Components</a>
-              <ul>
-                <li><a href="left-sidebar.html">Left Sidebar</a></li>
-                <li><a href="right-sidebar.html">Right Sidebar</a></li>
-                <li><a href="no-sidebar.html">No Sidebar</a></li>
-                <li>
-                  <a href="#">Submenu</a>
-                  <ul>
-                    <li><a href="#">Option 1</a></li>
-                    <li><a href="#">Option 2</a></li>
-                    <li><a href="#">Option 3</a></li>
-                    <li><a href="#">Option 4</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li><a href="elements.html">Chart</a></li>
+            <li><a href="about/about.html">About</a></li>
+            <li><a href="gallery/code_explaination.html">Code</a></li>
+            <li><a href="gallery/data.html">Data</a></li>
+            <li><a href="gallery/gallery_images.html">Gallery</a></li>
+            <!-- Keep other nav items if desired -->
+            <!-- Example Dropdown:
+                  <li>
+                    <a href="#">Components</a>
+                    <ul>
+                      <li><a href="left-sidebar.html">Left Sidebar</a></li>
+                      <li><a href="right-sidebar.html">Right Sidebar</a></li>
+                      <li><a href="no-sidebar.html">No Sidebar</a></li>
+                    </ul>
+                  </li>
+                  -->
             <li>
               <a
                 href="https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01.github.io"
                 class="button primary"
+                target="_blank"
+                rel="noopener noreferrer"
                 >Github</a
               >
             </li>
@@ -59,53 +58,34 @@
             </p>
           </header>
           <span class="image"
-            ><img src="images/quadruped.png" alt="Quadruped"
+            ><img src="assets/css/images/banner.png" alt="Quadruped"
           /></span>
         </div>
-        <a href="#system-architecture" class="goto-next scrolly">Next</a>
+        <a href="#course-info" class="goto-next scrolly">Next</a>
       </section>
 
-      <!-- System Architecture -->
-      <section id="system-architecture" class="wrapper style1 special">
+      <!-- Course Information -->
+      <section
+        id="course-info"
+        style="background: #2e3141; color: #fff; padding: 4em 0"
+      >
         <div class="container">
           <header class="major">
-            <h2>System Architecture</h2>
+            <h2 style="color: #fff">Course Information</h2>
             <p>
-              The system architecture comprises a quadruped robot and a UR5e
-              robotic arm. The quadruped is outfitted with a sensor suite,
-              including a camera and an ultrasonic sensor, to enable sensor
-              fusion. The UR5e arm is responsible for repositioning the
-              quadruped back to its original location to repeat the process.
+              <strong>Semester and Year:</strong> Spring 2025<br />
+              <strong>University:</strong> Arizona State University<br />
+              <strong>Class:</strong> Experimentation and Deployment of Robotic
+              Systems<br />
+              <strong>Professor:</strong> Dr. Daniel M. Aukes
             </p>
           </header>
 
-          <div class="diagram-wrapper">
-            <div class="quad-cluster">
-              <img
-                id="quadrupedImg"
-                src="images/quadruped.png"
-                alt="Quadruped"
-              />
-              <div id="quadStatus">Moving →</div>
-              <div class="quad-subnodes">
-                <div class="block animated-plot" id="imu-plot">
-                  <canvas id="imuCanvas" width="180" height="80"></canvas>
-                  <div class="label">IMU Pose Estimation</div>
-                </div>
-                <div class="block animated-camera-plot" id="camera-pose">
-                  <canvas id="cameraCanvas" width="180" height="80"></canvas>
-                  <div class="label">Camera Pose Estimation</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="block" id="ur5">
-              <img src="images/ur5e.png" alt="UR5e" />
-              <div class="label">UR5e</div>
-            </div>
-
-            <svg id="arrow-canvas"></svg>
-          </div>
+          <ul class="actions special">
+            <li>
+              <a href="about/about.html" class="button primary">Next: About</a>
+            </li>
+          </ul>
         </div>
       </section>
 

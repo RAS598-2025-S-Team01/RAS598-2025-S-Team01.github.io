@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team 01 - Experimental Data</title>
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/custom.css" />
+    <!-- Your custom styles if any -->
+    <noscript
+      ><link rel="stylesheet" href="../assets/css/noscript.css"
+    /></noscript>
+    
+  </head>
+  <body class="is-preload landing">
+    <div id="page-wrapper">
+      <!-- Header -->
+      <header id="header">
+        <h1 id="logo"><a href="index.html">Team 01</a></h1>
+        <nav id="nav">
+          <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../about/about.html">About</a></li>
+            <li><a href="../gallery/code_explaination.html">Code</a></li>
+            <li><a href="../gallery/data.html">Data</a></li>
+            <li><a href="../gallery/gallery_images.html">Gallery</a></li>
+
+            <!-- Current Page -->
+            <!-- Keep other nav items if desired -->
+            <li>
+              <a
+                href="https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01.github.io"
+                class="button primary"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Github</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <!-- Main Content -->
+      <section id="main" class="wrapper style1">
+        <div class="container">
+          <header class="major">
+            <h2>Experimental Data</h2>
+            <p>
+              Access the datasets collected during our Fusion Robotics project.
+            </p>
+          </header>
+
+          <!-- Data Access Section -->
+          <section>
+            <h3>Open Data for Reproducibility and Research</h3>
+            <p class="data-description">
+              In the spirit of open science and collaboration, we are sharing
+              the experimental data collected during the development and testing
+              of our Quadruped-UR5 testbed. This data primarily consists of ROS
+              bag files containing timestamped sensor readings and system states
+              recorded during autonomous runs.
+            </p>
+            <p class="data-description">
+              Potential uses for this data include:
+            </p>
+            <ul>
+              <li>Reproducing our pose estimation comparisons.</li>
+              <li>Testing alternative sensor fusion algorithms.</li>
+              <li>
+                Analyzing quadruped gait performance under different parameters.
+              </li>
+              <li>
+                Developing simulation models based on real-world sensor
+                characteristics.
+              </li>
+            </ul>
+
+            <h4>Accessing the Data</h4>
+            <p>
+              The datasets are hosted on a persistent storage platform to ensure
+              long-term availability. Please follow the link below to access the
+              data repository:
+            </p>
+            <p>
+              <a
+                href="[PLACEHOLDER: Link to Persistent Data Storage - e.g., Zenodo, Figshare, GitHub LFS, non-ASU Google Drive]"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="button primary icon solid fa-database data-link"
+              >
+                Access Experimental Data Repository
+              </a>
+            </p>
+            <p class="persistence-note">
+              <em
+                >Note: This link points to a third-party platform chosen for
+                data persistence beyond individual ASU affiliations. We aim to
+                keep this link active long-term.</em
+              >
+            </p>
+
+            <h4>Data Format</h4>
+            <p>
+              The data is primarily stored as ROS 2 bag files (`.db3` or
+              directory format). You will need a ROS 2 Humble installation to
+              easily inspect and replay these bags using tools like `ros2 bag
+              info` and `ros2 bag play`.
+            </p>
+            <p>Key topics typically included in the bags are:</p>
+            <ul>
+              <li><code>/imu/data</code></li>
+              <li><code>/imu/orientation</code></li>
+              <li><code>/imu/pose_estimate</code></li>
+              <li><code>/orb/pose</code></li>
+              <li><code>/servo/state</code></li>
+              <li>
+                <code>/tf</code> and <code>/tf_static</code> (for coordinate
+                frames)
+              </li>
+              <li>
+                <em>(Potentially others like raw camera feeds if recorded)</em>
+              </li>
+            </ul>
+            <p>
+              Please refer to any accompanying README files within the data
+              repository for specific details about individual datasets or
+              recording conditions.
+            </p>
+          </section>
+        </div>
+        <!-- /container -->
+      </section>
+      <!-- /main -->
+
+      <!-- Footer -->
+      <footer id="footer">
+        <ul class="icons">
+          <li>
+            <a href="#" class="icon brands alt fa-twitter"
+              ><span class="label">Twitter</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon brands alt fa-facebook-f"
+              ><span class="label">Facebook</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon brands alt fa-linkedin-in"
+              ><span class="label">LinkedIn</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon brands alt fa-instagram"
+              ><span class="label">Instagram</span></a
+            >
+          </li>
+          <li>
+            <a
+              href="https://github.com/RAS598-2025-S-Team01"
+              class="icon brands alt fa-github"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><span class="label">GitHub</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon solid alt fa-envelope"
+              ><span class="label">Email</span></a
+            >
+          </li>
+        </ul>
+        <ul class="copyright">
+          <li>&copy; Team 01. All rights reserved.</li>
+          <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+          <li>Course: RAS598 S2025, ASU</li>
+        </ul>
+      </footer>
+    </div>
+    <!-- /page-wrapper -->
+
+    <!-- Scripts -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery.scrolly.min.js"></script>
+    <script src="../assets/js/jquery.dropotron.min.js"></script>
+    <script src="../assets/js/jquery.scrollex.min.js"></script>
+    <script src="../assets/js/browser.min.js"></script>
+    <script src="../assets/js/breakpoints.min.js"></script>
+    <script src="../assets/js/util.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <!-- <script src="assets/js/custom.js"></script> -->
+    <!-- Include if you have custom JS for this page -->
+  </body>
+</html>

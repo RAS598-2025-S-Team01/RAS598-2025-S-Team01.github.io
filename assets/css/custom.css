@@ -1,17 +1,21 @@
+/* --- Styles derived from the provided diagram/animation CSS --- */
+
 .diagram-wrapper {
   position: relative;
   overflow: hidden; /* ✅ This prevents image from escaping */
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto;
-  gap: 2rem 2rem;
-  justify-items: center;
-  align-items: center;
+  /* grid properties removed as flex is used below */
+  gap: 2rem 2rem; /* Retained gap, might affect flex layout */
+  justify-items: center; /* Retained, less relevant for flex */
+  align-items: center; /* Retained, relevant for flex */
   background: #12121d;
   padding: 4rem 2rem;
   border-radius: 16px;
-  min-height: 1000px;
+  min-height: 1000px; /* Retained original min-height */
+  display: flex;
+  justify-content: center;
 }
+
+/* .wrapper class was present but empty in provided CSS, omitted unless needed */
 
 .block {
   background: rgba(255, 255, 255, 0.05); /* translucent dark */
@@ -26,7 +30,8 @@
   border: 1px solid #2d8cff;
   z-index: 2;
   backdrop-filter: blur(8px);
-  transition: transform 0.2s ease-in-out;
+  -webkit-backdrop-filter: blur(8px); /* Added for Safari support based on standard practice */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Combined transition */
 }
 
 .block:hover {
@@ -34,20 +39,24 @@
   box-shadow: 0 0 14px rgba(45, 140, 255, 0.6);
 }
 
-.label, #quadStatus, text {
-    color: #ffffff;
-    font-size: 1rem;
-    font-weight: 600;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
-  }
-  
-  #arrow-canvas text {
-    fill: #ffffff;
-    font-size: 16px;
-    font-weight: 600;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-  }
-  
+/* Combined label selectors */
+.label,
+#quadStatus,
+.diagram-wrapper text { /* Specificity for text inside diagram */
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+#arrow-canvas text {
+  fill: #ffffff;
+  /* font-size: 16px; */ /* Overridden by later rule */
+  font-size: 21px; /* Kept the last specified size */
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
 .animated-plot canvas {
   border-radius: 8px;
   background: #1e1e2a;
@@ -64,35 +73,24 @@
   pointer-events: none;
   z-index: 1;
 }
-.label, #quadStatus, text {
-    color: #ffffff;
-    font-size: 1rem;
-    font-weight: 600;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
-  }
-  
-  #arrow-canvas text {
-    fill: #ffffff;
-    font-size: 21px;
-    font-weight: 600;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-  }
-  
+
 #imuCanvas {
   display: block;
-  background-color: #f4f4f4;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  /* background-color: #f4f4f4; */ /* Overridden by .animated-plot canvas */
+  /* border: 1px solid #ccc; */ /* Overridden by .animated-plot canvas */
+  border-radius: 8px; /* Redundant with .animated-plot canvas */
   margin: 0 auto 0.5rem;
 }
 
 #ur5 {
-    position: absolute;
-    top: 2rem;
-    left: 2rem;
-    z-index: 2;
-  }
-  
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  z-index: 2;
+  /* text-align added for potential label centering */
+  text-align: center;
+}
+
 #ur5 img {
   width: 150px; /* Match scale to quadruped */
   height: auto;
@@ -100,42 +98,34 @@
 }
 
 #ur5.active-glow img {
-    filter: drop-shadow(0 0 10px #2d8cff) brightness(1.2);
-    transition: filter 0.3s ease;
-  }
-  
-  #quadrupedImg {
-    grid-column: 1 / span 2;
-    grid-row: 2;
-    width: 200px;
-    z-index: 2;
-    transition: transform 0.1s ease-out;
-    transform: scaleX(-1) !important;
-  }
-  
-#quadrupedImg,
-#imu-plot,
-#camera-pose {
-  position: static !important; /* Remove grid alignment */
-  transform: none !important;
+  filter: drop-shadow(0 0 10px #2d8cff) brightness(1.2);
+  transition: filter 0.3s ease;
 }
 
+#quadrupedImg {
+  /* grid properties removed */
+  width: 200px;
+  z-index: 2;
+  transition: transform 0.1s ease-out;
+  transform: scaleX(-1) !important; /* Kept !important as it was present */
+}
+
+/* Removed grid alignment overrides as grid is not used in diagram-wrapper */
+/* #quadrupedImg, #imu-plot, #camera-pose { position: static !important; transform: none !important; } */
+
 #quadStatus {
-  grid-column: 1 / span 2;
-  grid-row: 2;
-  margin-top: 6rem;
-  color: white;
-  font-weight: 500;
+  /* grid properties removed */
+  margin-top: 6rem; /* Kept original margin */
+  color: white; /* Redundant with combined rule */
+  font-weight: 500; /* Overridden by combined rule (600) */
 }
 
 #imu-plot {
-  grid-column: 1;
-  grid-row: 3;
+  /* grid properties removed */
 }
 
 #camera-pose {
-  grid-column: 2;
-  grid-row: 3;
+  /* grid properties removed */
 }
 
 .animated-camera-plot {
@@ -144,29 +134,325 @@
 
 #cameraCanvas {
   display: block;
-  background-color: #1e1e2a;
-  border: 1px solid #2d8cff;
-  border-radius: 8px;
-  box-shadow: inset 0 0 4px rgba(45, 140, 255, 0.3);
+  background-color: #1e1e2a; /* Redundant with .animated-plot canvas */
+  border: 1px solid #2d8cff; /* Redundant with .animated-plot canvas */
+  border-radius: 8px; /* Redundant with .animated-plot canvas */
+  box-shadow: inset 0 0 4px rgba(45, 140, 255, 0.3); /* Redundant */
   margin: 0 auto 0.5rem;
 }
 
 .quad-cluster {
+  position: absolute;
+  top: 35%; /* Adjust vertical position */
+  left: 0; /* Initial position, JS handles movement */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.1s ease-out; /* Kept original transition */
+  z-index: 2;
+}
+
+.quad-subnodes {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+/* --- Styles derived from the provided carousel CSS --- */
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 2em auto;
+  background: #1e1e2a;
+  border-radius: 1rem;
+  padding: 1rem;
+  min-height: 500px; /* Keep min-height */
+  overflow: hidden; /* Keep hidden */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-container .carousel-slide {
+  position: absolute; /* Non-active slides are absolute */
+  top: 1rem; /* Match padding */
+  left: 1rem; /* Match padding */
+  width: calc(100% - 2rem); /* Account for padding */
+  height: calc(100% - 2rem); /* Account for padding */
+  opacity: 0; /* Hidden by default */
+  visibility: hidden; /* Hidden by default */
+  transition: opacity 0.5s ease-in-out, visibility 0s linear 0.5s; /* Fade transition, delay visibility change */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Remove transform properties */
+  /* transform: translateX(100%); */
+}
+
+.carousel-container .carousel-slide.active {
+  position: relative; /* Active slide takes up space */
+  opacity: 1; /* Visible */
+  visibility: visible; /* Visible */
+  z-index: 1; /* Ensure active is clickable if needed */
+  transition: opacity 0.5s ease-in-out, visibility 0s linear 0s; /* Transition in immediately */
+  /* Remove transform properties */
+  /* transform: translateX(0%); */
+}
+
+/* Remove unused animation helper classes */
+/* .carousel-slide.exit-left, .carousel-slide.exit-right, etc. are no longer needed */
+
+
+.carousel-container .carousel-full-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100% - 4rem); /* Adjust max height considering buttons */
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.1);
+}
+
+.carousel-container .carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(45, 140, 255, 0.7);
+  color: white;
+  border: none;
+  font-size: 1.8rem;
+  padding: 0.6rem 1.1rem;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 10; /* Keep buttons on top */
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.carousel-container .carousel-btn.next { right: 1.5rem; }
+.carousel-container .carousel-btn.prev { left: 1.5rem; }
+
+.carousel-container .carousel-btn:hover { background-color: #2d8cff; }
+
+/* --- Styles derived from the provided #course-info CSS --- */
+#course-info {
+  padding: 1rem 0rem 0rem 0rem !important; /* Kept original padding and !important */
+  /* Background and color should be handled by the theme or inline style */
+}
+
+/* --- Keyframes --- */
+@keyframes fade { /* Kept as it was provided */
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* === About Page Enhancements === */
+
+/* --- General Readability & Structure --- */
+
+#main.wrapper.style1 .container {
+  /* Add more top/bottom padding within the main container */
+  padding-top: 3em;
+  padding-bottom: 3em;
+  color: white;
+}
+
+/* Style sections within the main content area */
+#main .container > section {
+  padding: 2.5em 0; /* Add vertical padding */
+  margin-bottom: 2.5em; /* Add space between sections */
+  border-bottom: 1px solid #e0e0e0; /* Subtle separator */
+  opacity: 0; /* Initial state for animation */
+  transform: translateY(30px); /* Initial state for animation */
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+#main .container > section:last-child {
+  border-bottom: none; /* No border for the last section */
+  margin-bottom: 0;
+}
+
+/* Style for sections animated into view */
+#main .container > section.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* --- Headings --- */
+
+#main h3 {
+  font-size: 1.75em;
+  margin-bottom: 1em;
+  position: relative;
+  padding-bottom: 0.5em;
+  color: #ffc5c5;
+}
+/* Add a subtle underline effect to H3 */
+#main h3::after {
+    content: '';
     position: absolute;
-    top: 35%; /* Adjust vertical position */
     left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    transition: transform 0.1s ease-out;
-    z-index: 2;
-  }
-  
-  .quad-subnodes {
-    display: flex;
-    flex-direction: row;
-    gap: 1.5rem;
-    justify-content: center;
-  }
-  
+    bottom: 0;
+    width: 50px; /* Width of the underline */
+    height: 3px; /* Thickness */
+    background-color: #e44c65; /* Theme's accent color */
+    transition: width 0.3s ease;
+}
+#main h3:hover::after {
+    width: 80px; /* Expand underline on hover */
+}
+
+
+#main h4 {
+  font-size: 1.3em;
+  margin-top: 2em; /* Space above H4 */
+  margin-bottom: 0.8em;
+  color: white;
+}
+
+/* --- Paragraphs and Text --- */
+
+#main p {
+  line-height: 1.8; /* Increase line spacing for readability */
+  margin-bottom: 1.5em;
+  color: white; /* Slightly lighter text */
+}
+
+#main strong {
+  font-weight: 600; /* Ensure it's bold */
+}
+
+/* --- Lists (Ordered and Unordered) --- */
+
+#main ol,
+#main ul {
+  margin-left: 1.5em; /* Indent lists */
+  margin-bottom: 1.5em;
+  padding-left: 1em; /* Add padding for list markers/icons */
+}
+
+#main li {
+  padding-bottom: 0.8em; /* Space between list items */
+  position: relative; /* For potential icon positioning */
+}
+
+/* Style ordered list numbers */
+#main ol {
+    list-style: none; /* Remove default numbers */
+    counter-reset: section-counter;
+}
+#main ol > li::before {
+    counter-increment: section-counter;
+    content: counter(section-counter);
+    background: #e44c65; /* Accent color */
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 1.8em;
+    height: 1.8em;
+    display: inline-block;
+    text-align: center;
+    line-height: 1.8em;
+    margin-right: 0.8em;
+    font-size: 0.9em;
+    position: absolute; /* Position relative to li */
+    left: -2.8em; /* Adjust positioning */
+    top: 0;
+}
+
+
+/* Style unordered list bullets with icons */
+#main ul {
+    list-style: none; /* Remove default bullets */
+}
+#main ul > li::before {
+    /* Using FontAwesome icons (ensure FontAwesome CSS is linked) */
+    content: '\f00c'; /* Example: fa-check */
+    font-family: 'Font Awesome 5 Free'; /* Or 'Font Awesome 5 Brands' etc. */
+    font-weight: 900; /* Solid icons */
+    color: #e44c65; /* Accent color */
+    margin-right: 0.8em;
+    position: absolute; /* Position relative to li */
+    left: -1.8em; /* Adjust positioning */
+    top: 0.1em; /* Fine-tune vertical alignment */
+    font-size: 1em;
+}
+/* Specific icons for different lists if needed */
+#goals ul > li::before { content: '\f140'; } /* fa-bullseye */
+#tradeoffs ol > li::before { content: counter(section-counter); /* Keep numbers for tradeoffs */ }
+#tradeoffs ul > li::before { content: '\f0eb'; } /* fa-lightbulb */
+
+
+/* --- Code and Preformatted Text --- */
+/* (Using styles from previous custom.css - ensure they are present) */
+/* Example refinement: */
+pre {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-left: 4px solid #e44c65; /* Accent border */
+  background-color: #f8f9fa; /* Slightly off-white */
+}
+code {
+	color: #e44c65;
+}
+/* --- Figures and Images --- */
+figure {
+  background-color: #fdfdfd; /* Very light background for figures */
+  padding: 1em;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin: 2.5em 0;
+}
+figure img {
+  border-radius: 4px; /* Rounded corners for images */
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1); /* Subtle shadow */
+}
+figcaption {
+  margin-top: 1em;
+  color: #555;
+}
+
+/* --- Tables --- */
+/* (Using styles from previous custom.css - ensure they are present) */
+/* Example refinement: */
+.table-wrapper {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-radius: 6px;
+}
+th {
+    background-color: #e44c65; /* Cooler header background */
+    font-weight: bold !important;
+    color: #000;
+}
+td {
+  color: #00ff00
+}
+/* --- Interactive Hover Effects --- */
+#main section:hover h3::after {
+    width: 100px; /* Slightly larger expansion on section hover */
+}
+
+#main ul > li:hover, #main ol > li:hover {
+    /* background-color: #f9f9f9; */ /* Optional: subtle background on list item hover */
+    /* color: #000; */ /* Optional: text color change */
+}
+
+/* --- Button Links --- */
+/* Ensure buttons defined in custom.css look good */
+.button.primary.icon.code-link,
+.button.primary.icon.data-link {
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+.button.primary.icon.code-link:hover,
+.button.primary.icon.data-link:hover {
+    background-color: #d63a53; /* Darker shade of accent */
+    transform: translateY(-2px);
+}

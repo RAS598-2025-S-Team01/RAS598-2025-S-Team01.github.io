@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team 01 - About the Project</title>
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/custom.css" />
+    <noscript
+      ><link rel="stylesheet" href="../assets/css/noscript.css"
+    /></noscript>
+    <!-- Include MathJax for LaTeX rendering (Optional, keep if needed) -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [["\\(", "\\)"]],
+          displayMath: [["$$", "$$"]],
+          processEscapes: true,
+          processEnvironments: true,
+        },
+        options: {
+          skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"],
+        },
+      };
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+      id="MathJax-script"
+      async
+    ></script>
+  </head>
+  <body class="is-preload landing">
+    <div id="page-wrapper">
+      <!-- Header -->
+      <header id="header">
+        <!-- Ensure logo links correctly to index.html in the root -->
+        <h1 id="logo"><a href="../index.html">Team 01</a></h1>
+        <nav id="nav">
+          <ul>
+            <!-- Use relative paths from the 'about' directory -->
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../about/about.html">About</a></li>
+            <li><a href="../gallery/code_explaination.html">Code</a></li>
+            <li><a href="../gallery/data.html">Data</a></li>
+            <li><a href="../gallery/gallery_images.html">Gallery</a></li>
+            <li>
+              <a
+                href="https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01.github.io"
+                class="button primary"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Github</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <!-- Main Content -->
+      <section id="main" class="wrapper style1">
+        <div class="container">
+          <header class="major">
+            <h2>About the Project: Fusion Robotics</h2>
+            <p>Detailed description of our Quadruped-UR5 Robotics Testbed.</p>
+          </header>
+
+          <!-- Section 1: Updated Project Description -->
+          <!-- This section will be animated by custom.js -->
+          <section id="description">
+            <h3>1. Description & Scope</h3>
+            <p>
+              Our project, "Fusion Robotics," establishes an autonomous testbed
+              integrating a quadruped robot and a UR5 robotic arm, orchestrated
+              using ROS 2. The core objective is to create a repeatable,
+              automated workflow for testing quadruped locomotion, collecting
+              sensor data, and evaluating performance through a closed loop
+              involving real-world execution and analysis.
+            </p>
+
+            <h4>1.1 Project Scoping and Evolution</h4>
+            <p>
+              Initially, our project broadly aimed to explore sensor fusion for
+              optimizing experimental setups. Through the initial development
+              cycles (Weeks 7-12), involving individual component testing (UR5
+              control, quadruped basic motion, sensor readings), we identified
+              the critical need to first solidify the core autonomous workflow.
+              Therefore, our scope refined to prioritize the seamless
+              integration and interaction between the UR5 and the quadruped for
+              the automated reset sequence. This became the primary milestone,
+              ensuring a stable platform before delving deeper into complex
+              simulation comparisons or advanced SLAM implementations initially
+              envisioned. The focus shifted towards robust hardware integration,
+              real-time control via a user interface, and reliable data
+              acquisition through ROS 2.
+            </p>
+
+            <h4>1.2 Data Collection Process</h4>
+            <p>
+              Our data collection process is central to the experimental loop:
+            </p>
+            <ol>
+              <li>
+                <strong>Initialization:</strong> The UR5 arm precisely places
+                the quadruped robot at a designated starting position.
+              </li>
+              <li>
+                <strong>Autonomous Locomotion:</strong> Triggered via our ROS 2
+                system (potentially through the UI), the quadruped begins
+                walking forward based on pre-set or user-defined gait parameters
+                (See Section 4).
+              </li>
+              <li>
+                <strong>Real-time Sensing:</strong> As the quadruped moves, its
+                onboard sensors (IMU, Camera - providing data for
+                <code>/orb/pose</code>, Servo encoders) continuously publish
+                data to respective ROS 2 topics.
+              </li>
+              <li>
+                <strong>Data Logging & Visualization:</strong> A dedicated ROS 2
+                node (<code>/ros2_flask_plotter</code>) subscribes to these
+                topics, logging the data and visualizing key metrics (IMU
+                readings, pose estimates) in real-time via a web interface.
+              </li>
+              <li>
+                <strong>Path Completion & Reset:</strong> Upon reaching a
+                predefined distance or condition (monitored via pose
+                estimation), the quadruped stops. A signal is sent (potentially
+                automated or via UI) to the UR5 arm.
+              </li>
+              <li>
+                <strong>Automated Reset:</strong> The UR5 executes a
+                pre-programmed routine to pick up the quadruped and return it to
+                the starting position.
+              </li>
+              <li>
+                <strong>Iteration:</strong> The cycle repeats, allowing for
+                continuous data collection under varying parameters or
+                conditions.
+              </li>
+            </ol>
+            <p>
+              Initial data collection involved testing sensors individually and
+              calibrating the quadruped's basic movements. This data was crucial
+              for tuning low-level controllers and identifying necessary
+              filtering techniques. We found raw IMU data too noisy due to motor
+              vibrations, necessitating filtering. Early camera pose tests
+              highlighted sensitivity to lighting, guiding our focus towards
+              robust estimation methods. This iterative process of
+              collect-analyze-refine was essential and required revisiting
+              initial data assumptions.
+            </p>
+
+            <h4>1.3 Pose Estimation and Model Fitting</h4>
+            <p>
+              Accurate pose estimation is vital for path completion detection
+              and performance analysis. We employ multiple approaches:
+            </p>
+            <ul>
+              <li>
+                <strong>IMU-based Pose Estimation:</strong> The
+                <code>/pose_estimator_node</code> integrates data from
+                <code>/imu/data</code> and <code>/imu/orientation</code> (likely
+                using techniques like Kalman filtering or complementary filters)
+                to produce <code>/imu/pose_estimate</code>. This provides a
+                continuous estimate of the robot's orientation and potentially
+                position relative to its start.
+              </li>
+              <li>
+                <strong>Camera-based Pose Estimation:</strong> The
+                <code>/optical_flow_pose_publisher</code> node processes camera
+                data (likely visual features or optical flow) to publish pose
+                information on the <code>/orb/pose</code> topic. This offers an
+                alternative, potentially drift-correcting pose source,
+                especially useful for tracking position over ground.
+              </li>
+              <li>
+                <strong>Sensor Fusion (Implicit/Comparative):</strong> While the
+                current ROS graph doesn't show explicit fusion of
+                <code>/imu/pose_estimate</code> and <code>/orb/pose</code> into
+                a single topic, our web interface plots both. This allows for
+                direct comparison and validation. Future work could involve
+                fusing these using filters (e.g., Extended Kalman Filter) for a
+                more robust estimate. Data collected informs the tuning of these
+                estimators (e.g., filter noise parameters).
+              </li>
+            </ul>
+
+            <h4>1.4 Integration into ROS 2</h4>
+            <p>
+              The entire system is orchestrated using ROS 2 Humble. The
+              quadruped itself is integrated via the <code>/bridge_node</code>,
+              which translates high-level commands and parameter changes into
+              low-level <code>/servo/command</code> messages and publishes
+              <code>/servo/state</code>. Sensor data is published directly by
+              dedicated nodes or drivers (e.g., IMU node, camera node publishing
+              to <code>/orb/pose</code>). A Flask web server
+              (<code>/ros2_flask_plotter</code>) acts as the central UI,
+              subscribing to relevant topics for visualization and potentially
+              publishing commands or parameter updates. (See Section 4 for the
+              detailed architecture).
+            </p>
+
+            <h4>1.5 Validation and Success Metrics</h4>
+            <p>We quantify success through several metrics:</p>
+            <ul>
+              <li>
+                <strong>Workflow Completion:</strong> Successfully executing
+                multiple consecutive cycles of the walk-and-reset loop
+                autonomously.
+              </li>
+              <li>
+                <strong>Pose Estimation Accuracy:</strong> Comparing
+                <code>/imu/pose_estimate</code> and <code>/orb/pose</code>.
+                While ground truth from OptiTrack (as mentioned in original
+                goals) might not be fully integrated yet, we assess consistency,
+                drift characteristics, and agreement between the methods.
+                Graphical plots showing the time evolution of both estimates are
+                used for visual validation.
+              </li>
+              <li>
+                <strong>Control Responsiveness:</strong> Demonstrating real-time
+                changes in quadruped gait parameters (Frequency, Duty Factor,
+                Amplitudes, Offsets, Mode) via the web UI and observing the
+                corresponding immediate change in locomotion.
+              </li>
+              <li>
+                <strong>Data Integrity:</strong> Ensuring sensor data logged via
+                the <code>/ros2_flask_plotter</code> is consistent and reflects
+                the robot's state accurately.
+              </li>
+            </ul>
+            <figure>
+              <!-- [PLACEHOLDER: Insert screenshot of your web UI showing plots] -->
+              <img
+                class="responsive"
+                src="[PLACEHOLDER: path/to/your/ui_screenshot.png]"
+                alt="Web UI showing sensor data and pose estimates"
+              />
+              <figcaption>
+                Figure 1: Real-time visualization of IMU data and comparative
+                pose estimates via the web interface.
+              </figcaption>
+            </figure>
+          </section>
+
+          <!-- Section 2: Updated Project Goals -->
+          <!-- This section will be animated by custom.js -->
+          <section id="goals">
+            <h3>2. Updated Project Goals</h3>
+            <p>
+              Our core vision of creating an advanced, automated robotic testbed
+              remains. However, based on initial development and feasibility
+              assessments, our project goals have been refined since the
+              beginning:
+            </p>
+            <ul>
+              <li>
+                <strong>Original Goal:</strong> Develop a testbed optimizing
+                experimental accuracy via sensor fusion and simulation
+                comparisons.
+              </li>
+              <li>
+                <strong>Updated & Current Goals:</strong>
+                <ol>
+                  <li>
+                    <strong>Demonstrate a Fully Autonomous Workflow:</strong>
+                    Successfully implement and showcase the closed-loop system
+                    where the UR5 positions the quadruped, the quadruped walks
+                    autonomously while collecting data, and the UR5 resets it
+                    for continuous operation.
+                  </li>
+                  <li>
+                    <strong
+                      >Implement Real-Time Quadruped Control via UI:</strong
+                    >
+                    Provide a user-friendly web interface (Flask-based) that
+                    allows real-time monitoring of sensor data (IMU, Pose
+                    Estimates) and interactive control over the quadruped's gait
+                    parameters (Frequency, Duty Factor, Offsets, Amplitudes) and
+                    movement modes (Walk, Trot, Pronk, etc.).
+                  </li>
+                  <li>
+                    <strong
+                      >Integrate and Compare Pose Estimation Methods:</strong
+                    >
+                    Utilize and log pose estimates derived from the IMU
+                    (<code>/imu/pose_estimate</code>) and camera-based methods
+                    (<code>/orb/pose</code>), enabling comparison and analysis
+                    of their performance within our specific setup.
+                  </li>
+                  <li>
+                    <strong>Develop Robust ROS 2 Integration:</strong> Create a
+                    modular and reliable ROS 2 architecture connecting the UR5
+                    (control assumed via existing ROS drivers/custom scripts),
+                    the quadruped (via <code>/bridge_node</code>), sensors,
+                    estimation nodes, and the user interface.
+                  </li>
+                  <li>
+                    <strong>Provide Open Resources:</strong> Share our developed
+                    ROS 2 packages, setup instructions, and collected
+                    experimental data to benefit the robotics community (as
+                    originally planned).
+                  </li>
+                </ol>
+              </li>
+            </ul>
+            <p>
+              The emphasis has shifted from deep simulation integration within
+              this semester to proving the core hardware automation, real-time
+              control, and multi-sensor data handling pipeline first.
+            </p>
+          </section>
+
+          <!-- Section 3: Project Process / Workflow -->
+          <!-- This section will be animated by custom.js -->
+          <section id="workflow">
+            <h3>3. Project Process / Workflow</h3>
+            <p>
+              Our project workflow follows an iterative development process
+              within the ROS 2 ecosystem. The high-level plan remains similar,
+              but the <em>focus</em> within the later weeks shifted towards
+              integration and UI development.
+            </p>
+            <p>
+              <strong>Note:</strong> While the overall weekly themes remain
+              similar to the initial plan, Weeks 12-15 saw an increased focus on
+              developing the <code>bridge_node</code> for parameter control, the
+              <code>ros2_flask_plotter</code> UI, and achieving the core
+              UR5-Quadruped automated reset loop, deferring deeper simulation
+              comparisons.
+            </p>
+
+            <h4>Project Timeline (Weeks 7-16)</h4>
+            <div class="table-wrapper">
+              <!-- Use table-wrapper for theme styling -->
+              <table>
+                <thead>
+                  <tr>
+                    <th>Week</th>
+                    <th>Task</th>
+                    <th>Status Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>7</td>
+                    <td>
+                      Initialize UR5 for positioning the quadruped at the start
+                      point
+                    </td>
+                    <td>Completed</td>
+                  </tr>
+                  <tr>
+                    <td>8</td>
+                    <td>Validate communication between UR5 and host machine</td>
+                    <td>Completed</td>
+                  </tr>
+                  <tr>
+                    <td>9</td>
+                    <td>Quadruped calibration and mobility tuning</td>
+                    <td>Completed</td>
+                  </tr>
+                  <tr>
+                    <td>10</td>
+                    <td>
+                      Initiate quadruped hardware setup; basic mobility tests
+                    </td>
+                    <td>Completed. Initial ROS topic publishing setup.</td>
+                  </tr>
+                  <tr>
+                    <td>11</td>
+                    <td>Fine-tune mechanical alignment and sensor mounts</td>
+                    <td>Completed. Focused on IMU/Camera mounting.</td>
+                  </tr>
+                  <tr>
+                    <td>12</td>
+                    <td>
+                      Quadruped ROS Node Dev (<code>/bridge_node</code>,
+                      parameters)
+                    </td>
+                    <td>Completed. Basic parameter control achieved.</td>
+                  </tr>
+                  <tr>
+                    <td>13</td>
+                    <td>
+                      Develop UI (<code>/ros2_flask_plotter</code>) & Pose
+                      Estimation
+                    </td>
+                    <td>Completed. UI plots data, basic control added.</td>
+                  </tr>
+                  <tr>
+                    <td>14</td>
+                    <td>Integrate UR5 control logic with Quadruped state</td>
+                    <td>Completed. Core automation loop functional.</td>
+                  </tr>
+                  <tr>
+                    <td>15</td>
+                    <td>Full system integration & robustness testing</td>
+                    <td>Completed. Tested walk-reset cycle multiple times.</td>
+                  </tr>
+                  <tr>
+                    <td>16</td>
+                    <td>Final Demo Prep, Documentation, Code Packaging</td>
+                    <td>Completed.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Section 4: Finalized ROS 2 Architecture -->
+          <!-- This section will be animated by custom.js -->
+          <section id="ros">
+            <h3>4. Finalized System & ROS 2 Architecture</h3>
+
+            <p>
+              Our system leverages ROS 2 Humble for modular communication
+              between the hardware components, control logic, and user
+              interface. The architecture is designed for clarity and
+              extensibility.
+            </p>
+            <figure>
+              <!-- [PLACEHOLDER: Insert your vector-based ROS graph image here] -->
+              <img
+                class="responsive"
+                src="[PLACEHOLDER: path/to/your/ros_graph.png]"
+                alt="ROS 2 Node and Topic Architecture"
+              />
+              <figcaption>
+                Figure 2: Finalized ROS 2 Node and Topic Architecture
+              </figcaption>
+            </figure>
+
+            <h4>Key Components:</h4>
+            <ul>
+              <li>
+                <strong>Nodes (Ellipses/Rectangles in Diagram):</strong>
+                <ul>
+                  <li>
+                    <code>/bridge_node</code> (Dark Grey): Interfaces directly
+                    with the quadruped's hardware (servos). Subscribes to
+                    <code>/servo/command</code> and parameter updates. Publishes
+                    <code>/servo/state</code>. Handles gait generation based on
+                    parameters.
+                  </li>
+                  <li>
+                    <code>/pose_estimator_node</code> (Purple): Subscribes to
+                    <code>/imu/data</code>, <code>/imu/orientation</code>.
+                    Performs calculations (e.g., sensor fusion, integration) and
+                    publishes <code>/imu/pose_estimate</code>.
+                  </li>
+                  <li>
+                    <code>/optical_flow_pose_publisher</code> (Teal): Processes
+                    camera data (implied input) using optical flow/visual
+                    features. Publishes pose to <code>/orb/pose</code>.
+                  </li>
+                  <li>
+                    <code>/ros2_flask_plotter</code> (Pink): Bridge between ROS
+                    2 and the web UI. Subscribes to sensor/state topics
+                    (<code>/imu/*</code>, <code>/orb/pose</code>,
+                    <code>/servo/state</code>) for visualization. Hosts
+                    services/publishers for UI commands and parameter changes
+                    (possibly via <code>/parameter_events</code>).
+                  </li>
+                  <li>
+                    <em>(Implied Nodes):</em> Sensor driver nodes publishing raw
+                    data (IMU, Camera), UR5 control node.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <strong
+                  >Topics (Arrows connecting Nodes, grouped by
+                  namespaces):</strong
+                >
+                <ul>
+                  <li>
+                    <code>/imu/data</code> (Orange): Raw IMU
+                    accelerometer/gyroscope data.
+                  </li>
+                  <li>
+                    <code>/imu/orientation</code> (Orange): Filtered IMU
+                    orientation (e.g., quaternions).
+                  </li>
+                  <li>
+                    <code>/imu/pose_estimate</code> (Orange): Calculated pose
+                    from IMU data (by <code>/pose_estimator_node</code>).
+                  </li>
+                  <li>
+                    <code>/orb/pose</code> (Teal): Calculated pose from
+                    camera/visual data (by
+                    <code>/optical_flow_pose_publisher</code>).
+                  </li>
+                  <li>
+                    <code>/servo/command</code> (Red): Commands sent to
+                    quadruped servos (by <code>/bridge_node</code>).
+                  </li>
+                  <li>
+                    <code>/servo/state</code> (Red): Current state from servos
+                    (published by <code>/bridge_node</code>).
+                  </li>
+                  <li>
+                    <code>/parameter_events</code> (Grey): Standard ROS 2 topic
+                    for parameter changes.
+                  </li>
+                  <li>
+                    <code>/rosout</code> (Grey): Standard ROS 2 logging topic.
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+            <h4>Quadruped Control Parameters (via UI):</h4>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>F</td>
+                    <td>Frequency of oscillation (controls step speed)</td>
+                  </tr>
+                  <tr>
+                    <td>DF</td>
+                    <td>Duty factor (portion of cycle foot is on ground)</td>
+                  </tr>
+                  <tr>
+                    <td>FO</td>
+                    <td>Foot Offset (lateral position offset)</td>
+                  </tr>
+                  <tr>
+                    <td>EO</td>
+                    <td>Elbow Offset (adjusts elbow position offset)</td>
+                  </tr>
+                  <tr>
+                    <td>HA</td>
+                    <td>Hip Amplitude (range of hip joint movement)</td>
+                  </tr>
+                  <tr>
+                    <td>HO</td>
+                    <td>Hip Offset (base angle shift for hip joint)</td>
+                  </tr>
+                  <tr>
+                    <td>KA</td>
+                    <td>Knee Amplitude (range of knee joint movement)</td>
+                  </tr>
+                  <tr>
+                    <td>KO</td>
+                    <td>Knee Offset (base angle shift for knee joint)</td>
+                  </tr>
+                  <tr>
+                    <td>Movement Mode</td>
+                    <td>Gait selection: PRONK, WALK, PACE, TROT, BOUND</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- START: Inserted Carousel Block -->
+            <div class="system-architecture-visuals">
+              <!-- Wrapper div -->
+              <header class="major" style="text-align: center; margin-top: 3em">
+                <!-- Centered header -->
+                <h4>System Architecture Visualization</h4>
+                <p>
+                  Interact with the diagram or view the static architecture.
+                </p>
+              </header>
+
+              <div class="carousel-container">
+                <!-- Slide 1: Full animated diagram -->
+                <div class="carousel-slide active">
+                  <!-- Start with this slide active -->
+                  <div class="carousel-content">
+                    <div class="diagram-wrapper">
+                      <svg id="arrow-canvas"></svg>
+                      <!-- SVG for arrows -->
+                      <div class="quad-cluster">
+                        <img
+                          id="quadrupedImg"
+                          src="../assets/css/images/quadruped.png"
+                          <!--
+                          Corrected
+                          Path
+                          --
+                        />
+                        alt="Quadruped" />
+                        <div id="quadStatus">Initializing...</div>
+                        <!-- Status text -->
+                        <div class="quad-subnodes">
+                          <div class="block animated-plot" id="imu-plot">
+                            <canvas
+                              id="imuCanvas"
+                              width="180"
+                              height="80"
+                            ></canvas>
+                            <div class="label">IMU Pose</div>
+                          </div>
+                          <div
+                            class="block animated-camera-plot"
+                            id="camera-pose"
+                          >
+                            <canvas
+                              id="cameraCanvas"
+                              width="180"
+                              height="80"
+                            ></canvas>
+                            <div class="label">Camera Pose</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="block" id="ur5">
+                        <img src="../assets/css/images/ur5e.png" alt="UR5e" />
+                        <!-- Corrected Path -->
+                        <div class="label">UR5e Arm</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 2: Explanation image -->
+                <div class="carousel-slide">
+                  <div class="carousel-content">
+                    <!-- Removed inner diagram-wrapper for static image -->
+                    <img
+                      src="../assets/css/images/working.png"
+                      <!--
+                      Corrected
+                      Path
+                      --
+                    />
+                    alt="System Architecture Overview"
+                    class="carousel-full-image" />
+                  </div>
+                </div>
+
+                <!-- Carousel Buttons -->
+                <!-- Note: onclick requires changeSlide function in custom.js -->
+                <button class="carousel-btn prev" aria-label="Previous Slide">
+                  &#10094;
+                </button>
+                <button class="carousel-btn next" aria-label="Next Slide">
+                  &#10095;
+                </button>
+              </div>
+            </div>
+            <!-- END: Inserted Carousel Block -->
+
+            <h4>Data Flow Example (Control):</h4>
+            <ol>
+              <li>User changes 'Frequency' parameter on the Web UI.</li>
+              <li>
+                UI sends command via Flask backend to
+                <code>/ros2_flask_plotter</code>.
+              </li>
+              <li>
+                <code>/ros2_flask_plotter</code> updates the relevant parameter
+                on <code>/bridge_node</code> (e.g., via parameter service call
+                or <code>/parameter_events</code>).
+              </li>
+              <li>
+                <code>/bridge_node</code> receives the parameter update, adjusts
+                its internal gait generator logic.
+              </li>
+              <li>
+                <code>/bridge_node</code> publishes new joint targets on
+                <code>/servo/command</code>.
+              </li>
+              <li>Quadruped hardware responds to new commands.</li>
+              <li>
+                Changes in motion affect <code>/imu/*</code> and
+                <code>/orb/pose</code> data, which are visualized back on the UI
+                via <code>/ros2_flask_plotter</code>.
+              </li>
+            </ol>
+          </section>
+
+          <!-- Section 5: System Tradeoffs -->
+          <!-- This section will be animated by custom.js -->
+          <section id="tradeoffs">
+            <h3>5. System Tradeoffs</h3>
+            <p>
+              Developing this integrated robotic system required balancing
+              several competing goals and making key tradeoffs:
+            </p>
+            <ol>
+              <li>
+                <strong
+                  >Accuracy vs. Speed/Complexity (Pose Estimation):</strong
+                >
+                <ul>
+                  <li>
+                    <strong>Tradeoff:</strong> Implemented both IMU-based (fast,
+                    drift-prone) and camera-based (<code>/orb/pose</code> -
+                    potentially more accurate long-term, computationally
+                    heavier, environment-sensitive).
+                  </li>
+                  <li>
+                    <strong>Balance:</strong> Ran both for comparison via UI
+                    rather than immediate complex fusion. Used simpler filters
+                    for IMU estimate for real-time suitability.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <strong>Real-time Control vs. System Stability:</strong>
+                <ul>
+                  <li>
+                    <strong>Tradeoff:</strong> UI allows real-time gait
+                    parameter changes, which could destabilize the robot if too
+                    abrupt.
+                  </li>
+                  <li>
+                    <strong>Balance:</strong> Used ROS 2 parameters.
+                    <code>/bridge_node</code> likely includes internal
+                    limits/smoothing on parameter changes to maintain stability.
+                    Balanced UI/control loop refresh rates.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <strong>Package Selection vs. Hardware Constraints:</strong>
+                <ul>
+                  <li>
+                    <strong>Tradeoff:</strong> Needed libraries compatible with
+                    onboard compute (e.g., Raspberry Pi) and UR5 controller.
+                    Some algorithms might be too resource-intensive.
+                  </li>
+                  <li>
+                    <strong>Balance:</strong> Selected established, reasonably
+                    performant packages (e.g., Flask for UI). Pose estimation
+                    algorithms chosen considering hardware limits.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <strong>Development Time vs. Feature Completeness:</strong>
+                <ul>
+                  <li>
+                    <strong>Tradeoff:</strong> Semester timeline required
+                    prioritization. Deferred deep simulation integration and
+                    advanced SLAM.
+                  </li>
+                  <li>
+                    <strong>Balance:</strong> Focused on delivering the core
+                    autonomous loop (walk-reset), interactive UI, and
+                    multi-sensor data pipeline with comparative pose estimation.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <strong>Type I vs. Type II Errors (Path End Detection):</strong>
+                <ul>
+                  <li>
+                    <strong>Tradeoff:</strong> Detecting path end involves
+                    uncertainty. Sensitive threshold = more false positives
+                    (Type I). Less sensitive threshold = risk of overshoot (Type
+                    II).
+                  </li>
+                  <li>
+                    <strong>Balance:</strong> Tuned detection logic (based on
+                    pose estimates) to ensure stopping within a safe zone for
+                    UR5 pickup, prioritizing avoiding collisions/failed pickups
+                    over millimeter precision, accepting a small error margin.
+                  </li>
+                </ul>
+              </li>
+            </ol>
+          </section>
+        </div>
+        <!-- /container -->
+      </section>
+      <!-- /main -->
+
+      <!-- Footer -->
+      <footer id="footer">
+        <ul class="icons">
+          <li>
+            <a href="#" class="icon brands alt fa-twitter"
+              ><span class="label">Twitter</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon brands alt fa-facebook-f"
+              ><span class="label">Facebook</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon brands alt fa-linkedin-in"
+              ><span class="label">LinkedIn</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon brands alt fa-instagram"
+              ><span class="label">Instagram</span></a
+            >
+          </li>
+          <li>
+            <a
+              href="https://github.com/RAS598-2025-S-Team01"
+              class="icon brands alt fa-github"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><span class="label">GitHub</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon solid alt fa-envelope"
+              ><span class="label">Email</span></a
+            >
+          </li>
+        </ul>
+        <ul class="copyright">
+          <li>&copy; Team 01. All rights reserved.</li>
+          <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+          <li>Course: RAS598 S2025, ASU</li>
+        </ul>
+      </footer>
+    </div>
+    <!-- /page-wrapper -->
+
+    <!-- Scripts -->
+    <!-- Theme Scripts FIRST -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery.scrolly.min.js"></script>
+    <script src="../assets/js/jquery.dropotron.min.js"></script>
+    <script src="../assets/js/jquery.scrollex.min.js"></script>
+    <script src="../assets/js/browser.min.js"></script>
+    <script src="../assets/js/breakpoints.min.js"></script>
+    <script src="../assets/js/util.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <!-- Your Custom Script LAST -->
+    <script src="../assets/js/custom.js"></script>
+  </body>
+</html>

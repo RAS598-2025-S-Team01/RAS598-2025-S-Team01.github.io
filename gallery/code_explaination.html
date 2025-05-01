@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team 01 - Code Walkthrough</title>
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/custom.css" />
+    <!-- Your custom styles if any -->
+    <noscript
+      ><link rel="stylesheet" href="../assets/css/noscript.css"
+    /></noscript>
+  </head>
+  <body class="is-preload landing">
+    <div id="page-wrapper">
+      <!-- Header -->
+      <header id="header">
+        <h1 id="logo"><a href="index.html">Team 01</a></h1>
+        <nav id="nav">
+          <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../about/about.html">About</a></li>
+            <li><a href="../gallery/code_explaination.html">Code</a></li>
+            <li><a href="../gallery/data.html">Data</a></li>
+            <li><a href="../gallery/gallery_images.html">Gallery</a></li>
+
+            <!-- Keep other nav items if desired -->
+            <li>
+              <a
+                href="https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01.github.io"
+                class="button primary"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Github</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <!-- Main Content -->
+      <section id="main" class="wrapper style1">
+        <div class="container">
+          <header class="major">
+            <h2>Code Walkthrough & Resources</h2>
+            <p>
+              Access our project code, setup instructions, and dependency
+              information.
+            </p>
+          </header>
+
+          <!-- Code Repository Link -->
+          <section>
+            <h3>Code Repository</h3>
+            <p>
+              All the ROS 2 packages and scripts developed for this project are
+              available in our public GitHub repository:
+            </p>
+            <p>
+              <a
+                href="https://github.com/RAS598-2025-S-Team01/project_code"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="button primary icon solid fa-code code-link"
+              >
+                View Code on GitHub: RAS598-2025-S-Team01/project_code
+              </a>
+            </p>
+            <!-- Optional: Link to zip file -->
+            <!--
+                    <p>
+                        Alternatively, you can download a snapshot of the code base:
+                    </p>
+                    <p>
+                        <a href="[PLACEHOLDER: link/to/project_code.zip]" class="button icon solid fa-download code-link">
+                            Download Code (.zip)
+                        </a>
+                    </p>
+                    -->
+          </section>
+
+          <hr />
+
+          <!-- README Content -->
+          <section>
+            <h3>README / Setup Guide</h3>
+            <p>
+              The following provides a summary of the repository contents and
+              instructions for setup and usage. Please refer to the full
+              <a
+                href="https://github.com/RAS598-2025-S-Team01/project_code/blob/main/README.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                >README.md on GitHub</a
+              >
+              for the most up-to-date details.
+            </p>
+
+            <h4>1. Package Descriptions</h4>
+            <p>
+              Our ROS 2 workspace (`src` directory in the repository) contains
+              the following custom packages:
+            </p>
+            <ul>
+              <li>
+                <strong><code>[PLACEHOLDER: package_name_1]</code>:</strong>
+                Description: Contains the core control logic for the quadruped,
+                including the <code>/bridge_node</code> which handles gait
+                generation, parameter updates, and servo communication. Key
+                Nodes: <code>bridge_node</code>.
+              </li>
+              <li>
+                <strong><code>[PLACEHOLDER: package_name_2]</code>:</strong>
+                Description: Implements sensor processing and pose estimation.
+                Includes the <code>/pose_estimator_node</code> for IMU-based
+                estimation and potentially the
+                <code>/optical_flow_pose_publisher</code> if it's custom. Key
+                Nodes: <code>pose_estimator_node</code>,
+                <code>optical_flow_pose_publisher</code> (if applicable).
+              </li>
+              <li>
+                <strong><code>[PLACEHOLDER: package_name_3]</code>:</strong>
+                Description: Provides the web-based user interface using Flask.
+                Contains the <code>/ros2_flask_plotter</code> node responsible
+                for subscribing to ROS topics and serving the web UI. Key Nodes:
+                <code>ros2_flask_plotter</code>.
+              </li>
+              <li>
+                <strong
+                  ><code>[PLACEHOLDER: ur5_control_package (if custom)]</code
+                  >:</strong
+                >
+                Description: (If applicable) Contains scripts or nodes for
+                controlling the UR5 arm and coordinating its actions with the
+                quadruped state. Key Nodes: (e.g.,
+                <code>ur5_coordinator_node</code>).
+              </li>
+              <!-- Add more packages as needed -->
+            </ul>
+
+            <h4>2. External Dependencies</h4>
+            <p>
+              Our project relies on several external libraries and ROS 2
+              packages. Ensure these are installed in your ROS 2 Humble
+              environment:
+            </p>
+            <ul>
+              <li>ROS 2 Humble Hawksbill (Desktop Install recommended)</li>
+              <li>
+                <code>python3-flask</code>: For the web UI backend. (Install via
+                apt:
+                <code>sudo apt update && sudo apt install python3-flask</code>)
+              </li>
+              <li>
+                <code>ros-humble-sensor-msgs</code>: Standard ROS messages for
+                sensor data.
+              </li>
+              <li>
+                <code>ros-humble-geometry-msgs</code>: Standard ROS messages for
+                poses, transforms.
+              </li>
+              <li>
+                <code>ros-humble-tf2-ros</code>: For coordinate transformations.
+              </li>
+              <li>
+                <code
+                  >[PLACEHOLDER: Specific camera driver package, e.g.,
+                  ros-humble-camera-driver]</code
+                >: Driver for the camera used.
+              </li>
+              <li>
+                <code
+                  >[PLACEHOLDER: Specific IMU driver package, e.g.,
+                  ros-humble-imu-driver]</code
+                >: Driver for the IMU used.
+              </li>
+              <li>
+                <code
+                  >[PLACEHOLDER: UR5 ROS 2 Driver package, e.g.,
+                  ros-humble-ur-robot-driver]</code
+                >: Official or community driver for UR5 control.
+              </li>
+              <li>
+                <code
+                  >[PLACEHOLDER: Any specific Python libraries used, e.g.,
+                  numpy, scipy, opencv-python]</code
+                >: List other key libraries. (Install via pip:
+                <code>pip install numpy scipy opencv-python</code>)
+              </li>
+              <!-- List specific versions/commits if critical -->
+              <li>
+                Example Versioning: OpenCV-Python (Version 4.x.x), UR Robot
+                Driver (Commit ID: [commit_hash] from [URL])
+              </li>
+            </ul>
+
+            <h4>3. Installation</h4>
+            <p>Follow these steps to set up the workspace:</p>
+            <pre><code># 1. Create a new ROS 2 workspace (if you don't have one)
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws/
+
+# 2. Clone the repository into your workspace's src directory
+git clone https://github.com/RAS598-2025-S-Team01/project_code.git src/project_code
+
+# 3. Install dependencies (ensure ROS 2 Humble and other prerequisites are installed)
+sudo apt update
+rosdep update
+rosdep install --from-paths src --ignore-src -r -y
+# Install any pip dependencies if needed
+# pip install -r src/project_code/[path_to_requirements.txt]
+
+# 4. Build the workspace
+colcon build --symlink-install
+
+# 5. Source the workspace
+source install/setup.bash
+# (Optional: Add this line to your ~/.bashrc for persistence)</code></pre>
+
+            <h4>4. Usage</h4>
+            <p>To launch the system:</p>
+            <pre><code># Source your workspace if you haven't already
+source ~/ros2_ws/install/setup.bash
+
+# Launch the main system components using the provided launch file
+# (Assuming you have a launch file named main_launch.py in one of your packages)
+ros2 launch [PLACEHOLDER: package_name] [PLACEHOLDER: main_launch.py]</code></pre>
+            <p>After launching, you should be able to:</p>
+            <ul>
+              <li>
+                Access the web UI by navigating to
+                <code>http://[IP_ADDRESS_OF_HOST]:[PORT]</code> in your browser
+                (e.g., <code>http://localhost:5000</code> if running locally).
+              </li>
+              <li>
+                View ROS 2 topics, nodes, and services using standard ROS 2
+                command-line tools (<code>ros2 topic list</code>,
+                <code>ros2 node list</code>, etc.).
+              </li>
+              <li>
+                Control the quadruped and observe sensor data via the web
+                interface.
+              </li>
+              <li>
+                Trigger the autonomous workflow (details depend on your specific
+                implementation - may involve UI buttons or specific ROS 2
+                service calls).
+              </li>
+            </ul>
+            <p>
+              Refer to the specific package READMEs within the repository for
+              more detailed usage instructions for individual nodes or features.
+            </p>
+          </section>
+        </div>
+        <!-- /container -->
+      </section>
+      <!-- /main -->
+
+      <!-- Footer -->
+      <footer id="footer">
+        <ul class="icons">
+          <li>
+            <a href="#" class="icon brands alt fa-twitter"
+              ><span class="label">Twitter</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon brands alt fa-facebook-f"
+              ><span class="label">Facebook</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon brands alt fa-linkedin-in"
+              ><span class="label">LinkedIn</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon brands alt fa-instagram"
+              ><span class="label">Instagram</span></a
+            >
+          </li>
+          <li>
+            <a
+              href="https://github.com/RAS598-2025-S-Team01"
+              class="icon brands alt fa-github"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><span class="label">GitHub</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon solid alt fa-envelope"
+              ><span class="label">Email</span></a
+            >
+          </li>
+        </ul>
+        <ul class="copyright">
+          <li>&copy; Team 01. All rights reserved.</li>
+          <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+          <li>Course: RAS598 S2025, ASU</li>
+        </ul>
+      </footer>
+    </div>
+    <!-- /page-wrapper -->
+
+    <!-- Scripts -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery.scrolly.min.js"></script>
+    <script src="../assets/js/jquery.dropotron.min.js"></script>
+    <script src="../assets/js/jquery.scrollex.min.js"></script>
+    <script src="../assets/js/browser.min.js"></script>
+    <script src="../assets/js/breakpoints.min.js"></script>
+    <script src="../assets/js/util.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <!-- <script src="assets/js/custom.js"></script> -->
+    <!-- Include if you have custom JS for this page -->
+  </body>
+</html>

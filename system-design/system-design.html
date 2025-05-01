@@ -1,0 +1,173 @@
+<!-- system-architecture.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>System Architecture - Team 01</title>
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/custom.css" />
+  </head>
+  <body class="is-preload">
+    <div id="page-wrapper">
+      <!-- Header -->
+      <header id="header">
+        <h1 id="logo"><a href="../index.html">Team 01</a></h1>
+        <nav id="nav">
+          <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li>
+              <a href="#">Components</a>
+              <ul>
+                <li><a href="left-sidebar.html">Left Sidebar</a></li>
+                <li><a href="right-sidebar.html">Right Sidebar</a></li>
+                <li><a href="no-sidebar.html">No Sidebar</a></li>
+                <li>
+                  <a href="#">Submenu</a>
+                  <ul>
+                    <li><a href="#">Option 1</a></li>
+                    <li><a href="#">Option 2</a></li>
+                    <li><a href="#">Option 3</a></li>
+                    <li><a href="#">Option 4</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><a href="elements.html">Chart</a></li>
+            <li>
+              <a
+                href="https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01.github.io"
+                class="button primary"
+                >Github</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <!-- System Architecture -->
+      <section id="system-architecture" class="wrapper style1 special">
+        <div class="container">
+          <header class="major">
+            <h2>System Architecture</h2>
+            <p>
+              The system architecture includes a quadruped robot and a UR5e arm
+              working in coordination using sensor fusion and reactive
+              positioning.
+            </p>
+          </header>
+
+          <div class="carousel-container">
+            <!-- Slide 1: Full animated diagram -->
+            <div class="carousel-slide active">
+              <div class="carousel-content">
+                <div class="diagram-wrapper">
+                  <div class="quad-cluster">
+                    <img
+                      id="quadrupedImg"
+                      src="../images/quadruped.png"
+                      alt="Quadruped"
+                    />
+                    <div id="quadStatus">Moving →</div>
+                    <div class="quad-subnodes">
+                      <div class="block animated-plot" id="imu-plot">
+                        <canvas id="imuCanvas" width="180" height="80"></canvas>
+                        <div class="label">IMU Pose</div>
+                      </div>
+                      <div class="block animated-camera-plot" id="camera-pose">
+                        <canvas
+                          id="cameraCanvas"
+                          width="180"
+                          height="80"
+                        ></canvas>
+                        <div class="label">Camera Pose Estimation</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="block" id="ur5">
+                    <img src="../images/ur5e.png" alt="UR5e" />
+                    <div class="label">UR5e</div>
+                  </div>
+
+                  <svg id="arrow-canvas"></svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2: Explanation image -->
+            <div class="carousel-slide">
+              <div class="carousel-content">
+                <div class="diagram-wrapper">
+                  <img
+                    src="../images/working.png"
+                    alt="System Architecture"
+                    class="carousel-full-image"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <button class="carousel-btn prev" onclick="changeSlide(-1)">
+              ❮
+            </button>
+            <button class="carousel-btn next" onclick="changeSlide(1)">
+              ❯
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer id="footer">
+        <ul class="icons">
+          <li>
+            <a href="#" class="icon brands alt fa-twitter"
+              ><span class="label">Twitter</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon brands alt fa-facebook-f"
+              ><span class="label">Facebook</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon brands alt fa-linkedin-in"
+              ><span class="label">LinkedIn</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon brands alt fa-instagram"
+              ><span class="label">Instagram</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon brands alt fa-github"
+              ><span class="label">GitHub</span></a
+            >
+          </li>
+          <li>
+            <a href="#" class="icon solid alt fa-envelope"
+              ><span class="label">Email</span></a
+            >
+          </li>
+        </ul>
+        <ul class="copyright">
+          <li>&copy; Team 01. All rights reserved.</li>
+          <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+        </ul>
+      </footer>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Scripts -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery.scrolly.min.js"></script>
+    <script src="../assets/js/jquery.dropotron.min.js"></script>
+    <script src="../assets/js/jquery.scrollex.min.js"></script>
+    <script src="../assets/js/browser.min.js"></script>
+    <script src="../assets/js/breakpoints.min.js"></script>
+    <script src="../assets/js/util.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/custom.js"></script>
+  </body>
+</html>
