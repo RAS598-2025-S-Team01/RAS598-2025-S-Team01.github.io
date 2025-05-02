@@ -3558,10 +3558,11 @@ body.landing #page-wrapper {
   padding-top: 0;
 }
 
-body.landing #header {
+#header {
   background: transparent;
   box-shadow: none;
   position: absolute;
+  
 }
 
 /* Banner */

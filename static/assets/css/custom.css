@@ -418,13 +418,56 @@ ul.actions li a.button > i /* Target direct child <i> tags */ {
 /* --- Prevent Body Scroll --- */
 body.no-scroll { overflow: hidden; }
 
-/* --- Responsive Adjustments --- */
+/* ================================================== */
+/* === Sticky Header Styles === */
+/* ================================================== */
+#header {
+  position: fixed; /* Stick to the viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10000; /* Ensure it's above everything */
+  transition: background-color 0.3s ease-in-out;
+  /* background-color: transparent; */ /* Start transparent */
+}
+
+#header.scrolled {
+  background: rgba(30, 32, 40, 0.95); /* Dark semi-transparent background */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  position: fixed !important;
+}
+#page-wrapper {
+  padding-top: 4.5em; /* Default fallback - JS should override */
+}
+#header.scrolled nav > ul > li > a {
+    color: rgba(255, 255, 255, 0.8);
+}
+#header.scrolled nav > ul > li > a:hover {
+    color: #ffffff;
+}
+#header.scrolled #logo a {
+     color: #ffffff;
+}
+#header.scrolled .button.primary {
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+}
+#header.scrolled .button.primary:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: #ffffff !important;
+}
+
+
+/* ================================================== */
+/* === Responsive Adjustments (Combined) === */
+/* ================================================== */
 @media screen and (max-width: 768px) {
+  /* Gallery */
   .gallery-card { flex: 0 1 95%; max-width: 95%; }
   .card-media-container { padding-bottom: 56.25%; }
   .gallery-card.card-expanded { width: 95vw; height: 90vh; }
 
-  /* Diagram Mobile Adjustments */
+  /* Diagram */
   .carousel-container { padding: 1.5rem 0; min-height: auto; height: auto; }
   .carousel-content { padding: 1rem; max-width: 100%; height: auto; }
   .carousel-slide { padding: 1rem; }

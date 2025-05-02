@@ -204,6 +204,75 @@ window.openTab = function(evt, tabName) {
   if (evt && evt.currentTarget) { evt.currentTarget.className += " active"; } else { const buttons = document.getElementsByClassName("tablinks"); for (let btn of buttons) { const onclickAttr = btn.getAttribute("onclick"); if (onclickAttr && onclickAttr.includes(`'${tabName}'`)) { btn.className += " active"; break; } } }
 }
 
+// --- Gallery Expansion ---
+function initializeGalleryExpansion() {
+    const galleryContainer = document.querySelector(".gallery-container");
+    const overlay = document.querySelector(".card-overlay");
+    if (!galleryContainer || !overlay) {
+        console.warn("Gallery container or overlay not found. Expansion disabled.");
+        return;
+    }
+    console.log("DEBUG: Initializing Gallery Expansion Features...");
+    let currentlyExpandedCard = null;
+    function closeExpandedCard() {
+        if (currentlyExpandedCard) {
+            currentlyExpandedCard.classList.remove("card-expanded");
+            overlay.classList.remove("active");
+            document.body.classList.remove("no-scroll");
+            currentlyExpandedCard = null;
+        }
+    }
+    galleryContainer.addEventListener("click", (event) => {
+        const card = event.target.closest(".gallery-card");
+        if (!card) return;
+        const isButtonOrLinkClick = event.target.closest(".card-content .button, .card-content a:not(.card-drive-link-placeholder)");
+        const isCloseButtonClick = event.target.classList.contains("card-close-btn");
+        if (!isButtonOrLinkClick && !isCloseButtonClick && !card.classList.contains("card-expanded")) {
+            closeExpandedCard();
+            card.classList.add("card-expanded");
+            overlay.classList.add("active");
+            document.body.classList.add("no-scroll");
+            currentlyExpandedCard = card;
+        }
+        if (isCloseButtonClick) {
+            closeExpandedCard();
+        }
+    });
+    overlay.addEventListener("click", closeExpandedCard);
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeExpandedCard();
+        }
+    });
+}
+
+// --- Sticky Header ---
+function initializeStickyHeader() {
+    const header = document.getElementById('header');
+    const pageWrapper = document.getElementById('page-wrapper');
+    if (!header || !pageWrapper) {
+        console.warn("DEBUG: Header or Page Wrapper element not found for sticky header.");
+        return;
+    }
+    console.log("DEBUG: Initializing Sticky Header...");
+    const headerHeight = header.offsetHeight;
+    pageWrapper.style.paddingTop = `${headerHeight}px`;
+    console.log(`DEBUG: Set page-wrapper padding-top to ${headerHeight}px`);
+    const scrollThreshold = 10;
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            if (window.scrollY > scrollThreshold) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }, 50);
+    }, { passive: true });
+}
+
+
 // --- Initialization --- //
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM Content Loaded - Initializing Custom JS Features...");
@@ -217,13 +286,16 @@ document.addEventListener("DOMContentLoaded", () => {
   } else { console.log("DEBUG: Carousel container not found on this page."); }
 
   // --- Initialize Gallery Expansion IF PRESENT ---
-  const galleryContainer = document.querySelector(".gallery-container"); const overlay = document.querySelector(".card-overlay"); if (galleryContainer && overlay) { console.log("DEBUG: Initializing Gallery Expansion Features..."); let currentlyExpandedCard = null; function closeExpandedCard() { if (currentlyExpandedCard) { currentlyExpandedCard.classList.remove("card-expanded"); overlay.classList.remove("active"); document.body.classList.remove("no-scroll"); currentlyExpandedCard = null; } } galleryContainer.addEventListener("click", (event) => { const card = event.target.closest(".gallery-card"); if (!card) return; const isButtonOrLinkClick = event.target.closest(".card-content .button, .card-content a:not(.card-drive-link-placeholder)"); const isCloseButtonClick = event.target.classList.contains("card-close-btn"); if (!isButtonOrLinkClick && !isCloseButtonClick && !card.classList.contains("card-expanded")) { closeExpandedCard(); card.classList.add("card-expanded"); overlay.classList.add("active"); document.body.classList.add("no-scroll"); currentlyExpandedCard = card; } if (isCloseButtonClick) { closeExpandedCard(); } }); overlay.addEventListener("click", closeExpandedCard); document.addEventListener("keydown", (event) => { if (event.key === "Escape") { closeExpandedCard(); } }); } else { console.log("DEBUG: Gallery container or overlay not found on this page."); }
+  initializeGalleryExpansion(); // Call the function
 
   // --- Initialize Scroll Animations IF PRESENT ---
   if (document.querySelector('#main.wrapper[class*="style"] .container > section')) { console.log("DEBUG: Initializing Scroll Animations..."); if (typeof initializeScrollAnimations === 'function') { initializeScrollAnimations(); } } else { console.log("DEBUG: Scroll animation target structure not found on this page."); }
 
   // --- Initialize Tabs IF PRESENT ---
   const defaultTabButton = document.getElementById("defaultOpen"); if (defaultTabButton || document.querySelector(".tablinks")) { console.log("DEBUG: Initializing Tab Features..."); let initialTabName = "Overview"; if (defaultTabButton) { const onclickAttr = defaultTabButton.getAttribute("onclick"); const tabNameMatch = onclickAttr ? onclickAttr.match(/openTab\(event, '(.*?)'\)/) : null; if (tabNameMatch && tabNameMatch[1]) { initialTabName = tabNameMatch[1]; } } else { const firstTabButton = document.querySelector(".tablinks"); if (firstTabButton) { const onclickAttr = firstTabButton.getAttribute("onclick"); const tabNameMatch = onclickAttr ? onclickAttr.match(/openTab\(event, '(.*?)'\)/) : null; if (tabNameMatch && tabNameMatch[1]) { initialTabName = tabNameMatch[1]; } } } if (typeof window.openTab === 'function') { window.openTab(null, initialTabName); console.log(`DEBUG: Attempted to open initial tab '${initialTabName}'.`); } else { console.error("DEBUG: openTab function not found for tab initialization."); } const MAX_PRISM_CHECKS = 20; let prismCheckCount = 0; const prismCheckInterval = setInterval(() => { prismCheckCount++; if (typeof Prism !== 'undefined') { clearInterval(prismCheckInterval); Prism.highlightAll(); console.log("DEBUG: Prism loaded and initial highlighting done."); } else if (prismCheckCount >= MAX_PRISM_CHECKS) { clearInterval(prismCheckInterval); console.error("Prism failed to load after multiple checks."); } }, 100); } else { console.log("DEBUG: Tab elements not found on this page."); }
+
+  // --- Initialize Sticky Header ---
+  initializeStickyHeader(); // Call the function
 
   // --- Resize Listener for Animation Handling ---
   let resizeTimeout;
@@ -253,6 +325,16 @@ document.addEventListener("DOMContentLoaded", () => {
               }
               // No action needed if still desktop and animations were running
           }
+
+          // Recalculate header padding on resize if using dynamic method
+          const header = document.getElementById('header');
+          const pageWrapper = document.getElementById('page-wrapper');
+          if(header && pageWrapper) {
+              const headerHeight = header.offsetHeight;
+              pageWrapper.style.paddingTop = `${headerHeight}px`;
+              // console.log(`DEBUG: Recalculated page-wrapper padding-top to ${headerHeight}px`);
+          }
+
       }, 250); // Debounce resize events
   });
 
