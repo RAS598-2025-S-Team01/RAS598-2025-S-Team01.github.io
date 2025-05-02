@@ -6,16 +6,92 @@
     <title>Team 01 - Code Walkthrough</title>
     <link rel="stylesheet" href="../assets/css/main.css" />
     <link rel="stylesheet" href="../assets/css/custom.css" />
-    <!-- Your custom styles if any -->
     <noscript
       ><link rel="stylesheet" href="../assets/css/noscript.css"
     /></noscript>
+
+    <!-- Prism.js CSS (Okaidia theme) - Integrity removed -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css"
+    />
+
+    <!-- Basic Tab Styles -->
+    <style>
+      /* Style the tab buttons */
+      .tab {
+        overflow: hidden;
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 20px;
+      }
+
+      .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 1em; /* Adjust as needed */
+        color: inherit; /* Inherit text color */
+        border-bottom: 3px solid transparent; /* For active indicator */
+      }
+
+      /* Change background color of buttons on hover */
+      .tab button:hover {
+        background-color: #ddd; /* Or use template's hover color */
+        color: #333; /* Adjust hover text color */
+      }
+
+      /* Create an active/current tablink class */
+      .tab button.active {
+        /* background-color: #eee; */ /* Optional: subtle background */
+        color: #e85a4f; /* Match primary button color */
+        border-bottom: 3px solid #e85a4f; /* Active indicator */
+      }
+
+      /* Style the tab content */
+      .tabcontent {
+        display: none; /* Hide tabs by default */
+        padding: 20px 12px; /* Added more padding */
+        border-top: none;
+        animation: fadeEffect 0.6s; /* Fading effect */
+      }
+      /* Make the initially active tab visible */
+      .tabcontent.active-content {
+        display: block;
+      }
+
+      /* Simple fade effect */
+      @keyframes fadeEffect {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      /* Style for pseudo-code blocks (Prism overrides some of this) */
+      pre[class*="language-"] {
+        background-color: #282c34; /* Ensure background for Prism */
+        padding: 1em;
+        margin: 0.5em 0;
+        overflow: auto;
+        border-radius: 0.3em;
+      }
+      code[class*="language-"] {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.9em;
+        line-height: 1.4;
+      }
+    </style>
   </head>
   <body class="is-preload landing">
     <div id="page-wrapper">
       <!-- Header -->
       <header id="header">
-        <h1 id="logo"><a href="index.html">Team 01</a></h1>
+        <h1 id="logo"><a href="../index.html">Team 01</a></h1>
         <nav id="nav">
           <ul>
             <li><a href="../index.html">Home</a></li>
@@ -23,11 +99,9 @@
             <li><a href="../gallery/code_explaination.html">Code</a></li>
             <li><a href="../gallery/data.html">Data</a></li>
             <li><a href="../gallery/gallery_images.html">Gallery</a></li>
-
-            <!-- Keep other nav items if desired -->
             <li>
               <a
-                href="https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01.github.io"
+                href="https://github.com/RAS598-2025-S-Team01/project_code"
                 class="button primary"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -43,215 +117,605 @@
         <div class="container">
           <header class="major">
             <h2>Code Walkthrough & Resources</h2>
-            <p>
-              Access our project code, setup instructions, and dependency
-              information.
-            </p>
           </header>
 
-          <!-- Code Repository Link -->
-          <section>
-            <h3>Code Repository</h3>
-            <p>
-              All the ROS 2 packages and scripts developed for this project are
-              available in our public GitHub repository:
-            </p>
-            <p>
-              <a
-                href="https://github.com/RAS598-2025-S-Team01/project_code"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="button primary icon solid fa-code code-link"
-              >
-                View Code on GitHub: RAS598-2025-S-Team01/project_code
-              </a>
-            </p>
-            <!-- Optional: Link to zip file -->
-            <!--
-                    <p>
-                        Alternatively, you can download a snapshot of the code base:
-                    </p>
-                    <p>
-                        <a href="[PLACEHOLDER: link/to/project_code.zip]" class="button icon solid fa-download code-link">
-                            Download Code (.zip)
-                        </a>
-                    </p>
-                    -->
-          </section>
+          <!-- Tab Navigation -->
+          <div class="tab">
+            <button
+              class="tablinks"
+              onclick="openTab(event, 'Overview')"
+              id="defaultOpen"
+            >
+              Code Overview
+            </button>
+            <button class="tablinks" onclick="openTab(event, 'Explanation')">
+              Code Explanation
+            </button>
+          </div>
 
-          <hr />
-
-          <!-- README Content -->
-          <section>
-            <h3>README / Setup Guide</h3>
-            <p>
-              The following provides a summary of the repository contents and
-              instructions for setup and usage. Please refer to the full
-              <a
-                href="https://github.com/RAS598-2025-S-Team01/project_code/blob/main/README.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                >README.md on GitHub</a
-              >
-              for the most up-to-date details.
-            </p>
-
-            <h4>1. Package Descriptions</h4>
-            <p>
-              Our ROS 2 workspace (`src` directory in the repository) contains
-              the following custom packages:
-            </p>
-            <ul>
-              <li>
-                <strong><code>[PLACEHOLDER: package_name_1]</code>:</strong>
-                Description: Contains the core control logic for the quadruped,
-                including the <code>/bridge_node</code> which handles gait
-                generation, parameter updates, and servo communication. Key
-                Nodes: <code>bridge_node</code>.
-              </li>
-              <li>
-                <strong><code>[PLACEHOLDER: package_name_2]</code>:</strong>
-                Description: Implements sensor processing and pose estimation.
-                Includes the <code>/pose_estimator_node</code> for IMU-based
-                estimation and potentially the
-                <code>/optical_flow_pose_publisher</code> if it's custom. Key
-                Nodes: <code>pose_estimator_node</code>,
-                <code>optical_flow_pose_publisher</code> (if applicable).
-              </li>
-              <li>
-                <strong><code>[PLACEHOLDER: package_name_3]</code>:</strong>
-                Description: Provides the web-based user interface using Flask.
-                Contains the <code>/ros2_flask_plotter</code> node responsible
-                for subscribing to ROS topics and serving the web UI. Key Nodes:
-                <code>ros2_flask_plotter</code>.
-              </li>
-              <li>
-                <strong
-                  ><code>[PLACEHOLDER: ur5_control_package (if custom)]</code
-                  >:</strong
+          <!-- Tab Content: Code Overview -->
+          <div id="Overview" class="tabcontent">
+            <!-- Content for Overview Tab remains here -->
+            <section>
+              <h3>Code Repository</h3>
+              <p>
+                Our ROS 2 code, including the <code>quad</code> package, is
+                available on GitHub:
+              </p>
+              <p>
+                <a
+                  href="https://github.com/RAS598-2025-S-Team01/project_code"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="button primary icon solid fa-code code-link"
                 >
-                Description: (If applicable) Contains scripts or nodes for
-                controlling the UR5 arm and coordinating its actions with the
-                quadruped state. Key Nodes: (e.g.,
-                <code>ur5_coordinator_node</code>).
-              </li>
-              <!-- Add more packages as needed -->
-            </ul>
+                  View Code on GitHub
+                </a>
+              </p>
+              <p>
+                For detailed explanations of the code structure, nodes, topics,
+                and dependencies, please refer to the comprehensive
+                <a
+                  href="https://github.com/RAS598-2025-S-Team01/project_code/blob/main/README.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >README.md</a
+                >
+                file within the repository.
+              </p>
+            </section>
 
-            <h4>2. External Dependencies</h4>
-            <p>
-              Our project relies on several external libraries and ROS 2
-              packages. Ensure these are installed in your ROS 2 Humble
-              environment:
-            </p>
-            <ul>
-              <li>ROS 2 Humble Hawksbill (Desktop Install recommended)</li>
-              <li>
-                <code>python3-flask</code>: For the web UI backend. (Install via
-                apt:
-                <code>sudo apt update && sudo apt install python3-flask</code>)
-              </li>
-              <li>
-                <code>ros-humble-sensor-msgs</code>: Standard ROS messages for
-                sensor data.
-              </li>
-              <li>
-                <code>ros-humble-geometry-msgs</code>: Standard ROS messages for
-                poses, transforms.
-              </li>
-              <li>
-                <code>ros-humble-tf2-ros</code>: For coordinate transformations.
-              </li>
-              <li>
-                <code
-                  >[PLACEHOLDER: Specific camera driver package, e.g.,
-                  ros-humble-camera-driver]</code
-                >: Driver for the camera used.
-              </li>
-              <li>
-                <code
-                  >[PLACEHOLDER: Specific IMU driver package, e.g.,
-                  ros-humble-imu-driver]</code
-                >: Driver for the IMU used.
-              </li>
-              <li>
-                <code
-                  >[PLACEHOLDER: UR5 ROS 2 Driver package, e.g.,
-                  ros-humble-ur-robot-driver]</code
-                >: Official or community driver for UR5 control.
-              </li>
-              <li>
-                <code
-                  >[PLACEHOLDER: Any specific Python libraries used, e.g.,
-                  numpy, scipy, opencv-python]</code
-                >: List other key libraries. (Install via pip:
-                <code>pip install numpy scipy opencv-python</code>)
-              </li>
-              <!-- List specific versions/commits if critical -->
-              <li>
-                Example Versioning: OpenCV-Python (Version 4.x.x), UR Robot
-                Driver (Commit ID: [commit_hash] from [URL])
-              </li>
-            </ul>
+            <hr />
 
-            <h4>3. Installation</h4>
-            <p>Follow these steps to set up the workspace:</p>
-            <pre><code># 1. Create a new ROS 2 workspace (if you don't have one)
-mkdir -p ~/ros2_ws/src
-cd ~/ros2_ws/
+            <section>
+              <h3>Quick Setup Guide</h3>
 
-# 2. Clone the repository into your workspace's src directory
+              <h4>1. Prerequisites</h4>
+              <ul>
+                <li>ROS 2 Humble Hawksbill</li>
+                <li>Python 3, Pip, Git, Colcon</li>
+                <li>
+                  Key Python Libraries: <code>Flask</code>,
+                  <code>websockets</code>, <code>requests</code>,
+                  <code>numpy</code>, <code>opencv-python</code> (Install via
+                  <code>pip</code>)
+                </li>
+                <li>UR5 Network Connectivity</li>
+              </ul>
+
+              <h4>2. Installation</h4>
+              <p>Clone the repository and build the workspace:</p>
+              <pre><code class="language-bash"># Create workspace
+mkdir -p ~/ros2_ws/src && cd ~/ros2_ws/
+
+# Clone repository
 git clone https://github.com/RAS598-2025-S-Team01/project_code.git src/project_code
 
-# 3. Install dependencies (ensure ROS 2 Humble and other prerequisites are installed)
-sudo apt update
-rosdep update
+# Install ROS dependencies (Sources ROS if needed)
+sudo apt update && rosdep update
 rosdep install --from-paths src --ignore-src -r -y
-# Install any pip dependencies if needed
-# pip install -r src/project_code/[path_to_requirements.txt]
 
-# 4. Build the workspace
-colcon build --symlink-install
+# Install Python dependencies (Activate virtual env if used)
+# Ensure you have a requirements.txt or install manually:
+# pip install Flask websockets requests numpy opencv-python # Add others if needed
+pip install -r src/project_code/requirements.txt # Assuming requirements.txt exists
 
-# 5. Source the workspace
-source install/setup.bash
-# (Optional: Add this line to your ~/.bashrc for persistence)</code></pre>
+# Build workspace (Sources ROS if needed)
+cd ~/ros2_ws/
+colcon build --symlink-install</code></pre>
 
-            <h4>4. Usage</h4>
-            <p>To launch the system:</p>
-            <pre><code># Source your workspace if you haven't already
-source ~/ros2_ws/install/setup.bash
+              <h4>3. Running the System</h4>
+              <p>
+                Open three separate terminals. In each terminal, first source
+                the workspace:
+              </p>
+              <pre><code class="language-bash">cd ~/ros2_ws/
+source install/setup.bash</code></pre>
+              <p>Then, run one command per terminal:</p>
+              <pre><code class="language-bash"># Terminal 1: Quadruped Interface
+ros2 run quad connect
 
-# Launch the main system components using the provided launch file
-# (Assuming you have a launch file named main_launch.py in one of your packages)
-ros2 launch [PLACEHOLDER: package_name] [PLACEHOLDER: main_launch.py]</code></pre>
-            <p>After launching, you should be able to:</p>
-            <ul>
-              <li>
-                Access the web UI by navigating to
-                <code>http://[IP_ADDRESS_OF_HOST]:[PORT]</code> in your browser
-                (e.g., <code>http://localhost:5000</code> if running locally).
-              </li>
-              <li>
-                View ROS 2 topics, nodes, and services using standard ROS 2
-                command-line tools (<code>ros2 topic list</code>,
-                <code>ros2 node list</code>, etc.).
-              </li>
-              <li>
-                Control the quadruped and observe sensor data via the web
-                interface.
-              </li>
-              <li>
-                Trigger the autonomous workflow (details depend on your specific
-                implementation - may involve UI buttons or specific ROS 2
-                service calls).
-              </li>
-            </ul>
+# Terminal 2: UR5 Interface
+ros2 run quad ur5
+
+# Terminal 3: Web UI & ROS Bridge
+ros2 run quad app</code></pre>
+              <p>
+                Access the web UI via the URL provided by the `app` node
+                (usually
+                <a href="http://127.0.0.1:5000" target="_blank"
+                  >http://127.0.0.1:5000</a
+                >). Use <code>ros2 topic list</code> in a sourced terminal to
+                verify communication.
+              </p>
+            </section>
+          </div>
+
+          <!-- Tab Content: Code Explanation -->
+          <div id="Explanation" class="tabcontent">
+            <!-- Content for Explanation Tab remains here -->
+            <h3>Code Explanation</h3>
             <p>
-              Refer to the specific package READMEs within the repository for
-              more detailed usage instructions for individual nodes or features.
+              This section provides a high-level overview of the logic within
+              the key Python scripts of the <code>quad</code> package.
             </p>
-          </section>
+
+            <hr />
+
+            <h4><code>quad/nodes/controller_node.py</code></h4>
+            <p>
+              This script defines the <code>CPGControllerNode</code> class,
+              responsible for generating rhythmic motion commands for the
+              quadruped using a Central Pattern Generator (CPG). It runs in a
+              separate thread to continuously calculate and publish servo
+              commands without blocking the main ROS execution.
+            </p>
+            <pre><code class="language-python">CLASS CPGControllerNode:
+    INITIALIZE(servo_publisher):
+        Store servo_publisher reference
+        Create CPG instance (from cpg_controller script)
+        Set initial state to disabled
+        Set default gait (e.g., 'pronk')
+        Start a background thread running the 'run' method
+
+    METHOD run():
+        LOOP FOREVER:
+            IF NOT disabled:
+                Calculate time delta (dt) since last loop
+                Update CPG state using cpg.step(dt) -> returns target servo positions
+                Create ROS message (Float64MultiArray) with target positions
+                Publish message using servo_publisher
+            ELSE:
+                Wait briefly (e.g., 20ms)
+                Reset loop timer
+            Wait briefly (e.g., 5ms) to yield CPU
+
+    METHOD set_enable(enable_flag):
+        Update disabled state based on enable_flag
+        IF disabling:
+            Create reset message (all zeros)
+            Publish reset message
+            Log "Disabled" message
+        ELSE:
+            Log "Enabled" message
+
+    METHOD change_gait():
+        Get list of available gaits from CPG definition
+        Find index of current gait
+        Calculate index of next gait (wrapping around)
+        Set current_gait to the new gait name
+        Re-initialize CPG instance with the new gait
+
+    METHOD update_params(parameter_dictionary):
+        IF NOT disabled:
+            Update CPG internal parameters (Frequency, Duty Factor, Offsets, Amplitudes)
+            based on values from the input dictionary (received from UI)</code></pre>
+
+            <hr />
+
+            <h4><code>quad/nodes/load_esp32.py</code></h4>
+            <p>
+              This script defines the <code>Bridge</code> class for low-level
+              communication (Serial or UDP) with the ESP32 microcontroller and
+              the <code>BridgeNode</code> ROS 2 node. The node handles sending
+              servo commands to the ESP32 and receiving sensor data (IMU, servo
+              states) back, publishing them onto ROS topics.
+            </p>
+            <pre><code class="language-python">CLASS Bridge:
+    DEFINE Constants (IPs, Port, Packet Structure, Data Types)
+
+    INITIALIZE(serial_port=None):
+        Store serial_port (if provided)
+        Initialize serial/socket connections to None
+        Initialize tx_data (commands to send) and rx_data (data received) arrays
+        Set initial tx_data to disable servos and reset positions
+
+    METHOD set_tx_data(enable_bits, position_array):
+        Format enable_bits and position_array into tx_data array
+        Convert tx_data array into a fixed-length byte packet with header/footer
+
+    METHOD set_rx_data():
+        Parse the received byte packet (rx_bytes)
+        Extract timestamp, quaternion, gyro, accel, servo positions, servo currents
+        Store extracted values into rx_data array, applying necessary scaling/conversions
+
+    METHOD tx_rx(): // Transmit and Receive
+        IF using UDP:
+            Initialize socket if needed
+            Send tx_bytes via UDP
+            Receive rx_bytes via UDP
+        ELSE (using Serial):
+            Initialize serial port if needed
+            Write tx_bytes to serial
+            Read rx_bytes from serial
+        Validate received packet length and header/footer
+        IF valid:
+            Call set_rx_data() to parse the data
+            RETURN True
+        ELSE:
+            RETURN False
+
+CLASS BridgeNode (ROS Node):
+    INITIALIZE():
+        Create ROS Node 'bridge_node'
+        Create Bridge instance
+        Create ROS Publishers for 'imu/data' (Imu msg) and 'servo/state' (Float64MultiArray msg)
+        Create ROS Subscription to 'servo/command' (Float64MultiArray msg), linking to command_callback
+        Create ROS Timer calling timer_callback periodically (e.g., 50Hz)
+
+    METHOD timer_callback():
+        Call bridge.tx_rx() to communicate with ESP32
+        IF data received successfully:
+            Create Imu message from bridge.rx_data (quaternion, gyro, accel)
+            Publish Imu message
+            Create Float64MultiArray message from bridge.rx_data (servo positions)
+            Publish servo state message
+        ELSE:
+            Log warning "Failed to receive data"
+
+    METHOD command_callback(received_command_message):
+        Get target servo positions from message data
+        IF all target positions are effectively zero:
+            Call bridge.set_tx_data() with DISABLE_ALL_SREVOS command
+            Log "Reset command received"
+        ELSE:
+            Call bridge.set_tx_data() with ENABLE_ALL_SREVOS and the target positions
+
+FUNCTION main():
+    Initialize ROS 2
+    Create instances of BridgeNode, PlotterNode, PoseEstimatorNode
+    Create instance of CPGControllerNode (passing plotter's servo_pub)
+    Create MultiThreadedExecutor
+    Add BridgeNode, PlotterNode, PoseEstimatorNode to executor
+    Spin the executor (runs the added nodes)
+    Cleanup nodes on shutdown</code></pre>
+            <p>
+              <em>Note:</em> The <code>CPGControllerNode</code> runs in its own
+              thread and is not added to the ROS executor in this setup. It
+              communicates via the ROS topics published/subscribed by the other
+              nodes.
+            </p>
+
+            <hr />
+
+            <h4><code>quad/nodes/plotter_node.py</code></h4>
+            <p>
+              This script defines the <code>PlotterNode</code>. Its primary role
+              is to subscribe to various sensor and state topics within the ROS
+              system and store the latest data in a globally accessible,
+              thread-safe dictionary (<code>shared_data</code>). This data is
+              then fetched by the Flask web application (<code>app.py</code>) to
+              be displayed on the UI. It also provides the publisher that the
+              CPG controller uses to send commands.
+            </p>
+            <pre><code class="language-python">DEFINE Global shared_data dictionary (time, servo, euler, gyro, accel, pose, etc.)
+DEFINE Global data_lock (threading.Lock)
+DEFINE Global MAX_HISTORY constant
+
+CLASS PlotterNode (ROS Node):
+    INITIALIZE():
+        Create ROS Node 'ros2_flask_plotter'
+        Initialize local variables for latest data (servo, orientation, gyro, etc.)
+        Create ROS Publisher for 'servo/command' (used by CPGControllerNode)
+        Define QoS profile for potentially unreliable sensor data (BEST_EFFORT)
+        Create ROS Subscriptions to:
+            'imu/data' -> imu_callback
+            'servo/state' -> servo_callback
+            'imu/pose_estimate' -> pose_callback
+            '/imu/orientation' -> orientation_callback
+            '/orb/pose' -> slam_pose_callback
+        Create ROS Timer calling sync_callback periodically (e.g., 50Hz)
+
+    METHOD imu_callback(imu_message):
+        Update local variables for orientation, gyro, accel from message
+
+    METHOD servo_callback(servo_state_message):
+        Update local variable for servo_data from message
+
+    METHOD pose_callback(imu_pose_message):
+        Update local variable for latest_pose (IMU-based) from message
+
+    METHOD orientation_callback(orientation_message):
+        Update local variable for orientation_quat from message
+
+    METHOD slam_pose_callback(orb_pose_message):
+        Update local variables for latest_slam_pose and latest_slam_orientation from message
+
+    METHOD sync_callback(): // Called by timer
+        Get current time
+        Convert latest orientation quaternion to Euler angles (handle potential errors)
+        ACQUIRE data_lock:
+            Append current time and latest values of all local data variables (servo, euler, gyro, accel, pose, etc.) to the corresponding lists in shared_data dictionary
+            IF any list in shared_data exceeds MAX_HISTORY:
+                Remove the oldest element (pop(0)) from that list
+        RELEASE data_lock</code></pre>
+
+            <hr />
+
+            <h4><code>quad/nodes/orb_pose_estimator_node.py</code></h4>
+            <p>
+              This script defines the
+              <code>ORBPosePublisher</code> node. It captures video frames from
+              a network stream, tracks features using optical flow (LK method),
+              calculates the camera's relative motion (rotation and translation)
+              between frames using the Essential Matrix, accumulates this motion
+              to estimate the overall pose, applies smoothing, and publishes the
+              result as a <code>PoseStamped</code> message on the
+              <code>/orb/pose</code> topic. It uses an ultrasonic sensor reading
+              during initialization to help scale the translation estimate.
+            </p>
+            <pre><code class="language-python">DEFINE Constants (VIDEO_URL, ULTRASONIC_URL, Camera Matrix, Distortion Coeffs)
+
+CLASS ORBPosePublisher (ROS Node):
+    INITIALIZE():
+        Create ROS Node 'optical_flow_pose_publisher'
+        Create ROS Publisher for '/orb/pose' (PoseStamped msg)
+        Initialize state variables (scale_z, prev_gray, prev_pts, initialized flag, pose_R, pose_t)
+        Initialize pose buffer (deque) for smoothing
+        Open video capture stream from VIDEO_URL
+        Call set_initial_reference() to get first frame and features
+        Create ROS Timer calling process_frame periodically (e.g., 10Hz)
+
+    METHOD fetch_ultrasonic_distance():
+        Try to get distance reading from ULTRASONIC_URL via HTTP GET request
+        Return distance in meters, or None on failure
+
+    METHOD set_initial_reference():
+        Log "Capturing initial reference..."
+        Fetch ultrasonic distance and set scale_z if available
+        LOOP until initialized:
+            Read frame from video stream
+            IF frame received:
+                Rotate frame (if needed)
+                Convert frame to grayscale
+                Detect good features to track (cv2.goodFeaturesToTrack)
+                IF enough features found:
+                    Store gray frame as prev_gray
+                    Store features as prev_pts
+                    Set initialized = True
+                    Log number of keypoints found
+
+    METHOD process_frame(): // Called by timer
+        IF NOT initialized: RETURN
+        Read frame from video stream
+        IF frame received:
+            Rotate frame (if needed)
+            Convert frame to grayscale
+            Calculate optical flow (cv2.calcOpticalFlowPyrLK) using prev_gray, gray, prev_pts -> get next_pts, status
+            Filter out bad points (status == 1) -> get good_prev, good_next
+            IF not enough good points: RETURN
+            Calculate Essential Matrix (cv2.findEssentialMat) between good_next and good_prev
+            IF Essential Matrix found:
+                Recover relative Rotation (R) and translation (t) (cv2.recoverPose)
+                Accumulate pose:
+                    pose_t = pose_t + (pose_R * t * scale_z) // Apply scale factor
+                    pose_R = R * pose_R
+                Add current pose_t to pose_buffer
+                IF pose_buffer is full:
+                    Apply Savitzky-Golay filter (savgol_filter) to the buffer
+                    Get the last (smoothed) translation vector (smoothed_t)
+                ELSE:
+                    Use current pose_t as smoothed_t
+                Convert accumulated rotation matrix (pose_R) to quaternion (quat)
+                Create PoseStamped message:
+                    Set header timestamp and frame_id
+                    Set position from smoothed_t
+                    Set orientation from quat
+                Publish PoseStamped message
+            Update prev_gray = gray
+            Update prev_pts = good_next (reshaped)
+
+    STATIC METHOD rotation_matrix_to_quaternion(RotationMatrix):
+        Perform conversion math
+        Return quaternion [x, y, z, w]
+
+FUNCTION main():
+    Initialize ROS 2
+    Create ORBPosePublisher node instance
+    Spin the node
+    Cleanup node on shutdown</code></pre>
+
+            <hr />
+
+            <h4><code>quad/nodes/pose_estimator_node.py</code></h4>
+            <p>
+              This script defines the <code>PoseEstimatorNode</code>. It
+              subscribes to raw IMU data (<code>/imu/data</code>). It performs
+              an initial calibration phase to estimate sensor biases. After
+              calibration, it corrects the incoming IMU readings, applies simple
+              filtering (low-pass for accel/gyro, high-pass/decay for velocity),
+              integrates acceleration to get velocity, and velocity to get
+              position. It also integrates gyro readings to get orientation (as
+              Euler angles). Finally, it publishes the estimated position and
+              orientation as a <code>PoseStamped</code> message on
+              <code>/imu/pose_estimate</code> and the orientation separately as
+              a <code>Quaternion</code> message on
+              <code>/imu/orientation</code>.
+            </p>
+            <pre><code class="language-python">CLASS PoseEstimatorNode (ROS Node):
+    INITIALIZE():
+        Create ROS Node 'pose_estimator_node'
+        Create Subscription to '/imu/data' -> imu_callback
+        Create Publisher for '/imu/pose_estimate' (PoseStamped)
+        Create Publisher for '/imu/orientation' (Quaternion)
+        Initialize state variables (position, velocity, orientation) to zeros
+        Initialize last_time = None
+        Initialize calibration variables (biases, data lists, calibrated flag, start time)
+        Initialize filtering variables (alpha, filtered accel/gyro, velocity damping)
+
+    METHOD imu_callback(imu_message):
+        Get current time
+        IF calibration_start_time is None: Set it
+        IF NOT calibrated:
+            Extract raw accel and gyro from message
+            Append readings to calibration_data lists
+            IF calibration duration (e.g., 1 second) has passed:
+                Calculate average of calibration data -> set bias_accel, bias_gyro
+                Set calibrated = True
+                Log "Calibration complete"
+            RETURN // Don't process further until calibrated
+        IF last_time is None: // First reading after calibration
+            Set last_time = current_time
+            RETURN
+        Calculate time delta (dt) = current_time - last_time
+        Update last_time = current_time
+        Correct raw accel/gyro readings using calculated biases
+        Apply low-pass filter to accel/gyro readings
+        Integrate filtered acceleration to update velocity (velocity += filtered_accel * dt)
+        Apply velocity decay/damping (velocity *= decay_factor or similar)
+        Apply velocity threshold (set near-zero velocities to zero)
+        Integrate velocity to update position (position += velocity * dt)
+        Integrate filtered gyro to update orientation (orientation += filtered_gyro * dt)
+        Create PoseStamped message:
+            Set header timestamp and frame_id ('map')
+            Set position from state variable
+            Convert Euler orientation state variable to quaternion
+            Set orientation from quaternion
+        Publish PoseStamped message
+        Create Quaternion message from calculated quaternion
+        Publish Quaternion message
+
+FUNCTION main():
+    Initialize ROS 2
+    Create PoseEstimatorNode instance
+    Spin the node
+    Cleanup node on shutdown</code></pre>
+
+            <hr />
+
+            <h4><code>quad/nodes/ur5_node.py</code></h4>
+            <p>
+              This script defines the <code>URDashboardServiceNode</code>. It
+              provides ROS 2
+              <strong>services</strong> (<code>/start_program</code>,
+              <code>/stop_program</code>) to trigger actions on the UR5. When
+              called, it connects to the UR5's Dashboard Server via TCP sockets
+              and sends text commands to load and play pre-defined URScript
+              programs (<code>gripper.urp</code>, <code>stop.urp</code>) stored
+              on the robot controller, which contain the pick-and-place logic.
+            </p>
+            <pre><code class="language-python">DEFINE Constants (ROBOT_IP, DASHBOARD_PORT, TIMEOUT, Program Names)
+
+CLASS URDashboardServiceNode (ROS Node):
+    INITIALIZE():
+        Create ROS Node 'ur_dashboard_service_node'
+        Log "Node started"
+        Create ROS Service '/start_program' (Trigger type) -> handle_start_program
+        Create ROS Service '/stop_program' (Trigger type) -> handle_stop_program
+
+    METHOD send_dashboard(command_string):
+        TRY:
+            Create TCP socket connection to ROBOT_IP:DASHBOARD_PORT with TIMEOUT
+            Receive and discard initial connection message from robot
+            Send the command_string + newline, encoded as UTF-8
+            Wait briefly (e.g., 0.1s)
+            Receive response from robot (up to 4096 bytes)
+            Decode response as UTF-8 and strip whitespace
+            Close socket
+            RETURN decoded response string
+        CATCH Exception as e:
+            Log error message
+            RETURN error string
+
+    METHOD load_and_play(program_filename):
+        Log "Loading program: [program_filename]"
+        response = send_dashboard("load [program_filename]")
+        IF "Loading program" NOT IN response:
+            RETURN False, "Failed to load: [response]"
+        Wait briefly (e.g., 0.3s)
+        Log "Starting program..."
+        response = send_dashboard("play")
+        IF "Starting program" OR "Running program" IN response:
+            RETURN True, "Program started: [response]"
+        ELSE:
+            RETURN False, "Failed to start: [response]"
+
+    METHOD handle_start_program(request, response): // Service callback
+        success, message = load_and_play(START_PROGRAM filename)
+        Set response.success = success
+        Set response.message = message
+        RETURN response
+
+    METHOD handle_stop_program(request, response): // Service callback
+        success, message = load_and_play(STOP_PROGRAM filename)
+        Set response.success = success
+        Set response.message = message
+        RETURN response
+
+FUNCTION main():
+    Initialize ROS 2
+    Create URDashboardServiceNode instance
+    Spin the node (waits for service calls)
+    Cleanup node on shutdown</code></pre>
+
+            <hr />
+
+            <h4><code>quad/web/app.py</code></h4>
+            <p>
+              This script sets up and runs the Flask web server, acting as the
+              user interface backend. It also initializes and runs necessary ROS
+              2 nodes (Plotter, ORB Pose Estimator) in a separate thread using a
+              MultiThreadedExecutor. It defines Flask routes (URLs) for serving
+              the main HTML page (`/`), providing real-time data to the UI
+              (`/data`), and handling UI commands (`/cpg/...`) to interact with
+              the CPG controller node.
+            </p>
+            <pre><code class="language-python">IMPORT Flask, ROS 2 libraries, threading, nodes (PlotterNode, CPGControllerNode, ORBPosePublisher)
+
+INITIALIZE Flask app
+
+DEFINE Global variables for plotter_node, cpg_controller (initially None)
+
+DEFINE Flask route '/' (index):
+    Render 'index.html' template
+
+DEFINE Flask route '/data' (get data):
+    ACQUIRE data_lock (from plotter_node module)
+    Get a copy of shared_data
+    RELEASE data_lock
+    Return shared_data as JSON
+
+DEFINE Flask route '/cpg/enable' (POST request):
+    Get 'enable' state from JSON request body
+    IF cpg_controller exists:
+        Call cpg_controller.set_enable(state)
+    Return success JSON response
+
+DEFINE Flask route '/cpg/gait' (POST request):
+    IF cpg_controller exists:
+        Call cpg_controller.change_gait()
+        Return success JSON response with new gait name
+    Return failure JSON response
+
+DEFINE Flask route '/cpg/params' (POST request):
+    Get 'params' dictionary from JSON request body
+    IF cpg_controller exists:
+        Call cpg_controller.update_params(params)
+    Return success JSON response
+
+FUNCTION ros_spin(): // Runs in a separate thread
+    DECLARE plotter_node, cpg_controller as global
+    Initialize ROS 2
+    Create PlotterNode instance -> assign to global plotter_node
+    Create CPGControllerNode instance (passing plotter_node.servo_pub) -> assign to global cpg_controller
+    Create ORBPosePublisher instance -> assign to local orb_pose_node
+    Create MultiThreadedExecutor
+    Add plotter_node to executor
+    Add orb_pose_node to executor
+    TRY:
+        Spin the executor (runs plotter and orb_pose nodes)
+    FINALLY: // Cleanup on thread exit/error
+        Destroy plotter_node
+        Destroy orb_pose_node
+        Shutdown ROS 2
+
+FUNCTION main(): // Main entry point
+    Create and start the ros_spin thread (as daemon)
+    Start the Flask development server (host='0.0.0.0', threaded=True)
+
+IF script is run directly (__name__ == '__main__'):
+    Call main()</code></pre>
+          </div>
         </div>
         <!-- /container -->
       </section>
@@ -259,6 +723,7 @@ ros2 launch [PLACEHOLDER: package_name] [PLACEHOLDER: main_launch.py]</code></pr
 
       <!-- Footer -->
       <footer id="footer">
+        <!-- Footer content remains the same -->
         <ul class="icons">
           <li>
             <a href="#" class="icon brands alt fa-twitter"
@@ -282,7 +747,7 @@ ros2 launch [PLACEHOLDER: package_name] [PLACEHOLDER: main_launch.py]</code></pr
           </li>
           <li>
             <a
-              href="https://github.com/RAS598-2025-S-Team01"
+              href="https://github.com/RAS598-2025-S-Team01/project_code"
               class="icon brands alt fa-github"
               target="_blank"
               rel="noopener noreferrer"
@@ -313,7 +778,17 @@ ros2 launch [PLACEHOLDER: package_name] [PLACEHOLDER: main_launch.py]</code></pr
     <script src="../assets/js/breakpoints.min.js"></script>
     <script src="../assets/js/util.js"></script>
     <script src="../assets/js/main.js"></script>
-    <!-- <script src="assets/js/custom.js"></script> -->
-    <!-- Include if you have custom JS for this page -->
+
+    <!-- Prism.js Core JS - Integrity removed -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <!-- Prism.js Language Component (Python) - Integrity removed -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <!-- Prism.js Language Component (Bash) - Integrity removed -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <!-- Prism.js Autoloader (optional) - Integrity removed -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <!-- Your Custom JS including Tab Switching -->
+    <script src="../assets/js/custom.js"></script>
   </body>
 </html>

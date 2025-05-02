@@ -235,9 +235,10 @@
               <!-- [PLACEHOLDER: Insert screenshot of your web UI showing plots] -->
               <img
                 class="responsive"
-                src="[PLACEHOLDER: path/to/your/ui_screenshot.png]"
+                src="https://drive.google.com/thumbnail?id=1K5av9xoC7nrwIB3XXrLIk6M40THacZq-&sz=w1000"
                 alt="Web UI showing sensor data and pose estimates"
               />
+
               <figcaption>
                 Figure 1: Real-time visualization of IMU data and comparative
                 pose estimates via the web interface.
@@ -411,7 +412,6 @@
           </section>
 
           <!-- Section 4: Finalized ROS 2 Architecture -->
-          <!-- This section will be animated by custom.js -->
           <section id="ros">
             <h3>4. Finalized System & ROS 2 Architecture</h3>
 
@@ -425,9 +425,10 @@
               <!-- [PLACEHOLDER: Insert your vector-based ROS graph image here] -->
               <img
                 class="responsive"
-                src="[PLACEHOLDER: path/to/your/ros_graph.png]"
+                src="https://drive.google.com/thumbnail?id=19ztdmX9D2rtsbJV15LfoqSZtRVrkrm3x&sz=w1000"
                 alt="ROS 2 Node and Topic Architecture"
               />
+
               <figcaption>
                 Figure 2: Finalized ROS 2 Node and Topic Architecture
               </figcaption>
@@ -477,15 +478,15 @@
                 >
                 <ul>
                   <li>
-                    <code>/imu/data</code> (Orange): Raw IMU
+                    <code>/imu/data</code> (Yellow): Raw IMU
                     accelerometer/gyroscope data.
                   </li>
                   <li>
-                    <code>/imu/orientation</code> (Orange): Filtered IMU
+                    <code>/imu/orientation</code> (Yellow): Filtered IMU
                     orientation (e.g., quaternions).
-                  </li>
+                  </li>G
                   <li>
-                    <code>/imu/pose_estimate</code> (Orange): Calculated pose
+                    <code>/imu/pose_estimate</code> (Yellow): Calculated pose
                     from IMU data (by <code>/pose_estimator_node</code>).
                   </li>
                   <li>
@@ -581,43 +582,39 @@
                     <div class="diagram-wrapper">
                       <svg id="arrow-canvas"></svg>
                       <!-- SVG for arrows -->
+                      <!-- Inside the .carousel-slide .diagram-wrapper -->
                       <div class="quad-cluster">
                         <img
                           id="quadrupedImg"
-                          src="../assets/css/images/quadruped.png"
-                          <!--
-                          Corrected
-                          Path
-                          --
+                          src="https://drive.google.com/thumbnail?id=10klM3L3n3x_vw4EgEcuV2vT4hs8_cRaX&sz=w1000"
+                          alt="Quadruped"
                         />
-                        alt="Quadruped" />
+
                         <div id="quadStatus">Initializing...</div>
-                        <!-- Status text -->
-                        <div class="quad-subnodes">
-                          <div class="block animated-plot" id="imu-plot">
-                            <canvas
-                              id="imuCanvas"
-                              width="180"
-                              height="80"
-                            ></canvas>
-                            <div class="label">IMU Pose</div>
-                          </div>
-                          <div
-                            class="block animated-camera-plot"
-                            id="camera-pose"
-                          >
-                            <canvas
-                              id="cameraCanvas"
-                              width="180"
-                              height="80"
-                            ></canvas>
-                            <div class="label">Camera Pose</div>
-                          </div>
+                        <!-- Plots are now direct children -->
+                        <div class="block animated-plot" id="imu-plot">
+                          <canvas
+                            id="imuCanvas"
+                            width="180"
+                            height="80"
+                          ></canvas>
+                          <div class="label">IMU Pose</div>
+                        </div>
+                        <div
+                          class="block animated-camera-plot"
+                          id="camera-pose"
+                        >
+                          <canvas
+                            id="cameraCanvas"
+                            width="180"
+                            height="80"
+                          ></canvas>
+                          <div class="label">Camera Pose</div>
                         </div>
                       </div>
 
                       <div class="block" id="ur5">
-                        <img src="../assets/css/images/ur5e.png" alt="UR5e" />
+                        <img src="https://drive.google.com/thumbnail?id=1CQ75fRtXiswbmohswEaEV3oaMW5gM5eM" alt="UR5e" />
                         <!-- Corrected Path -->
                         <div class="label">UR5e Arm</div>
                       </div>
@@ -630,14 +627,11 @@
                   <div class="carousel-content">
                     <!-- Removed inner diagram-wrapper for static image -->
                     <img
-                      src="../assets/css/images/working.png"
-                      <!--
-                      Corrected
-                      Path
-                      --
+                      src="https://drive.google.com/thumbnail?id=1dYZ5xaMBLFVqCS3U3Kqw6w07qXZdJIAk&sz=w1000"
+                      alt="System Architecture Overview"
+                      class="carousel-full-image"
                     />
-                    alt="System Architecture Overview"
-                    class="carousel-full-image" />
+                  
                   </div>
                 </div>
 
@@ -682,102 +676,124 @@
             </ol>
           </section>
 
-          <!-- Section 5: System Tradeoffs -->
-          <!-- This section will be animated by custom.js -->
-          <section id="tradeoffs">
-            <h3>5. System Tradeoffs</h3>
-            <p>
-              Developing this integrated robotic system required balancing
-              several competing goals and making key tradeoffs:
-            </p>
-            <ol>
+      <!-- Section 5: System Tradeoffs -->
+      <!-- This section will be animated by custom.js -->
+      <section id="tradeoffs">
+        <h3>5. System Tradeoffs & Technical Considerations</h3>
+        <p>
+          Engineering this integrated robotic system involved balancing key technical
+          requirements:
+        </p>
+        <ol>
+          <li>
+            <strong>Pose Estimation: Accuracy vs. Resources</strong>
+            <ul>
               <li>
-                <strong
-                  >Accuracy vs. Speed/Complexity (Pose Estimation):</strong
-                >
-                <ul>
-                  <li>
-                    <strong>Tradeoff:</strong> Implemented both IMU-based (fast,
-                    drift-prone) and camera-based (<code>/orb/pose</code> -
-                    potentially more accurate long-term, computationally
-                    heavier, environment-sensitive).
-                  </li>
-                  <li>
-                    <strong>Balance:</strong> Ran both for comparison via UI
-                    rather than immediate complex fusion. Used simpler filters
-                    for IMU estimate for real-time suitability.
-                  </li>
-                </ul>
+                <strong>Conflict:</strong> High-accuracy SLAM demands significant
+                computation (CPU/RAM), conflicting with real-time needs on potentially
+                limited onboard hardware. Basic IMU integration is fast but drifts
+                significantly.
               </li>
               <li>
-                <strong>Real-time Control vs. System Stability:</strong>
-                <ul>
-                  <li>
-                    <strong>Tradeoff:</strong> UI allows real-time gait
-                    parameter changes, which could destabilize the robot if too
-                    abrupt.
-                  </li>
-                  <li>
-                    <strong>Balance:</strong> Used ROS 2 parameters.
-                    <code>/bridge_node</code> likely includes internal
-                    limits/smoothing on parameter changes to maintain stability.
-                    Balanced UI/control loop refresh rates.
-                  </li>
-                </ul>
+                <strong>Balance:</strong> Implemented parallel, independent IMU-based
+                (fast filter, drift-prone position) and camera-based
+                (<code>/orb/pose</code>, likely VO, less drift, higher latency/load)
+                estimators. Deferred complex real-time fusion; enabled comparison via
+                UI.
               </li>
               <li>
-                <strong>Package Selection vs. Hardware Constraints:</strong>
-                <ul>
-                  <li>
-                    <strong>Tradeoff:</strong> Needed libraries compatible with
-                    onboard compute (e.g., Raspberry Pi) and UR5 controller.
-                    Some algorithms might be too resource-intensive.
-                  </li>
-                  <li>
-                    <strong>Balance:</strong> Selected established, reasonably
-                    performant packages (e.g., Flask for UI). Pose estimation
-                    algorithms chosen considering hardware limits.
-                  </li>
-                </ul>
+                <strong>Implication:</strong> Provides redundancy and comparison data
+                but relies on simpler/less optimal estimates for real-time control
+                logic or requires offline analysis for best accuracy.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Real-time Control vs. Stability</strong>
+            <ul>
+              <li>
+                <strong>Conflict:</strong> Instantaneous UI changes to gait parameters
+                (frequency, amplitude) can command dynamically unstable states for the
+                quadruped.
               </li>
               <li>
-                <strong>Development Time vs. Feature Completeness:</strong>
-                <ul>
-                  <li>
-                    <strong>Tradeoff:</strong> Semester timeline required
-                    prioritization. Deferred deep simulation integration and
-                    advanced SLAM.
-                  </li>
-                  <li>
-                    <strong>Balance:</strong> Focused on delivering the core
-                    autonomous loop (walk-reset), interactive UI, and
-                    multi-sensor data pipeline with comparative pose estimation.
-                  </li>
-                </ul>
+                <strong>Balance:</strong> Used ROS 2 parameters managed via the UI.
+                The <code>/bridge_node</code> likely applies rate limiting, value
+                clamping, and/or input smoothing to parameter changes before
+                generating servo commands.
               </li>
               <li>
-                <strong>Type I vs. Type II Errors (Path End Detection):</strong>
-                <ul>
-                  <li>
-                    <strong>Tradeoff:</strong> Detecting path end involves
-                    uncertainty. Sensitive threshold = more false positives
-                    (Type I). Less sensitive threshold = risk of overshoot (Type
-                    II).
-                  </li>
-                  <li>
-                    <strong>Balance:</strong> Tuned detection logic (based on
-                    pose estimates) to ensure stopping within a safe zone for
-                    UR5 pickup, prioritizing avoiding collisions/failed pickups
-                    over millimeter precision, accepting a small error margin.
-                  </li>
-                </ul>
+                <strong>Implication:</strong> Prioritizes robot stability and safety
+                over immediate command response, resulting in smoother, controlled
+                transitions.
               </li>
-            </ol>
-          </section>
-        </div>
-        <!-- /container -->
+            </ul>
+          </li>
+          <li>
+            <strong>Hardware Constraints vs. Algorithm Choice</strong>
+            <ul>
+              <li>
+                <strong>Conflict:</strong> Onboard computing limits (e.g., Raspberry
+                Pi) restrict the feasibility of running complex algorithms like full
+                SLAM or MPC concurrently with control loops.
+              </li>
+              <li>
+                <strong>Balance:</strong> Focused on core functionality using
+                performant, established ROS 2 packages and less demanding algorithms
+                (e.g., filters/VO instead of full SLAM). Deferred resource-intensive
+                features.
+              </li>
+              <li>
+                <strong>Implication:</strong> Achieved reliable core operation on
+                target hardware, but performance ceilings (accuracy, speed) may be
+                lower than systems with high-end compute.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Development Time vs. Feature Scope</strong>
+            <ul>
+              <li>
+                <strong>Conflict:</strong> Limited time required prioritizing core
+                features over implementing the full initial vision (e.g., deep
+                simulation, advanced fusion).
+              </li>
+              <li>
+                <strong>Balance:</strong> Focused on delivering the Minimum Viable
+                System: the robust automated walk-reset loop, multi-sensor data
+                pipeline, interactive UI control, and comparative pose estimation.
+              </li>
+              <li>
+                <strong>Implication:</strong> Delivered a functional, integrated
+                testbed demonstrating the core concept, providing a validated platform
+                for future, more advanced feature integration.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Path End Detection: Robustness vs. Precision (Type I & Type II Error)</strong>
+            <ul>
+              <li>
+                <strong>Conflict:</strong> Stopping the quadruped accurately using
+                noisy/drifting pose estimates risks stopping too early (Type I error)
+                or overshooting the UR5 pickup zone (Type II error).
+              </li>
+              <li>
+                <strong>Balance:</strong> Prioritized successful automated resets.
+                Employed conservative stopping logic (e.g., filtering/hysteresis on
+                pose estimate, slightly shorter target distance) and a generous UR5
+                pickup envelope.
+              </li>
+              <li>
+                <strong>Implication:</strong> High reliability in the autonomous loop,
+                minimizing collision/failure risk, at the cost of potentially slightly
+                shorter travel distances per run.
+              </li>
+            </ul>
+          </li>
+        </ol>
       </section>
-      <!-- /main -->
+
 
       <!-- Footer -->
       <footer id="footer">
