@@ -35,7 +35,7 @@
             <li><a href="../gallery/gallery_images.html">Gallery</a></li>
             <li>
               <a
-                href="https://github.com/RAS598-2025-S-Team01/project_code"
+                href="https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01-code"
                 class="button primary"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -123,7 +123,7 @@
 mkdir -p ~/ros2_ws/src && cd ~/ros2_ws/
 
 # Clone repository
-git clone https://github.com/RAS598-2025-S-Team01/project_code.git src/project_code
+git clone https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01-code ~/ros2_ws/
 
 # Install ROS dependencies (Sources ROS if needed)
 sudo apt update && rosdep update
@@ -132,7 +132,7 @@ rosdep install --from-paths src --ignore-src -r -y
 # Install Python dependencies (Activate virtual env if used)
 # Ensure you have a requirements.txt or install manually:
 # pip install Flask websockets requests numpy opencv-python # Add others if needed
-pip install -r src/project_code/requirements.txt # Assuming requirements.txt exists
+pip install -r requirements.txt
 
 # Build workspace (Sources ROS if needed)
 cd ~/ros2_ws/
