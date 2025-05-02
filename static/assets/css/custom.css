@@ -1,48 +1,82 @@
+/* ================================================== */
 /* === Global Readability for DARK Background === */
-/* ... (Keep all rules from #main.wrapper ... down to #main.wrapper pre ...) ... */
-#main.wrapper {
-  color: rgba(255, 255, 255, 0.85);
+/* ================================================== */
+
+#main.wrapper,
+body {
+  color: rgba(255, 255, 255, 0.9); /* Light grey for general text */
 }
+
 #main.wrapper h1,
 #main.wrapper h2,
 #main.wrapper h3,
 #main.wrapper h4,
 #main.wrapper h5,
-#main.wrapper h6 {
-  color: #ffffff;
+#main.wrapper h6,
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff; /* White for headings */
 }
+
+/* Keep accent color for h3 underline */
 #main.wrapper h3::after {
   background-color: #e44c65;
 }
+
 #main.wrapper p {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9); /* Light grey for paragraphs */
 }
+
 #main.wrapper li {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9); /* Light grey for list items */
 }
-#main.wrapper a {
-  color: #9cf;
+
+#main.wrapper a,
+a {
+  color: #a8d8f8; /* Slightly brighter blue for links */
 }
-#main.wrapper strong {
-  color: #ffffff;
+#main.wrapper a:hover,
+a:hover {
+  color: #cceaff; /* Even lighter blue on hover */
+}
+
+#main.wrapper strong,
+strong {
+  color: #ffffff; /* White for strong text */
   font-weight: 600;
 }
+
+/* Table Styles */
 #main.wrapper .table-wrapper {
   background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Increased border opacity slightly */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 2em;
+}
+#main.wrapper table { /* Apply to table inside wrapper */
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0;
 }
 #main.wrapper th,
 #main.wrapper td {
-  color: rgba(255, 255, 255, 0.9);
-  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9); /* INCREASED Alpha for table cells */
+  border-color: rgba(255, 255, 255, 0.2); /* Increased border opacity slightly */
+  padding: 0.75em 1em; /* Ensure padding */
 }
 #main.wrapper th {
-  color: #ffffff;
+  color: #ffffff; /* White for table headers */
   background-color: rgba(255, 255, 255, 0.1);
+  font-weight: bold;
+  text-align: left; /* Ensure alignment */
 }
-#main.wrapper code {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #adf;
+
+/* Code Block Styles */
+#main.wrapper code { /* Inline code */
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #bce074; /* Slightly brighter green/lime */
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 0.2em 0.5em;
   border-radius: 4px;
@@ -50,18 +84,23 @@
   margin: 0 0.1em;
   font-family: "Courier New", Courier, monospace;
 }
-#main.wrapper pre code {
+#main.wrapper pre code { /* Code within pre blocks */
   background-color: transparent;
-  color: inherit;
+  color: inherit; /* Inherit color from pre */
   border: none;
   padding: 0;
   margin: 0;
+  font-family: inherit; /* Inherit font */
+  font-size: inherit; /* Inherit size */
+  line-height: inherit; /* Inherit line height */
+  white-space: inherit; /* Inherit wrap */
+  word-wrap: inherit; /* Inherit wrap */
 }
-#main.wrapper pre {
-  background-color: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-left: 4px solid #e44c65;
-  color: #f0f0f0;
+#main.wrapper pre { /* Preformatted text blocks */
+  background-color: #282c34; /* Dark background consistent with Prism */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Increased border opacity */
+  border-left: 4px solid #e44c65; /* Accent border */
+  color: #c5c8c6; /* Brighter grey for pre text */
   padding: 1em;
   overflow-x: auto;
   border-radius: 4px;
@@ -73,27 +112,30 @@
   word-wrap: break-word;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
+
+/* List Markers */
 #main.wrapper ol > li::before {
-  background: #e44c65;
+  background: #e44c65; /* Keep accent color */
   color: white;
-  
 }
 #main.wrapper ul > li::before {
-  color: #e44c65;
+  color: #e44c65; /* Keep accent color */
 }
+
+/* Figure Styles */
 .wrapper {
-  padding: 6em 0 0em 0;
+  padding: 6em 0 0em 0; /* Keep existing padding */
 }
 #main.wrapper figure {
-  background-color: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.04); /* Slightly brighter bg */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Slightly brighter border */
   padding: 1em;
   border-radius: 8px;
   margin: 2.5em 0;
   text-align: center;
 }
 #main.wrapper figcaption {
-  color: white;
+  color: rgba(255, 255, 255, 0.85); /* Brighter caption */
   margin-top: 1em;
   font-size: 0.9em;
 }
@@ -106,8 +148,9 @@
   border-radius: 4px;
 }
 
+/* ================================================== */
 /* === About Page Enhancements === */
-/* ... (Keep general #main rules, heading styles, list styles, table styles, hover effects, button styles) ... */
+/* ================================================== */
 #main.wrapper .container {
   padding-top: 3em;
   padding-bottom: 3em;
@@ -115,17 +158,23 @@
 #main .container > section {
   padding: 2.5em 0;
   margin-bottom: 2.5em;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* opacity: 0; */ /* transform: translateY(30px); */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 #main .container > section:last-child {
   border-bottom: none;
   margin-bottom: 0;
 }
+/* Scroll animation classes */
+.scroll-animate-init {
+    opacity: 0;
+    transform: translateY(30px);
+}
 #main .container > section.animate-in {
   opacity: 1;
   transform: translateY(0);
 }
+
 #main h3 {
   font-size: 1.75em;
   margin-bottom: 1em;
@@ -190,8 +239,8 @@
   list-style: none;
 }
 #main ul > li::before {
-  content: "\f00c";
-  font-family: "Font Awesome 5 Free";
+  content: "\f00c"; /* Checkmark icon */
+  font-family: "Font Awesome 5 Free"; /* Ensure Font Awesome is linked */
   font-weight: 900;
   color: #e44c65;
   margin-right: 0.8em;
@@ -200,38 +249,23 @@
   top: 0.1em;
   font-size: 1em;
 }
-#navigation-button > li::before {
+/* Specific list icon overrides */
+#navigation-button > li::before,
+.gallery-container > div::before /* Prevent list styles on gallery cards if they were LIs */ {
   content: "" !important;
- 
+  display: none !important;
 }
-
 #goals ul > li::before {
-  content: "\f140";
+  content: "\f140"; /* Target icon */
 }
 #tradeoffs ol > li::before {
-  content: counter(section-counter);
+  content: counter(section-counter); /* Keep numbered style */
 }
 #tradeoffs ul > li::before {
-  content: "\f0eb";
+  content: "\f0eb"; /* Lightbulb icon */
 }
-.table-wrapper {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  border-radius: 6px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  margin-bottom: 2em;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 0;
-}
-th {
-  font-weight: bold;
-}
-#main section:hover h3::after {
-  width: 100px;
-}
+
+/* Button Styles */
 .button.primary.icon.code-link,
 .button.primary.icon.data-link {
   transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
@@ -243,945 +277,178 @@ th {
 }
 
 /* Remove default icons/pseudo-elements from specific action buttons */
-.actions.special li a.button::before,
-.actions.special li a.button::after {
+ul.actions li a.button::before,
+ul.actions li a.button::after,
+ul.actions li a.button .icon, /* Target potential <i> or <span> with .icon class */
+ul.actions li a.button > i /* Target direct child <i> tags */ {
   display: none !important;
-  content: none !important;
-  margin-right: 0 !important; /* Remove any spacing added for the icon */
-  margin-left: 0 !important;
+  content: none !important; /* Specifically for pseudo-elements */
+  margin: 0 !important; /* Remove spacing */
+  padding: 0 !important; /* Remove padding */
+  width: 0 !important; /* Collapse width */
+  line-height: 0 !important; /* Collapse line height */
+  vertical-align: initial !important; /* Reset alignment */
+  border: none !important; /* Remove potential borders */
 }
 
+/* Header Nav Height */
 #header nav {
   height: auto;
 }
+
+/* ================================================== */
 /* === Styles for Diagram WITHIN CAROUSEL === */
-/* === Complete Carousel Styling Block (Full Width, Grid Layout, Absolute UR5) === */
+/* ================================================== */
+.carousel-container { position: relative; width: 100%; margin: 3em 0; background: #12121d; border-radius: 0; padding: 2.5rem; min-height: 700px; overflow: hidden; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); border: none; border-top: 1px solid rgba(45, 140, 255, 0.2); border-bottom: 1px solid rgba(45, 140, 255, 0.2); box-sizing: border-box; height: 1000px; }
+.carousel-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; visibility: hidden; transition: transform 0.6s ease, opacity 0.6s ease; transform: translateX(100%); display: flex; justify-content: center; align-items: center; padding: 2rem; box-sizing: border-box; }
+.carousel-slide.active { position: relative; visibility: visible; opacity: 1; transform: translateX(0%); z-index: 1; }
+.carousel-slide.slide-left { transform: translateX(-100%); }
+.carousel-slide.slide-right { transform: translateX(100%); }
+.carousel-content { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 1.5rem; box-sizing: border-box; max-width: 1200px; margin: 0 auto; }
+.carousel-full-image { display: block; width: auto; height: auto; max-width: 90%; max-height: 85%; object-fit: contain; border-radius: 16px; box-shadow: 0 0 20px rgba(45, 140, 255, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); }
+.carousel-slide:nth-child(2) .carousel-full-image { max-width: 80%; max-height: 75%; }
+.carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(45, 140, 255, 0.7); color: white; border: none; font-size: 2rem; width: 50px; height: 50px; line-height: 45px; text-align: center; cursor: pointer; border-radius: 50%; transition: all 0.3s ease; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+.carousel-btn.next { right: 1.5rem; z-index: 9999 !important; }
+.carousel-btn.prev { left: 1.5rem; }
+.carousel-btn:hover { background-color: #2d8cff; transform: translateY(-50%) scale(1.1); }
 
-/* Main carousel container - MODIFIED FOR FULL WIDTH */
-.carousel-container {
-  position: relative;
-  width: 100%; /* Ensure it takes full width */
-  /* max-width: 1200px; */ /* REMOVED max-width */
-  margin: 3em 0; /* REMOVED horizontal auto margin */
-  background: #12121d;
-  border-radius: 0; /* Optional: Remove radius if you want sharp edges */
-  padding: 2.5rem; /* Keep padding for content spacing */
-  min-height: 700px;
-  overflow: hidden;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  border: none; /* Optional: Remove border if it looks odd at full width */
-  border-top: 1px solid rgba(45, 140, 255, 0.2); /* Optional: Add top/bottom borders */
-  border-bottom: 1px solid rgba(45, 140, 255, 0.2);
-  box-sizing: border-box; /* Include padding in width calculation */
-  height: 1000px;
-}
+/* Diagram specific styles */
+.carousel-slide .diagram-wrapper { position: relative; overflow: visible; background: linear-gradient(to bottom, #1a1a2e, #12121d); padding: 2rem; border-radius: 12px; min-height: 600px; width: 100%; height: 100%; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); box-sizing: border-box; border: 1px solid rgba(45, 140, 255, 0.15); }
+.carousel-slide .diagram-wrapper #arrow-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: visible; }
+.carousel-slide .diagram-wrapper #ur5 { position: absolute; top: 2rem; left: 2rem; z-index: 2; order: unset; margin-bottom: unset; padding: 0; background: none; border: none; text-align: center; }
+.carousel-slide .diagram-wrapper #ur5 img { width: 150px; height: auto; margin-bottom: 0.5rem; transition: filter 0.3s ease; }
+.carousel-slide .diagram-wrapper #ur5.active-glow img { filter: drop-shadow(0 0 10px #2d8cff) brightness(1.2); }
+.carousel-slide .diagram-wrapper .quad-cluster { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto auto; gap: 1rem; justify-items: center; align-items: center; width: fit-content; max-width: 600px; position: absolute; top: 10rem; right: 5rem; padding: 1.5rem; background: rgba(30, 30, 46, 0.5); border-radius: 15px; border: 1px solid rgba(45, 140, 255, 0.2); order: unset; flex-direction: unset; z-index: 2; }
+.carousel-slide .diagram-wrapper #quadrupedImg { grid-column: 1 / span 2; grid-row: 1; width: 200px; height: auto; z-index: 2; transition: transform 0.1s ease-out; transform: scaleX(-1); margin-bottom: 1rem; }
+.carousel-slide .diagram-wrapper #quadStatus { grid-column: 1 / span 2; grid-row: 2; margin-top: 0; color: white; font-weight: 500; font-size: 1em; background-color: rgba(0, 0, 0, 0.5); padding: 0.5em 0.8em; border-radius: 6px; border: 1px solid rgba(45, 140, 255, 0.3); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); text-align: center; }
+.carousel-slide .diagram-wrapper #imu-plot { grid-column: 1; grid-row: 3; }
+.carousel-slide .diagram-wrapper #camera-pose { grid-column: 2; grid-row: 3; }
+.carousel-slide .diagram-wrapper .block { background: rgba(30, 30, 46, 0.8); color: #ffffff; padding: 1.2rem 1.5rem; border-radius: 10px; min-width: 200px; width: 100%; max-width: 250px; text-align: center; font-weight: 500; font-size: 0.95rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); border: 1px solid #2d8cff; z-index: 2; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; box-sizing: border-box; margin: 0; }
+.carousel-slide .diagram-wrapper .block:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 6px 20px rgba(45, 140, 255, 0.5); }
+.carousel-slide .diagram-wrapper .animated-plot canvas, .carousel-slide .diagram-wrapper .animated-camera-plot canvas { border-radius: 8px; background: #1e1e2a; border: 1px solid #2d8cff; box-shadow: inset 0 0 5px rgba(45, 140, 255, 0.3); display: block; margin: 0.8rem auto 0.6rem; width: 90%; max-width: 220px; height: 90px; box-sizing: border-box; }
+.carousel-slide .diagram-wrapper .label { color: #eee; font-size: 0.9rem; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); margin-top: 0.3rem; }
+.carousel-slide .diagram-wrapper #arrow-canvas text { fill: #ddd; font-size: 12px; font-weight: 400; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); }
 
-/* Individual carousel slides */
-.carousel-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  visibility: hidden;
-  transition: transform 0.6s ease, opacity 0.6s ease;
-  transform: translateX(100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  box-sizing: border-box;
-}
+/* ================================================== */
+/* === Course Info Styles === */
+/* ================================================== */
+#course-info { padding: 3em 0 !important; background: #2e3141; color: rgba(255, 255, 255, 0.8); }
+#course-info h2 { color: #ffffff; }
+#course-info p { color: rgba(255, 255, 255, 0.8); }
 
-.carousel-slide.active {
-  position: relative;
-  visibility: visible;
-  opacity: 1;
-  transform: translateX(0%);
-  z-index: 1;
-}
-
-.carousel-slide.slide-left {
-  transform: translateX(-100%);
-}
-
-.carousel-slide.slide-right {
-  transform: translateX(100%);
-}
-
-/* Content wrapper inside slides */
-.carousel-content {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1.5rem;
-  box-sizing: border-box;
-  max-width: 1200px; /* Add max-width HERE to constrain content, not container */
-  margin: 0 auto; /* Center the content within the full-width slide */
-}
-
-/* Full-size images in carousel */
-.carousel-full-image {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 90%;
-  max-height: 85%;
-  object-fit: contain;
-  border-radius: 16px;
-  box-shadow: 0 0 20px rgba(45, 140, 255, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Specific control for second slide image */
-.carousel-slide:nth-child(2) .carousel-full-image {
-  max-width: 80%;
-  max-height: 75%;
-}
-
-/* Navigation buttons */
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(45, 140, 255, 0.7);
-  color: white;
-  border: none;
-  font-size: 2rem;
-  width: 50px;
-  height: 50px;
-  line-height: 45px;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.carousel-btn.next {
-  right: 1.5rem;
-
-  z-index: 9999 !important;
-}
-
-.carousel-btn.prev {
-  left: 1.5rem;
-}
-
-.carousel-btn:hover {
-  background-color: #2d8cff;
-  transform: translateY(-50%) scale(1.1);
-}
-
-/* Diagram wrapper styling - Needs position: relative for absolute children */
-.carousel-slide .diagram-wrapper {
-  position: relative;
-  overflow: visible; /* Allow arrows to potentially draw outside bounds slightly */
-  background: linear-gradient(to bottom, #1a1a2e, #12121d);
-  padding: 2rem;
-  border-radius: 12px;
-  min-height: 600px;
-  width: 100%; /* Takes width of .carousel-content */
-  height: 100%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  box-sizing: border-box;
-  border: 1px solid rgba(45, 140, 255, 0.15);
-}
-
-/* SVG canvas for arrows */
-.carousel-slide .diagram-wrapper #arrow-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-  overflow: visible; /* Allow arrows to draw outside SVG bounds if needed */
-}
-
-/* UR5 robot styling - Absolute Positioning */
-.carousel-slide .diagram-wrapper #ur5 {
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
-  z-index: 2;
-  order: unset;
-  margin-bottom: unset;
-  padding: 0;
-  background: none;
-  border: none;
-  text-align: center;
-}
-
-.carousel-slide .diagram-wrapper #ur5 img {
-  width: 150px;
-  height: auto;
-  margin-bottom: 0.5rem;
-  transition: filter 0.3s ease;
-}
-
-.carousel-slide .diagram-wrapper #ur5.active-glow img {
-  filter: drop-shadow(0 0 10px #2d8cff) brightness(1.2);
-}
-
-/* Quadruped cluster styling - Grid Layout */
-.carousel-slide .diagram-wrapper .quad-cluster {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 columns */
-  grid-template-rows: auto auto auto; /* 3 rows: Image, Status, Plots */
-  gap: 1rem;
-  justify-items: center;
-  align-items: center;
-  width: fit-content;
-  max-width: 600px;
-  /* Position relative to diagram-wrapper, adjust top/left/right as needed */
-  position: absolute;
-  top: 10rem; /* Adjust as needed */
-  right: 5rem; /* Adjust as needed */
-  /* margin: 10rem auto 2rem auto; */ /* REMOVED margin positioning */
-  padding: 1.5rem;
-  background: rgba(30, 30, 46, 0.5);
-  border-radius: 15px;
-  border: 1px solid rgba(45, 140, 255, 0.2);
-  order: unset;
-  flex-direction: unset;
-  z-index: 2;
-}
-
-/* Quadruped Image Styling */
-.carousel-slide .diagram-wrapper #quadrupedImg {
-  grid-column: 1 / span 2; /* Row 1, Columns 1-2 */
-  grid-row: 1;
-  width: 200px;
-  height: auto;
-  z-index: 2;
-  transition: transform 0.1s ease-out;
-  transform: scaleX(-1);
-  margin-bottom: 1rem;
-}
-
-/* Quadruped Status Styling */
-.carousel-slide .diagram-wrapper #quadStatus {
-  grid-column: 1 / span 2; /* Row 2, Columns 1-2 */
-  grid-row: 2;
-  margin-top: 0;
-  color: white;
-  font-weight: 500;
-  font-size: 1em;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 0.5em 0.8em;
-  border-radius: 6px;
-  border: 1px solid rgba(45, 140, 255, 0.3);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-/* IMU Plot Styling */
-.carousel-slide .diagram-wrapper #imu-plot {
-  grid-column: 1; /* Row 3, Column 1 */
-  grid-row: 3;
-  /* Inherits .block styling */
-}
-
-/* Camera Pose Styling */
-.carousel-slide .diagram-wrapper #camera-pose {
-  grid-column: 2; /* Row 3, Column 2 */
-  grid-row: 3;
-  /* Inherits .block styling */
-}
-
-/* Block styling for nodes (used by IMU/Camera plots) */
-.carousel-slide .diagram-wrapper .block {
-  background: rgba(30, 30, 46, 0.8);
-  color: #ffffff;
-  padding: 1.2rem 1.5rem;
-  border-radius: 10px;
-  min-width: 200px;
-  width: 100%; /* Make blocks fill grid cell */
-  max-width: 250px;
-  text-align: center;
-  font-weight: 500;
-  font-size: 0.95rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  border: 1px solid #2d8cff;
-  z-index: 2;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  box-sizing: border-box;
-  margin: 0; /* Reset margin, use grid gap */
-}
-
-.carousel-slide .diagram-wrapper .block:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(45, 140, 255, 0.5);
-}
-
-/* Canvas plots styling */
-.carousel-slide .diagram-wrapper .animated-plot canvas,
-.carousel-slide .diagram-wrapper .animated-camera-plot canvas {
-  border-radius: 8px;
-  background: #1e1e2a;
-  border: 1px solid #2d8cff;
-  box-shadow: inset 0 0 5px rgba(45, 140, 255, 0.3);
-  display: block;
-  margin: 0.8rem auto 0.6rem;
-  width: 90%; /* Adjust width within block */
-  max-width: 220px;
-  height: 90px;
-  box-sizing: border-box;
-}
-
-/* Labels styling */
-.carousel-slide .diagram-wrapper .label {
-  color: #eee;
-  font-size: 0.9rem;
-  font-weight: 500;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  margin-top: 0.3rem;
-}
-
-/* Arrow text styling */
-.carousel-slide .diagram-wrapper #arrow-canvas text {
-  fill: #ddd;
-  font-size: 12px;
-  font-weight: 400;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-}
-
-/* Responsive adjustments */
-@media screen and (max-width: 980px) {
-  /* Adjust cluster position for medium screens */
-  .carousel-slide .diagram-wrapper .quad-cluster {
-    right: 2rem;
-    top: 12rem;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .carousel-container {
-    padding: 1.5rem 0; /* Adjust padding for smaller screens */
-    min-height: auto; /* Allow height to adjust */
-  }
-
-  .carousel-content {
-    padding: 1rem;
-    max-width: 100%; /* Allow content to use full width */
-  }
-
-  .carousel-slide {
-    padding: 1rem;
-  }
-
-  .carousel-full-image {
-    max-width: 90%;
-    max-height: 80%;
-  }
-
-  .carousel-slide:nth-child(2) .carousel-full-image {
-    max-width: 85%;
-    max-height: 75%;
-  }
-
-  .carousel-slide .diagram-wrapper {
-    padding: 1.5rem 1rem;
-    min-height: 550px; /* Adjust min-height */
-  }
-
-  .carousel-slide .diagram-wrapper #ur5 {
-    top: 1rem;
-    left: 1rem;
-    position: static; /* Stack UR5 on small screens */
-    margin-bottom: 1rem;
-  }
-
-  .carousel-slide .diagram-wrapper #ur5 img {
-    width: 120px;
-  }
-
-  .carousel-slide .diagram-wrapper .quad-cluster {
-    position: static; /* Stack cluster below UR5 */
-    grid-template-columns: 1fr; /* Stack elements in one column */
-    grid-template-rows: auto auto auto auto; /* Adjust rows: Image, Status, IMU, Camera */
-    margin: 1rem auto; /* Adjust margin */
-    gap: 0.8rem;
-    width: 90%;
-    max-width: 400px;
-  }
-
-  .carousel-slide .diagram-wrapper #quadrupedImg {
-    grid-column: 1; /* Span 1 column */
-    grid-row: 1;
-    width: 150px;
-  }
-
-  .carousel-slide .diagram-wrapper #quadStatus {
-    grid-column: 1; /* Span 1 column */
-    grid-row: 2;
-  }
-
-  .carousel-slide .diagram-wrapper #imu-plot {
-    grid-column: 1; /* Span 1 column */
-    grid-row: 3;
-  }
-
-  .carousel-slide .diagram-wrapper #camera-pose {
-    grid-column: 1; /* Span 1 column */
-    grid-row: 4;
-  }
-
-  .carousel-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 1.5rem;
-    line-height: 36px;
-  }
-
-  .carousel-btn.next {
-    right: 1rem;
-  }
-
-  .carousel-btn.prev {
-    left: 1rem;
-  }
-}
-
-/* === END: User-Provided Carousel CSS === */
-
-/* === Styles derived from the provided #course-info CSS === */
-#course-info {
-  padding: 3em 0 !important;
-  background: #2e3141;
-  color: #fff;
-}
-#course-info h2 {
-  color: #fff;
-}
-#course-info p {
-  color: rgba(255, 255, 255, 0.8);
-}
-
+/* ================================================== */
 /* === Banner Adjustments === */
-#banner .content {
-  background-color: rgba(46, 49, 65, 0.8);
-  padding: 2em;
-  border-radius: 8px;
-}
-#banner header h2 {
-  font-size: 2.5em;
-}
+/* ================================================== */
+#banner .content { background-color: rgba(46, 49, 65, 0.85); padding: 2em; border-radius: 8px; }
+#banner header h2 { font-size: 2.5em; color: #ffffff; }
+#banner p { color: rgba(255, 255, 255, 0.9); }
 
+/* ================================================== */
 /* === Footer Adjustments === */
-#footer {
-  background-color: #2e3141;
-  color: rgba(255, 255, 255, 0.7);
-  padding: 1rem;
-}
-#footer .icons a {
-  color: rgba(255, 255, 255, 0.7);
-}
-#footer .icons a:hover {
-  color: #fff;
-}
-#footer .copyright {
-  color: rgba(255, 255, 255, 0.5);
-}
-#footer .copyright a {
-  color: rgba(255, 255, 255, 0.6);
-  border-bottom-color: rgba(255, 255, 255, 0.3);
-}
-#footer .copyright a:hover {
-  color: #fff;
-  border-bottom-color: #fff;
-}
+/* ================================================== */
+.md-footer { background-color: #1f212b; color: rgba(255, 255, 255, 0.7); padding: 2em 0; font-size: 0.9em; }
+.md-footer a { color: #b0dfff; }
+.md-footer a:hover { color: #ffffff; }
+.md-footer-meta { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1.5em; margin-top: 1.5em; }
+.md-footer-meta__inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+.md-copyright { text-align: left; color: rgba(255, 255, 255, 0.6); }
+.md-social { text-align: right; }
+.md-social__link { display: inline-block; margin-left: 0.8em; color: rgba(255, 255, 255, 0.7); }
+.md-social__link svg { width: 1.5em; height: 1.5em; fill: currentColor; vertical-align: middle; }
+.md-social__link:hover { color: #ffffff; }
+.md-grid { max-width: 1200px; margin-left: auto; margin-right: auto; padding-left: 1em; padding-right: 1em; }
 
-/* Style the tab buttons */
-.tab {
-  overflow: hidden;
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 20px;
-}
-
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  font-size: 1em; /* Adjust as needed */
-  color: inherit; /* Inherit text color */
-  border-bottom: 3px solid transparent; /* For active indicator */
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd; /* Or use template's hover color */
-  color: #333; /* Adjust hover text color */
-}
-
-/* Create an active/current tablink class */
-.tab button.active {
-  /* background-color: #eee; */ /* Optional: subtle background */
-  color: #e85a4f; /* Match primary button color */
-  border-bottom: 3px solid #e85a4f; /* Active indicator */
-}
-
-/* Style the tab content */
-.tabcontent {
-  display: none; /* Hide tabs by default */
-  padding: 20px 12px; /* Added more padding */
-  border-top: none;
-  animation: fadeEffect 0.6s; /* Fading effect */
-}
-/* Make the initially active tab visible */
-.tabcontent.active-content {
-  display: block;
-}
-
-/* Style for pseudo-code blocks (Prism overrides some of this) */
-pre[class*="language-"] {
-  background-color: #282c34; /* Ensure background for Prism */
-  padding: 1em;
-  margin: 0.5em 0;
-  overflow: auto;
-  border-radius: 0.3em;
-}
-code[class*="language-"] {
-  font-family: "Courier New", Courier, monospace;
-  font-size: 0.9em;
-  line-height: 1.4;
-}
-
-
-/* Gallery Styles */
-/* --- Gallery Card Expansion Styles --- */
-.featured-video-section {
-  margin-bottom: 3em;
-  padding-bottom: 2em;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.featured-video-section .major {
-  /* Adjust header margin if needed when it's outside container */
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 90%; /* Limit header width slightly */
-}
-
-.featured-video-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-  height: 0;
-  overflow: hidden;
-  margin-bottom: 1.5em; /* Increased space below video */
-  /* No border-radius needed if it spans full width */
-  background-color: #222;
-}
-
-.featured-video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-.featured-video-description {
-  text-align: center;
-  max-width: 800px; /* Limit description width */
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 1em; /* Add some horizontal padding */
-  color: #ccc;
-  font-size: 1em;
-  line-height: 1.6;
-}
-/* Overlay for background dimming */
-/* Gallery Styles - Adjusted for 2 Columns & Larger Media */
-.gallery-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2em; /* Keep gap between cards */
-  justify-content: center;
-  margin-top: 2em;
-  padding: 0;
-  list-style: none;
-}
-
-.gallery-card {
-  /* --- Two Column Layout --- */
-  flex: 0 1 calc(50% - 1em); /* Don't grow, shrink allowed, basis is 50% minus half the gap */
-  /* --- Increased Max Width --- */
-  max-width: 600px; /* Allow cards to grow larger */
-  /* --- Keep existing styles --- */
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  transition:
-    transform 0.3s ease-in-out,
-    box-shadow 0.3s ease-in-out;
-  cursor: pointer;
-}
-
-/* Apply hover only when NOT expanded */
-.gallery-card:not(.card-expanded):hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
-
-.card-media-container {
-  position: relative;
-  /* --- Increased Media Height (Adjust percentage as desired) --- */
-  padding-bottom: 65%; /* Example: Taller than 16:9 (56.25%) */
-  height: 0;
-  overflow: hidden;
-  background-color: #222;
-}
-
-/* Keep iframe/video/img styles */
-.card-media-container iframe,
-.card-media-container video,
-.card-media-container img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  object-fit: cover; /* Use cover for videos/iframes */
-}
-/* Override for images to fit */
-.card-media-container img {
-  object-fit: contain;
-  background-color: #1a1a1a;
-}
-
-/* --- Keep Drive Link Placeholder Styles --- */
-.card-drive-link-placeholder {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.08);
-  color: #ccc;
-  text-decoration: none;
-  font-size: 1.1em;
-  text-align: center;
-  padding: 1em;
-  transition: background-color 0.2s ease;
-  pointer-events: none;
-}
-.card-drive-link-placeholder .icon {
-  font-size: 2.5em;
-  margin-bottom: 0.5em;
-}
-
-/* --- Keep Card Content Styles --- */
-.card-content {
-  padding: 1.5em;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-.card-content h4 {
-  margin-top: 0;
-  margin-bottom: 0.7em;
-  font-size: 1.25em;
-  color: #e85a4f;
-}
-.card-content p {
-  font-size: 0.95em;
-  color: #ccc;
-  line-height: 1.6;
-  margin-bottom: 1.2em;
-  flex-grow: 1;
-}
-.card-content .button {
-  margin-top: auto;
-  align-self: flex-start;
-  padding: 0.6em 1.4em;
-  font-size: 0.9em;
-  pointer-events: auto;
-}
+/* ================================================== */
+/* === Tab Styles === */
+/* ================================================== */
+.tab { overflow: hidden; border-bottom: 1px solid rgba(255, 255, 255, 0.2); margin-bottom: 20px; }
+.tab button { background-color: transparent; float: left; border: none; outline: none; cursor: pointer; padding: 14px 16px; transition: 0.3s; font-size: 1em; color: rgba(255, 255, 255, 0.7); border-bottom: 3px solid transparent; }
+.tab button:hover { background-color: rgba(255, 255, 255, 0.05); color: #ffffff; }
+.tab button.active { color: #e85a4f; border-bottom: 3px solid #e85a4f; }
+.tabcontent { display: none; padding: 20px 12px; border-top: none; animation: fadeEffect 0.6s; }
+.tabcontent.active-content { display: block; }
 
 /* ================================================== */
 /* === Gallery Styles (Cards & Expansion) === */
 /* ================================================== */
+/* --- Featured Video --- */
+.featured-video-section { margin-bottom: 3em; padding-bottom: 2em; border-bottom: 1px solid rgba(255, 255, 255, 0.15); }
+.featured-video-section .major { margin-left: auto; margin-right: auto; max-width: 90%; }
+.featured-video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 1.5em; background-color: #222; }
+.featured-video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+.featured-video-description { text-align: center; max-width: 800px; margin-left: auto; margin-right: auto; padding: 0 1em; color: rgba(255, 255, 255, 0.85); font-size: 1em; line-height: 1.6; }
 
 /* --- Gallery Container --- */
-.gallery-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2em; /* Space between cards */
-  justify-content: center;
-  margin-top: 2em;
-  padding: 0;
-  list-style: none;
-}
+.gallery-container { display: flex; flex-wrap: wrap; gap: 2em; justify-content: center; margin-top: 2em; padding: 0; list-style: none; }
 
 /* --- Base Gallery Card --- */
-.gallery-card {
-  /* Layout (2 columns on wider screens) */
-  flex: 0 1 calc(50% - 1em); /* Don't grow, shrink allowed, basis 50% minus half gap */
-  max-width: 600px; /* Max width per card */
-
-  /* Appearance */
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-
-  /* Structure & Interaction */
-  display: flex;
-  flex-direction: column;
-  cursor: pointer; /* Indicate clickability for expansion */
-
-  /* Base state for transitions */
-  transform: translate(0, 0) scale(1);
-
-  /* Consolidated Transition Definition */
-  transition:
-    transform 0.35s ease-in-out,
-    box-shadow 0.35s ease-in-out,
-    width 0.35s ease-in-out,
-    height 0.35s ease-in-out,
-    top 0.35s ease-in-out,
-    left 0.35s ease-in-out;
-}
-
-/* Hover effect only when NOT expanded */
-.gallery-card:not(.card-expanded):hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
+.gallery-card { flex: 0 1 calc(50% - 1em); max-width: 600px; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; overflow: hidden; background-color: rgba(255, 255, 255, 0.05); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); display: flex; flex-direction: column; cursor: pointer; transform: translate(0, 0) scale(1); transition: transform 0.35s ease-in-out, box-shadow 0.35s ease-in-out, width 0.35s ease-in-out, height 0.35s ease-in-out, top 0.35s ease-in-out, left 0.35s ease-in-out; }
+.gallery-card:not(.card-expanded):hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); }
 
 /* --- Card Media Area --- */
-.card-media-container {
-  position: relative;
-  padding-bottom: 65%; /* Taller aspect ratio for media */
-  height: 0;
-  overflow: hidden;
-  background-color: #222; /* Dark background */
-}
-
-.card-media-container iframe,
-.card-media-container video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  object-fit: cover; /* Fill container */
-}
-
-.card-media-container img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  object-fit: contain; /* Show full image */
-  background-color: #1a1a1a; /* Dark background for contain */
-}
+.card-media-container { position: relative; padding-bottom: 65%; height: 0; overflow: hidden; background-color: #222; }
+.card-media-container iframe, .card-media-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; object-fit: cover; }
+.card-media-container img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; object-fit: contain; background-color: #1a1a1a; }
 
 /* --- Drive Link Placeholder --- */
-.card-drive-link-placeholder {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.08);
-  color: #ccc;
-  text-decoration: none;
-  font-size: 1.1em;
-  text-align: center;
-  padding: 1em;
-  transition: background-color 0.2s ease;
-  pointer-events: none; /* Click handled by parent card */
-}
-.card-drive-link-placeholder .icon {
-  font-size: 2.5em;
-  margin-bottom: 0.5em;
-}
+.card-drive-link-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: rgba(255, 255, 255, 0.08); color: #ccc; text-decoration: none; font-size: 1.1em; text-align: center; padding: 1em; transition: background-color 0.2s ease; pointer-events: none; }
+.card-drive-link-placeholder .icon { font-size: 2.5em; margin-bottom: 0.5em; }
 
 /* --- Card Content Area --- */
-.card-content {
-  padding: 1.5em;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.card-content h4 {
-  margin-top: 0;
-  margin-bottom: 0.7em;
-  font-size: 1.25em;
-  color: #e85a4f; /* Theme primary color */
-}
-
-.card-content p {
-  font-size: 0.95em;
-  color: #ccc;
-  line-height: 1.6;
-  margin-bottom: 1.2em;
-  flex-grow: 1; /* Push button down */
-}
-
-.card-content .button {
-  margin-top: auto; /* Pushes button to the bottom */
-  align-self: flex-start;
-  padding: 0.6em 1.4em;
-  font-size: 0.9em;
-  pointer-events: auto; /* Ensure buttons are clickable */
-}
+.card-content { padding: 1.5em; flex-grow: 1; display: flex; flex-direction: column; }
+.card-content h4 { margin-top: 0; margin-bottom: 0.7em; font-size: 1.25em; color: #e85a4f; }
+.card-content p { font-size: 0.95em; color: rgba(255, 255, 255, 0.85); line-height: 1.6; margin-bottom: 1.2em; flex-grow: 1; }
+.card-content .button { margin-top: auto; align-self: flex-start; padding: 0.6em 1.4em; font-size: 0.9em; pointer-events: auto; }
 
 /* --- Expansion Overlay --- */
-.card-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.85); /* Slightly darker overlay */
-  z-index: 999;
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.35s ease-in-out,
-    visibility 0s linear 0.35s;
-  cursor: pointer;
-}
-
-.card-overlay.active {
-  opacity: 1;
-  visibility: visible;
-  transition-delay: 0s;
-}
+.card-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.35s ease-in-out, visibility 0s linear 0.35s; cursor: pointer; }
+.card-overlay.active { opacity: 1; visibility: visible; transition-delay: 0s; }
 
 /* --- Expanded Card State --- */
-.gallery-card.card-expanded {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 90vw;
-  height: 90vh;
-  max-width: 1400px;
-  max-height: 95vh;
-  transform: translate(-50%, -50%); /* Centering */
-  z-index: 1000; /* Above overlay */
-  overflow-y: auto; /* Scroll if content overflows */
-  cursor: default;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  /* Transition defined on base .gallery-card */
-}
-
-.gallery-card.card-expanded .card-media-container {
-  height: calc(100% - 80px); /* Approx full height minus content */
-  min-height: 70%;
-  padding-bottom: 0; /* Override aspect ratio padding */
-  background-color: #111; /* Dark background for contain */
-}
-
-.gallery-card.card-expanded .card-media-container img,
-.gallery-card.card-expanded .card-media-container iframe {
-  object-fit: contain; /* Fit media within the expanded area */
-}
-
-.gallery-card.card-expanded .card-content {
-  padding: 1em 1.5em;
-  flex-grow: 0; /* Don't stretch content area */
-  flex-shrink: 0;
-  height: auto;
-  overflow-y: auto; /* Allow content scroll if needed */
-  background-color: rgba(40, 40, 55, 0.95); /* Match card bg */
-}
+.gallery-card.card-expanded { position: fixed; top: 50%; left: 50%; width: 90vw; height: 90vh; max-width: 1400px; max-height: 95vh; transform: translate(-50%, -50%); z-index: 1000; overflow-y: auto; cursor: default; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+.gallery-card.card-expanded .card-media-container { height: calc(100% - 80px); min-height: 70%; padding-bottom: 0; background-color: #111; }
+.gallery-card.card-expanded .card-media-container img, .gallery-card.card-expanded .card-media-container iframe { object-fit: contain; }
+.gallery-card.card-expanded .card-content { padding: 1em 1.5em; flex-grow: 0; flex-shrink: 0; height: auto; overflow-y: auto; background-color: rgba(40, 40, 55, 0.95); }
 
 /* --- Close Button --- */
-.card-close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  width: 35px;
-  height: 35px;
-  background-color: rgba(40, 40, 40, 0.8);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 20px;
-  line-height: 35px;
-  text-align: center;
-  cursor: pointer;
-  z-index: 1001; /* Above card content */
-  transition: background-color 0.2s ease;
-  display: none; /* Hidden by default */
-  opacity: 0.8;
-}
-
-.gallery-card.card-expanded .card-close-btn {
-  display: block; /* Show only when card is expanded */
-}
-
-.card-close-btn:hover {
-  background-color: rgba(232, 90, 79, 0.9); /* Theme primary color */
-  opacity: 1;
-}
+.card-close-btn { position: absolute; top: 10px; right: 15px; width: 35px; height: 35px; background-color: rgba(40, 40, 40, 0.8); color: #fff; border: none; border-radius: 50%; font-size: 20px; line-height: 35px; text-align: center; cursor: pointer; z-index: 1001; transition: background-color 0.2s ease; display: none; opacity: 0.8; }
+.gallery-card.card-expanded .card-close-btn { display: block; }
+.card-close-btn:hover { background-color: rgba(232, 90, 79, 0.9); opacity: 1; }
 
 /* --- Prevent Body Scroll --- */
-body.no-scroll {
-  overflow: hidden;
-}
+body.no-scroll { overflow: hidden; }
 
 /* --- Responsive Adjustments --- */
-/* On smaller screens, revert to single column */
 @media screen and (max-width: 768px) {
-  .gallery-card {
-    flex: 0 1 95%; /* Take up most of the width */
-    max-width: 95%;
-  }
-  .card-media-container {
-    padding-bottom: 56.25%; /* Revert to 16:9 for single column */
-  }
-  .gallery-card.card-expanded {
-    width: 95vw; /* Adjust expanded size for smaller screens */
-    height: 90vh;
-  }
+  .gallery-card { flex: 0 1 95%; max-width: 95%; }
+  .card-media-container { padding-bottom: 56.25%; }
+  .gallery-card.card-expanded { width: 95vw; height: 90vh; }
+
+  /* Diagram Mobile Adjustments */
+  .carousel-container { padding: 1.5rem 0; min-height: auto; height: auto; }
+  .carousel-content { padding: 1rem; max-width: 100%; height: auto; }
+  .carousel-slide { padding: 1rem; }
+  .carousel-full-image { max-width: 90%; max-height: 80%; }
+  .carousel-slide:nth-child(2) .carousel-full-image { max-width: 85%; max-height: 75%; }
+  .carousel-slide .diagram-wrapper { padding: 1.5rem 1rem; min-height: auto; height: auto; display: flex; flex-direction: column; align-items: center; gap: 1.5em; }
+  .carousel-slide .diagram-wrapper #arrow-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: visible; }
+  .carousel-slide .diagram-wrapper #ur5 { position: static; order: 1; margin-bottom: 0; width: fit-content; }
+  .carousel-slide .diagram-wrapper #ur5 img { width: 120px; }
+  .carousel-slide .diagram-wrapper .quad-cluster { position: static; order: 2; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; width: 90%; max-width: 400px; padding: 1rem; margin: 0; background: rgba(30, 30, 46, 0.5); border-radius: 15px; border: 1px solid rgba(45, 140, 255, 0.2); z-index: 2; }
+  .carousel-slide .diagram-wrapper #quadrupedImg { width: 150px; margin-bottom: 0.5rem; }
+  .carousel-slide .diagram-wrapper #quadStatus { margin-top: 0.5rem; color: white; font-weight: 500; font-size: 1em; background-color: rgba(0, 0, 0, 0.5); padding: 0.5em 0.8em; border-radius: 6px; border: 1px solid rgba(45, 140, 255, 0.3); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); text-align: center; }
+  .carousel-slide .diagram-wrapper #imu-plot { order: 3; width: 80%; max-width: 300px; margin: 0; }
+  .carousel-slide .diagram-wrapper #camera-pose { order: 4; width: 80%; max-width: 300px; margin: 0; }
+  .carousel-slide .diagram-wrapper #imuCanvas, .carousel-slide .diagram-wrapper #cameraCanvas { display: none; }
+  .carousel-slide .diagram-wrapper #imu-plot, .carousel-slide .diagram-wrapper #camera-pose { min-height: 80px; display: flex; align-items: center; justify-content: center; background: rgba(30, 30, 46, 0.9); }
+  .carousel-slide .diagram-wrapper #imu-plot .label, .carousel-slide .diagram-wrapper #camera-pose .label { margin-top: 0; font-size: 1em; }
+  .carousel-btn { width: 40px; height: 40px; font-size: 1.5rem; line-height: 36px; }
+  .carousel-btn.next { right: 1rem; }
+  .carousel-btn.prev { left: 1rem; }
 }
-
-/* ================================================== */
-/* === End Gallery Styles === */
-/* ================================================== */
-
 
 /* Simple fade effect */
 @keyframes fadeEffect {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

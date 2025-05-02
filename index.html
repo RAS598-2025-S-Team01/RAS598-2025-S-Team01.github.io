@@ -9,6 +9,70 @@
     <noscript
       ><link rel="stylesheet" href="static/assets/css/noscript.css"
     /></noscript>
+    <style>
+      /* Meet the Team Section Styling */
+      #meet-the-team {
+        padding: 4em 0;
+        background: #2e3141; /* Matches the course info section */
+        color: #fff;
+        text-align: center;
+      }
+
+      #meet-the-team .major h2 {
+        font-size: 2.5em;
+        margin-bottom: 0.5em;
+        color: #fff;
+      }
+
+      #meet-the-team .major p {
+        font-size: 1.2em;
+        color: #ccc;
+        margin-bottom: 2em;
+      }
+
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2em;
+        justify-items: center;
+        align-items: center;
+      }
+
+      .team-member {
+        background: #3a3d4f; /* Slightly lighter than the section background */
+        border: 1px solid #444;
+        border-radius: 8px;
+        padding: 1.5em;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .team-member:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+      }
+
+      .team-member img {
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+        border-radius: 50%;
+        margin-bottom: 1em;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .team-member h3 {
+        font-size: 1.5em;
+        color: #fff;
+        margin-bottom: 0.5em;
+      }
+
+      .team-member p {
+        font-size: 1em;
+        color: #ccc;
+        margin: 0;
+      }
+    </style>
   </head>
   <body class="is-preload landing">
     <div id="page-wrapper">
@@ -22,17 +86,6 @@
             <li><a href="gallery/code_explaination.html">Code</a></li>
             <li><a href="gallery/data.html">Data</a></li>
             <li><a href="gallery/gallery_images.html">Gallery</a></li>
-            <!-- Keep other nav items if desired -->
-            <!-- Example Dropdown:
-                  <li>
-                    <a href="#">Components</a>
-                    <ul>
-                      <li><a href="left-sidebar.html">Left Sidebar</a></li>
-                      <li><a href="right-sidebar.html">Right Sidebar</a></li>
-                      <li><a href="no-sidebar.html">No Sidebar</a></li>
-                    </ul>
-                  </li>
-                  -->
             <li>
               <a
                 href="https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01.github.io"
@@ -83,16 +136,52 @@
               <strong>Professor:</strong> Dr. Daniel M. Aukes
             </p>
           </header>
-
-          <ul class="actions special">
-            <li>
-              <a href="about/about.html" class="button primary">Next: About</a>
-            </li>
-          </ul>
         </div>
       </section>
 
-      <!-- NEW FOOTER -->
+      <!-- Meet the Team -->
+      <section id="meet-the-team">
+        <div class="container">
+          <header class="major">
+            <h2>Meet the Team</h2>
+            <p>Get to know the members of Team 01!</p>
+          </header>
+          <div class="team-grid">
+            <div class="team-member">
+              <img
+                src="static/assets/css/images/jeevan.jpeg"
+                alt="Jeevan Hebbal Manjunath"
+              />
+              <h3>Jeevan Hebbal Manjunath</h3>
+              <p>Engineer, Developer, Robotics Enthusiast</p>
+            </div>
+            <div class="team-member">
+              <img
+                src="static/assets/css/images/yeshwanth.jpeg"
+                alt="Yeshwanth Reddy Gurreddy"
+              />
+              <h3>Yeshwanth Reddy Gurreddy</h3>
+              <p>Engineer, Developer, AI Specialist</p>
+            </div>
+            <div class="team-member">
+              <img
+                src="static/assets/css/images/anirudha.jpeg"
+                alt="Aniruddha Anand Damle"
+              />
+              <h3>Aniruddha Anand Damle</h3>
+              <p>Engineer, Developer, Robotics Researcher</p>
+            </div>
+          </div>
+        </div>
+        <br />
+        <ul class="actions special">
+          <li>
+            <a href="about/about.html" class="button primary">Next: About</a>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Footer -->
       <footer class="md-footer">
         <nav class="md-footer__inner md-grid" aria-label="Footer">
           <!-- Removed Previous/Next Links -->
@@ -108,7 +197,6 @@
           </div>
         </div>
       </footer>
-      <!-- END NEW FOOTER -->
     </div>
 
     <!-- Scripts -->
