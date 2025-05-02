@@ -187,27 +187,29 @@ quad/
 *   **Quadruped Specific Drivers/Interfaces:** Any necessary low-level drivers or libraries for communicating with the quadruped hardware if not handled entirely by the `connect` node.
 *   **OpenCV:** Required for `orb_pose_estimator_node.py`.
 
+Note: Install all requirements using the command:
+    ```
+    pip install -r requirements.txt
+    ```
 ## 8. Installation and Building
 
 1.  **Create/Navigate to ROS 2 Workspace:**
     ```bash
-    mkdir -p ~/ros2_ws/src
+    mkdir -p ~/ros2_ws/
     cd ~/ros2_ws
     ```
 
 2.  **Clone Repository:**
-    Assuming the `quad` package shown in the tree is directly within the `project_code` repository:
+    Assuming the `quad` package shown in the tree is directly within the `RAS598-2025-S-Team01-code` repository:
     ```bash
     # Clone the main repository into your workspace's src directory
-    git clone https://github.com/RAS598-2025-S-Team01/project_code.git src/project_code
-    # The 'quad' package will then be at ~/ros2_ws/src/project_code/quad
+    git clone https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01-code ~/ros2_ws
     ```
     *Adjust the clone command if the `quad` package is at the root of the repository.*
 
 3.  **Install Dependencies:**
     Navigate to the workspace root (`~/ros2_ws`) and install dependencies listed in `package.xml` files within the `src` directory.
     ```bash
-    cd ~/ros2_ws
     rosdep install --from-paths src --ignore-src -r -y
     ```
     *This command will install system dependencies. Ensure Python dependencies like Flask and the WebSocket/HTTP libraries are correctly listed in `package.xml`'s `<exec_depend>` tags or install them manually via pip (`pip install Flask websockets requests ...`).*
@@ -271,7 +273,7 @@ To run the full system, you need to launch the core components concurrently. Thi
 
 4.  **Access Web Interface:**
     *   Open a web browser on a device connected to the same network as the computer running the nodes.
-    *   Navigate to the URL provided in Terminal 3 (e.g., `http://<your_robot_ip_or_127.0.0.1>:5000`).
+    *   Navigate to the URL provided in Terminal 3 (e.g., `http://127.0.0.1:5000`).
     *   Interact with the UI to monitor data and control the quadruped.
 
 *(Optional: Consider creating a ROS 2 launch file (`.launch.py`) within your `quad` package to start all three nodes (`connect`, `ur5`, `app`) and potentially the pose estimation nodes with a single command for convenience.)*
