@@ -76,9 +76,13 @@
 #main.wrapper ol > li::before {
   background: #e44c65;
   color: white;
+  
 }
 #main.wrapper ul > li::before {
   color: #e44c65;
+}
+.wrapper {
+  padding: 6em 0 0em 0;
 }
 #main.wrapper figure {
   background-color: rgba(255, 255, 255, 0.03);
@@ -196,6 +200,11 @@
   top: 0.1em;
   font-size: 1em;
 }
+#navigation-button > li::before {
+  content: "" !important;
+ 
+}
+
 #goals ul > li::before {
   content: "\f140";
 }
@@ -231,6 +240,15 @@ th {
 .button.primary.icon.data-link:hover {
   background-color: #d63a53;
   transform: translateY(-2px);
+}
+
+/* Remove default icons/pseudo-elements from specific action buttons */
+.actions.special li a.button::before,
+.actions.special li a.button::after {
+  display: none !important;
+  content: none !important;
+  margin-right: 0 !important; /* Remove any spacing added for the icon */
+  margin-left: 0 !important;
 }
 
 #header nav {
@@ -681,16 +699,6 @@ th {
   border-bottom-color: #fff;
 }
 
-/* === Keyframes === */
-@keyframes fade {
-  from {
-    opacity: 0.5;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 /* Style the tab buttons */
 .tab {
   overflow: hidden;
@@ -719,7 +727,7 @@ th {
 
 /* Create an active/current tablink class */
 .tab button.active {
-  background-color: #eee; /* Or use template's active color */
+  /* background-color: #eee; */ /* Optional: subtle background */
   color: #e85a4f; /* Match primary button color */
   border-bottom: 3px solid #e85a4f; /* Active indicator */
 }
@@ -727,60 +735,447 @@ th {
 /* Style the tab content */
 .tabcontent {
   display: none; /* Hide tabs by default */
-  padding: 6px 12px;
+  padding: 20px 12px; /* Added more padding */
   border-top: none;
-  animation: fadeEffect 1s; /* Fading effect */
+  animation: fadeEffect 0.6s; /* Fading effect */
 }
-/* Style the tab buttons */
-.tab {
+/* Make the initially active tab visible */
+.tabcontent.active-content {
+  display: block;
+}
+
+/* Style for pseudo-code blocks (Prism overrides some of this) */
+pre[class*="language-"] {
+  background-color: #282c34; /* Ensure background for Prism */
+  padding: 1em;
+  margin: 0.5em 0;
+  overflow: auto;
+  border-radius: 0.3em;
+}
+code[class*="language-"] {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+
+/* Gallery Styles */
+/* --- Gallery Card Expansion Styles --- */
+.featured-video-section {
+  margin-bottom: 3em;
+  padding-bottom: 2em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.featured-video-section .major {
+  /* Adjust header margin if needed when it's outside container */
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 90%; /* Limit header width slightly */
+}
+
+.featured-video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
   overflow: hidden;
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 20px;
+  margin-bottom: 1.5em; /* Increased space below video */
+  /* No border-radius needed if it spans full width */
+  background-color: #222;
 }
 
-.tab button {
-  background-color: inherit;
-  float: left;
+.featured-video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   border: none;
-  outline: none;
+}
+
+.featured-video-description {
+  text-align: center;
+  max-width: 800px; /* Limit description width */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1em; /* Add some horizontal padding */
+  color: #ccc;
+  font-size: 1em;
+  line-height: 1.6;
+}
+/* Overlay for background dimming */
+/* Gallery Styles - Adjusted for 2 Columns & Larger Media */
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em; /* Keep gap between cards */
+  justify-content: center;
+  margin-top: 2em;
+  padding: 0;
+  list-style: none;
+}
+
+.gallery-card {
+  /* --- Two Column Layout --- */
+  flex: 0 1 calc(50% - 1em); /* Don't grow, shrink allowed, basis is 50% minus half the gap */
+  /* --- Increased Max Width --- */
+  max-width: 600px; /* Allow cards to grow larger */
+  /* --- Keep existing styles --- */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
   cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  font-size: 1em; /* Adjust as needed */
-  color: inherit; /* Inherit text color */
-  border-bottom: 3px solid transparent; /* For active indicator */
 }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd; /* Or use template's hover color */
-  color: #333; /* Adjust hover text color */
+/* Apply hover only when NOT expanded */
+.gallery-card:not(.card-expanded):hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #eee; /* Or use template's active color */
-  color: #e85a4f; /* Match primary button color */
-  border-bottom: 3px solid #e85a4f; /* Active indicator */
+.card-media-container {
+  position: relative;
+  /* --- Increased Media Height (Adjust percentage as desired) --- */
+  padding-bottom: 65%; /* Example: Taller than 16:9 (56.25%) */
+  height: 0;
+  overflow: hidden;
+  background-color: #222;
 }
 
-/* Style the tab content */
-.tabcontent {
-  display: none; /* Hide tabs by default */
-  padding: 6px 12px;
-  border-top: none;
-  animation: fadeEffect 1s; /* Fading effect */
+/* Keep iframe/video/img styles */
+.card-media-container iframe,
+.card-media-container video,
+.card-media-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  object-fit: cover; /* Use cover for videos/iframes */
+}
+/* Override for images to fit */
+.card-media-container img {
+  object-fit: contain;
+  background-color: #1a1a1a;
 }
 
-/* Simple fade effect */
-@keyframes fadeEffect {
-  from {
-    opacity: 0;
+/* --- Keep Drive Link Placeholder Styles --- */
+.card-drive-link-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+  text-decoration: none;
+  font-size: 1.1em;
+  text-align: center;
+  padding: 1em;
+  transition: background-color 0.2s ease;
+  pointer-events: none;
+}
+.card-drive-link-placeholder .icon {
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+}
+
+/* --- Keep Card Content Styles --- */
+.card-content {
+  padding: 1.5em;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.card-content h4 {
+  margin-top: 0;
+  margin-bottom: 0.7em;
+  font-size: 1.25em;
+  color: #e85a4f;
+}
+.card-content p {
+  font-size: 0.95em;
+  color: #ccc;
+  line-height: 1.6;
+  margin-bottom: 1.2em;
+  flex-grow: 1;
+}
+.card-content .button {
+  margin-top: auto;
+  align-self: flex-start;
+  padding: 0.6em 1.4em;
+  font-size: 0.9em;
+  pointer-events: auto;
+}
+
+/* ================================================== */
+/* === Gallery Styles (Cards & Expansion) === */
+/* ================================================== */
+
+/* --- Gallery Container --- */
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em; /* Space between cards */
+  justify-content: center;
+  margin-top: 2em;
+  padding: 0;
+  list-style: none;
+}
+
+/* --- Base Gallery Card --- */
+.gallery-card {
+  /* Layout (2 columns on wider screens) */
+  flex: 0 1 calc(50% - 1em); /* Don't grow, shrink allowed, basis 50% minus half gap */
+  max-width: 600px; /* Max width per card */
+
+  /* Appearance */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  /* Structure & Interaction */
+  display: flex;
+  flex-direction: column;
+  cursor: pointer; /* Indicate clickability for expansion */
+
+  /* Base state for transitions */
+  transform: translate(0, 0) scale(1);
+
+  /* Consolidated Transition Definition */
+  transition:
+    transform 0.35s ease-in-out,
+    box-shadow 0.35s ease-in-out,
+    width 0.35s ease-in-out,
+    height 0.35s ease-in-out,
+    top 0.35s ease-in-out,
+    left 0.35s ease-in-out;
+}
+
+/* Hover effect only when NOT expanded */
+.gallery-card:not(.card-expanded):hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Card Media Area --- */
+.card-media-container {
+  position: relative;
+  padding-bottom: 65%; /* Taller aspect ratio for media */
+  height: 0;
+  overflow: hidden;
+  background-color: #222; /* Dark background */
+}
+
+.card-media-container iframe,
+.card-media-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  object-fit: cover; /* Fill container */
+}
+
+.card-media-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  object-fit: contain; /* Show full image */
+  background-color: #1a1a1a; /* Dark background for contain */
+}
+
+/* --- Drive Link Placeholder --- */
+.card-drive-link-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+  text-decoration: none;
+  font-size: 1.1em;
+  text-align: center;
+  padding: 1em;
+  transition: background-color 0.2s ease;
+  pointer-events: none; /* Click handled by parent card */
+}
+.card-drive-link-placeholder .icon {
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+}
+
+/* --- Card Content Area --- */
+.card-content {
+  padding: 1.5em;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-content h4 {
+  margin-top: 0;
+  margin-bottom: 0.7em;
+  font-size: 1.25em;
+  color: #e85a4f; /* Theme primary color */
+}
+
+.card-content p {
+  font-size: 0.95em;
+  color: #ccc;
+  line-height: 1.6;
+  margin-bottom: 1.2em;
+  flex-grow: 1; /* Push button down */
+}
+
+.card-content .button {
+  margin-top: auto; /* Pushes button to the bottom */
+  align-self: flex-start;
+  padding: 0.6em 1.4em;
+  font-size: 0.9em;
+  pointer-events: auto; /* Ensure buttons are clickable */
+}
+
+/* --- Expansion Overlay --- */
+.card-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85); /* Slightly darker overlay */
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.35s ease-in-out,
+    visibility 0s linear 0.35s;
+  cursor: pointer;
+}
+
+.card-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* --- Expanded Card State --- */
+.gallery-card.card-expanded {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 90vw;
+  height: 90vh;
+  max-width: 1400px;
+  max-height: 95vh;
+  transform: translate(-50%, -50%); /* Centering */
+  z-index: 1000; /* Above overlay */
+  overflow-y: auto; /* Scroll if content overflows */
+  cursor: default;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  /* Transition defined on base .gallery-card */
+}
+
+.gallery-card.card-expanded .card-media-container {
+  height: calc(100% - 80px); /* Approx full height minus content */
+  min-height: 70%;
+  padding-bottom: 0; /* Override aspect ratio padding */
+  background-color: #111; /* Dark background for contain */
+}
+
+.gallery-card.card-expanded .card-media-container img,
+.gallery-card.card-expanded .card-media-container iframe {
+  object-fit: contain; /* Fit media within the expanded area */
+}
+
+.gallery-card.card-expanded .card-content {
+  padding: 1em 1.5em;
+  flex-grow: 0; /* Don't stretch content area */
+  flex-shrink: 0;
+  height: auto;
+  overflow-y: auto; /* Allow content scroll if needed */
+  background-color: rgba(40, 40, 55, 0.95); /* Match card bg */
+}
+
+/* --- Close Button --- */
+.card-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  background-color: rgba(40, 40, 40, 0.8);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 35px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 1001; /* Above card content */
+  transition: background-color 0.2s ease;
+  display: none; /* Hidden by default */
+  opacity: 0.8;
+}
+
+.gallery-card.card-expanded .card-close-btn {
+  display: block; /* Show only when card is expanded */
+}
+
+.card-close-btn:hover {
+  background-color: rgba(232, 90, 79, 0.9); /* Theme primary color */
+  opacity: 1;
+}
+
+/* --- Prevent Body Scroll --- */
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* --- Responsive Adjustments --- */
+/* On smaller screens, revert to single column */
+@media screen and (max-width: 768px) {
+  .gallery-card {
+    flex: 0 1 95%; /* Take up most of the width */
+    max-width: 95%;
   }
-  to {
-    opacity: 1;
+  .card-media-container {
+    padding-bottom: 56.25%; /* Revert to 16:9 for single column */
+  }
+  .gallery-card.card-expanded {
+    width: 95vw; /* Adjust expanded size for smaller screens */
+    height: 90vh;
   }
 }
+
+/* ================================================== */
+/* === End Gallery Styles === */
+/* ================================================== */
+
+
 /* Simple fade effect */
 @keyframes fadeEffect {
   from {

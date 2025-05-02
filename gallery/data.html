@@ -4,18 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Team 01 - Experimental Data</title>
-    <link rel="stylesheet" href="../assets/css/main.css" />
-    <link rel="stylesheet" href="../assets/css/custom.css" />
+    <link rel="stylesheet" href="../static/assets/css/main.css" />
+    <link rel="stylesheet" href="../static/assets/css/custom.css" />
     <!-- Your custom styles if any -->
     <noscript
-      ><link rel="stylesheet" href="../assets/css/noscript.css"
+      ><link rel="stylesheet" href="../static/assets/css/noscript.css"
     /></noscript>
   </head>
   <body class="is-preload landing">
     <div id="page-wrapper">
       <!-- Header -->
       <header id="header">
-        <h1 id="logo"><a href="index.html">Team 01</a></h1>
+        <h1 id="logo"><a href="../index.html">Team 01</a></h1>
+        <!-- Use index.html for logo link -->
         <nav id="nav">
           <ul>
             <li><a href="../index.html">Home</a></li>
@@ -23,12 +24,9 @@
             <li><a href="../gallery/code_explaination.html">Code</a></li>
             <li><a href="../gallery/data.html">Data</a></li>
             <li><a href="../gallery/gallery_images.html">Gallery</a></li>
-
-            <!-- Current Page -->
-            <!-- Keep other nav items if desired -->
             <li>
               <a
-                href="https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01.github.io"
+                href="https://github.com/RAS598-2025-S-Team01/project_code"
                 class="button primary"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -45,7 +43,8 @@
           <header class="major">
             <h2>Experimental Data</h2>
             <p>
-              Access the datasets collected during our Fusion Robotics project.
+              Access the datasets collected during our Fusion Robotics project,
+              understand their format, and how they are processed.
             </p>
           </header>
 
@@ -53,10 +52,10 @@
           <section>
             <h3>Open Data for Reproducibility and Research</h3>
             <p class="data-description">
-              In the spirit of open science and collaboration, we are sharing
-              the experimental data collected during the development and testing
-              of our Quadruped-UR5 testbed. This data primarily consists of ROS
-              bag files containing timestamped sensor readings and system states
+              In the spirit of open source and collaboration, we are sharing the
+              experimental data collected during the development and testing of
+              our Quadruped-UR5 testbed. This data primarily consists of ROS bag
+              files containing timestamped sensor readings and system states
               recorded during autonomous runs.
             </p>
             <p class="data-description">
@@ -76,118 +75,170 @@
 
             <h4>Accessing the Data</h4>
             <p>
-              The datasets are hosted on a persistent storage platform to ensure
-              long-term availability. Please follow the link below to access the
-              data repository:
+              The datasets are hosted on GitHub within the project repository.
+              Please follow the link below to access the data directory:
             </p>
             <p>
               <a
-                href="[PLACEHOLDER: Link to Persistent Data Storage - e.g., Zenodo, Figshare, GitHub LFS, non-ASU Google Drive]"
+                href="https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01-code/tree/master/dataset"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="button primary icon solid fa-database data-link"
               >
-                Access Experimental Data Repository
+                Access Experimental Data on GitHub
               </a>
             </p>
-            <p class="persistence-note">
-              <em
-                >Note: This link points to a third-party platform chosen for
-                data persistence beyond individual ASU affiliations. We aim to
-                keep this link active long-term.</em
-              >
-            </p>
+            <!-- Removed persistence note as it's now in the main repo -->
 
-            <h4>Data Format</h4>
+            <h4>Data Format and Content</h4>
             <p>
               The data is primarily stored as ROS 2 bag files (`.db3` or
               directory format). You will need a ROS 2 Humble installation to
-              easily inspect and replay these bags using tools like `ros2 bag
-              info` and `ros2 bag play`.
+              easily inspect and replay these bags using tools like
+              <code>ros2 bag info</code> and <code>ros2 bag play</code>.
             </p>
             <p>Key topics typically included in the bags are:</p>
             <ul>
-              <li><code>/imu/data</code></li>
-              <li><code>/imu/orientation</code></li>
-              <li><code>/imu/pose_estimate</code></li>
-              <li><code>/orb/pose</code></li>
-              <li><code>/servo/state</code></li>
               <li>
-                <code>/tf</code> and <code>/tf_static</code> (for coordinate
-                frames)
+                <code>/imu/data</code> (sensor_msgs/Imu): Raw readings from the
+                IMU, including linear acceleration, angular velocity, and raw
+                orientation quaternion (often directly from the sensor's
+                internal filter).
               </li>
               <li>
-                <em>(Potentially others like raw camera feeds if recorded)</em>
+                <code>/imu/orientation</code> (geometry_msgs/Quaternion):
+                Orientation calculated by the
+                <code>pose_estimator_node</code> after bias removal and gyro
+                integration.
+              </li>
+              <li>
+                <code>/imu/pose_estimate</code> (geometry_msgs/PoseStamped):
+                Full pose (position + orientation) estimated purely from IMU
+                data integration by the <code>pose_estimator_node</code>.
+                Subject to drift.
+              </li>
+              <li>
+                <code>/orb/pose</code> (geometry_msgs/PoseStamped): Full pose
+                estimated from visual features/optical flow by the
+                <code>orb_pose_estimator_node</code>. Less prone to drift over
+                time but potentially noisier or slower.
+              </li>
+              <li>
+                <code>/servo/state</code> (std_msgs/Float64MultiArray): Actual
+                reported positions of the 8 quadruped servos, read back from the
+                ESP32.
+              </li>
+              <li>
+                <code>/servo/command</code> (std_msgs/Float64MultiArray):
+                Commanded positions sent to the servos by the
+                <code>CPGControllerNode</code>.
+              </li>
+              <li>
+                <code>/tf</code> and <code>/tf_static</code>: Coordinate frame
+                transformations used within the system.
+              </li>
+            </ul>
+
+            <h4>Data Filtering and Usage</h4>
+            <p>The raw sensor data undergoes processing within our nodes:</p>
+            <ul>
+              <li>
+                <strong>IMU Bias Removal:</strong> The
+                <code>pose_estimator_node</code> performs an initial calibration
+                to calculate accelerometer and gyroscope biases, which are then
+                subtracted from subsequent raw readings.
+              </li>
+              <li>
+                <strong>IMU Filtering:</strong> Simple low-pass filtering (using
+                an exponential moving average with `alpha = 0.8`) is applied to
+                the bias-corrected accelerometer and gyroscope data within the
+                <code>pose_estimator_node</code> to reduce noise before
+                integration. Velocity estimates are also decayed over time to
+                mitigate drift.
+              </li>
+              <li>
+                <strong>Visual Pose Smoothing:</strong> The
+                <code>orb_pose_estimator_node</code> uses a Savitzky-Golay
+                filter (`savgol_filter` with window size 11, polynomial order 2)
+                on a buffer of recent translation estimates to smooth the output
+                visual pose (`/orb/pose`).
+              </li>
+              <li>
+                <strong>UI Plotting:</strong> The <code>plotter_node</code>
+                subscribes to most of the key topics (IMU data, servo states,
+                both pose estimates) and stores them in a buffer
+                (<code>shared_data</code>). The Flask web application
+                (<code>app.py</code>) serves this buffered data to the web UI
+                for real-time visualization.
+              </li>
+              <li>
+                <strong>Pose Estimation:</strong> The filtered IMU data is
+                integrated in <code>pose_estimator_node</code> to produce
+                <code>/imu/pose_estimate</code>. Visual features and optical
+                flow are processed in <code>orb_pose_estimator_node</code> to
+                produce <code>/orb/pose</code>. These two estimates can be
+                compared (e.g., visually in the UI) to assess performance and
+                drift characteristics.
               </li>
             </ul>
             <p>
-              Please refer to any accompanying README files within the data
-              repository for specific details about individual datasets or
-              recording conditions.
+              Please refer to any accompanying
+              <a
+                href="https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01-code/blob/master/README.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                >README.md</a
+              >
+              files within the data repository for specific details about
+              individual datasets or recording conditions.
             </p>
           </section>
         </div>
         <!-- /container -->
       </section>
       <!-- /main -->
+      <ul class="actions special">
+        <li>
+          <a href="../gallery/code_explaination.html" class="button primary"
+            >Previous: Code</a
+          >
+        </li>
+        <li>
+          <a href="../gallery/gallery_images.html" class="button primary"
+            >Next: Gallery</a
+          >
+        </li>
+      </ul>
+      <!-- NEW FOOTER -->
+      <footer class="md-footer">
+        <nav class="md-footer__inner md-grid" aria-label="Footer">
+          <!-- Removed Previous/Next Links -->
+        </nav>
 
-      <!-- Footer -->
-      <footer id="footer">
-        <ul class="icons">
-          <li>
-            <a href="#" class="icon brands alt fa-twitter"
-              ><span class="label">Twitter</span></a
-            >
-          </li>
-          <li>
-            <a href="#" class="icon brands alt fa-facebook-f"
-              ><span class="label">Facebook</span></a
-            >
-          </li>
-          <li>
-            <a href="#" class="icon brands alt fa-linkedin-in"
-              ><span class="label">LinkedIn</span></a
-            >
-          </li>
-          <li>
-            <a href="#" class="icon brands alt fa-instagram"
-              ><span class="label">Instagram</span></a
-            >
-          </li>
-          <li>
-            <a
-              href="https://github.com/RAS598-2025-S-Team01"
-              class="icon brands alt fa-github"
-              target="_blank"
-              rel="noopener noreferrer"
-              ><span class="label">GitHub</span></a
-            >
-          </li>
-          <li>
-            <a href="#" class="icon solid alt fa-envelope"
-              ><span class="label">Email</span></a
-            >
-          </li>
-        </ul>
-        <ul class="copyright">
-          <li>&copy; Team 01. All rights reserved.</li>
-          <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-          <li>Course: RAS598 S2025, ASU</li>
-        </ul>
+        <div class="md-footer-meta md-typeset">
+          <div class="md-footer-meta__inner md-grid">
+            <div class="md-copyright">
+              <div class="md-copyright__highlight">
+                Copyright &copy; 2024 RAS598-2025-S-Team01
+              </div>
+            </div>
+          </div>
+        </div>
       </footer>
+      <!-- END NEW FOOTER -->
     </div>
     <!-- /page-wrapper -->
 
     <!-- Scripts -->
-    <script src="../assets/js/jquery.min.js"></script>
-    <script src="../assets/js/jquery.scrolly.min.js"></script>
-    <script src="../assets/js/jquery.dropotron.min.js"></script>
-    <script src="../assets/js/jquery.scrollex.min.js"></script>
-    <script src="../assets/js/browser.min.js"></script>
-    <script src="../assets/js/breakpoints.min.js"></script>
-    <script src="../assets/js/util.js"></script>
-    <script src="../assets/js/main.js"></script>
-    <!-- <script src="assets/js/custom.js"></script> -->
+    <script src="../static/assets/js/jquery.min.js"></script>
+    <script src="../static/assets/js/jquery.scrolly.min.js"></script>
+    <script src="../static/assets/js/jquery.dropotron.min.js"></script>
+    <script src="../static/assets/js/jquery.scrollex.min.js"></script>
+    <script src="../static/assets/js/browser.min.js"></script>
+    <script src="../static/assets/js/breakpoints.min.js"></script>
+    <script src="../static/assets/js/util.js"></script>
+    <script src="../static/assets/js/main.js"></script>
+    <!-- <script src="../static/assets/js/custom.js"></script> -->
     <!-- Include if you have custom JS for this page -->
   </body>
 </html>

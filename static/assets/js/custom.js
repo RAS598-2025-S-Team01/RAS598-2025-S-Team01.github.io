@@ -1,4 +1,3 @@
-// --- PASTE THE ENTIRE JAVASCRIPT BLOCK FROM THE PREVIOUS ANSWER HERE ---
 console.log("Custom JS File Loaded"); // Check if file loads
 
 // --- Global variables for animations --- //
@@ -77,7 +76,7 @@ function changeSlide(delta) {
 }
 
 // --- Diagram Animation Functions --- //
-
+// ... (Keep all your animation functions: _imuPlotLoop, startIMUAnimation, _cameraPlotLoop, etc.) ...
 // --- IMU Plot ---
 function _imuPlotLoop(ctx, width, height, t) {
   // Check flag at the beginning of each frame
@@ -714,7 +713,8 @@ function initializeScrollAnimations() {
 }
 
 // --- Tab Functionality --- //
-function openTab(evt, tabName) {
+// Make openTab globally accessible for onclick attributes
+window.openTab = function(evt, tabName) {
   // Declare all variables
   var i, tabcontent, tablinks;
 
@@ -767,117 +767,77 @@ function openTab(evt, tabName) {
 
 
 // --- Initialization --- //
+console.log("Custom JS File Loaded for Gallery");
+
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM Content Loaded - Initializing Custom JS...");
+  const galleryContainer = document.querySelector(".gallery-container");
+  const overlay = document.querySelector(".card-overlay");
 
-  // Initialize Carousel if container exists
-  const carouselContainer = document.querySelector(".carousel-container");
-  if (carouselContainer) {
-    console.log("DEBUG: Initializing Carousel");
-    const slides = carouselContainer.querySelectorAll(".carousel-slide");
-    if (slides.length > 0) {
-      // Initialize slide visibility and active state
-      slides.forEach((slide, index) => {
-        if (index === currentSlide) {
-          slide.classList.add("active");
-          slide.style.visibility = "visible";
-          slide.style.opacity = "1";
-          console.log(`DEBUG: Initial active slide set to ${index}`);
-        } else {
-          slide.classList.remove("active");
-          slide.style.visibility = "hidden";
-          slide.style.opacity = "0";
-        }
-      });
-    } else {
-      console.log("DEBUG: No slides found in carousel container.");
-    }
-
-    // Add button listeners
-    const prevButton = carouselContainer.querySelector(".carousel-btn.prev");
-    const nextButton = carouselContainer.querySelector(".carousel-btn.next");
-    if (prevButton) {
-      prevButton.addEventListener("click", () => changeSlide(-1));
-      console.log("DEBUG: Prev button listener added.");
-    } else {
-      console.log("DEBUG: Prev button not found.");
-    }
-    if (nextButton) {
-      nextButton.addEventListener("click", () => changeSlide(1));
-      console.log("DEBUG: Next button listener added.");
-    } else {
-      console.log("DEBUG: Next button not found.");
-    }
-
-    // Check if initial slide is the diagram slide and start animations
-    if (currentSlide === diagramSlideIndex) {
-      console.log("DEBUG: Initial slide is diagram slide. Starting animations.");
-      // Delay slightly to ensure DOM is fully ready and CSS applied
-      setTimeout(startDiagramAnimations, 250);
-    }
-  } else {
-    console.log("DEBUG: Carousel container not found.");
+  if (!galleryContainer || !overlay) {
+    console.warn("Gallery container or overlay not found. Expansion disabled.");
+    return;
   }
 
-  // Initialize Scroll Animations
-  // Check if we are on a page that likely has sections to animate
-  if (
-    document.querySelector('#main.wrapper[class*="style"] .container > section')
-  ) {
-    initializeScrollAnimations();
-  } else {
-    console.log(
-      "DEBUG: Scroll animation target structure not found on this page."
+  let currentlyExpandedCard = null;
+
+  // Function to close any expanded card
+  function closeExpandedCard() {
+    if (currentlyExpandedCard) {
+      currentlyExpandedCard.classList.remove("card-expanded");
+      overlay.classList.remove("active");
+      document.body.classList.remove("no-scroll"); // Allow body scroll again
+      currentlyExpandedCard = null;
+    }
+  }
+
+  // Event listener for clicks within the gallery
+  galleryContainer.addEventListener("click", (event) => {
+    // Find the closest ancestor which is a gallery card
+    const card = event.target.closest(".gallery-card");
+    if (!card) return; // Click wasn't inside a card
+
+    // --- MODIFIED LOGIC START ---
+    // Check if the click was directly on a button or a link *within* the card content
+    const isButtonOrLinkClick = event.target.closest(
+      ".card-content .button, .card-content a:not(.card-drive-link-placeholder)" // Target buttons or links inside card-content
     );
-  }
+    const isCloseButtonClick = event.target.classList.contains(
+      "card-close-btn"
+    );
 
-  // --- TAB INITIALIZATION --- //
-  // Get the element with id="defaultOpen" and trigger the openTab function for it
-  const defaultTabButton = document.getElementById("defaultOpen");
-  let initialTabName = "Overview"; // Default tab name
+    // Expand if the click was on the card itself, but NOT on a button/link inside content
+    // or the close button, and the card is not already expanded.
+    if (
+      !isButtonOrLinkClick &&
+      !isCloseButtonClick &&
+      !card.classList.contains("card-expanded")
+    ) {
+      // Close any previously expanded card first
+      closeExpandedCard();
 
-  if (defaultTabButton) {
-      // Extract tab name from the button's onclick attribute if possible
-      const onclickAttr = defaultTabButton.getAttribute("onclick");
-      const tabNameMatch = onclickAttr ? onclickAttr.match(/openTab\(event, '(.*?)'\)/) : null;
-      if (tabNameMatch && tabNameMatch[1]) {
-          initialTabName = tabNameMatch[1];
-      }
-      // Call openTab directly instead of simulating a click
-      openTab(null, initialTabName);
-      console.log(`DEBUG: Default tab '${initialTabName}' opened.`);
-  } else {
-      console.warn("DEBUG: Default open tab button ('#defaultOpen') not found.");
-      // Fallback: Open the first tab if default isn't found
-      const firstTabButton = document.querySelector(".tablinks");
-      if (firstTabButton) {
-          const onclickAttr = firstTabButton.getAttribute("onclick");
-          const tabNameMatch = onclickAttr ? onclickAttr.match(/openTab\(event, '(.*?)'\)/) : null;
-          if (tabNameMatch && tabNameMatch[1]) {
-              initialTabName = tabNameMatch[1];
-              openTab(null, initialTabName);
-              console.log(`DEBUG: Opening first tab '${initialTabName}' as fallback.`);
-          }
-      }
-  }
+      // Expand the clicked card
+      card.classList.add("card-expanded");
+      overlay.classList.add("active");
+      document.body.classList.add("no-scroll"); // Prevent body scroll
+      currentlyExpandedCard = card;
+    }
+    // --- MODIFIED LOGIC END ---
 
-  // Initial highlighting for the default tab (already visible)
-  // Ensure Prism is loaded before calling highlightAll
-  if (typeof Prism !== 'undefined') {
-      Prism.highlightAll();
-      console.log("DEBUG: Initial Prism highlighting done.");
-  } else {
-      // If Prism isn't loaded yet, wait a bit and try again
-      // This is a fallback, ideally Prism scripts load before this runs
-      setTimeout(() => {
-          if (typeof Prism !== 'undefined') {
-              Prism.highlightAll();
-              console.log("DEBUG: Delayed initial Prism highlighting done.");
-          } else {
-              console.error("Prism failed to load in time for initial highlighting.");
-          }
-      }, 500); // Wait 500ms
-  }
-  // --- END TAB INITIALIZATION --- //
+    // Check specifically if the click was on the close button (even if inside the card)
+    if (isCloseButtonClick) {
+      closeExpandedCard();
+    }
+  });
 
-}); // End of DOMContentLoaded listener
+  // Event listener for clicking the overlay to close the card
+  overlay.addEventListener("click", () => {
+    closeExpandedCard();
+  });
+
+  // Optional: Close on Escape key press
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeExpandedCard();
+    }
+  });
+});
