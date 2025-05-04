@@ -17,6 +17,8 @@
     /></noscript>
   </head>
   <body class="is-preload landing">
+    <!-- Added Overlay Div for card expansion -->
+    <div class="card-overlay"></div>
     <div id="page-wrapper">
       <!-- Header -->
       <header id="header">
@@ -93,7 +95,6 @@
                 Access Experimental Data on GitHub
               </a>
             </p>
-            <!-- Removed persistence note as it's now in the main repo -->
 
             <h4>Data Format and Content</h4>
             <p>
@@ -104,104 +105,177 @@
             </p>
             <p>Key topics typically included in the bags are:</p>
             <ul>
+              <li><code>/imu/data</code> (sensor_msgs/Imu)</li>
+              <li><code>/imu/orientation</code> (geometry_msgs/Quaternion)</li>
               <li>
-                <code>/imu/data</code> (sensor_msgs/Imu): Raw readings from the
-                IMU, including linear acceleration, angular velocity, and raw
-                orientation quaternion (often directly from the sensor's
-                internal filter).
+                <code>/imu/pose_estimate</code> (geometry_msgs/PoseStamped)
               </li>
-              <li>
-                <code>/imu/orientation</code> (geometry_msgs/Quaternion):
-                Orientation calculated by the
-                <code>pose_estimator_node</code> after bias removal and gyro
-                integration.
-              </li>
-              <li>
-                <code>/imu/pose_estimate</code> (geometry_msgs/PoseStamped):
-                Full pose (position + orientation) estimated purely from IMU
-                data integration by the <code>pose_estimator_node</code>.
-                Subject to drift.
-              </li>
-              <li>
-                <code>/orb/pose</code> (geometry_msgs/PoseStamped): Full pose
-                estimated from visual features/optical flow by the
-                <code>orb_pose_estimator_node</code>. Less prone to drift over
-                time but potentially noisier or slower.
-              </li>
-              <li>
-                <code>/servo/state</code> (std_msgs/Float64MultiArray): Actual
-                reported positions of the 8 quadruped servos, read back from the
-                ESP32.
-              </li>
-              <li>
-                <code>/servo/command</code> (std_msgs/Float64MultiArray):
-                Commanded positions sent to the servos by the
-                <code>CPGControllerNode</code>.
-              </li>
-              <li>
-                <code>/tf</code> and <code>/tf_static</code>: Coordinate frame
-                transformations used within the system.
-              </li>
+              <li><code>/orb/pose</code> (geometry_msgs/PoseStamped)</li>
+              <li><code>/servo/state</code> (std_msgs/Float64MultiArray)</li>
+              <li><code>/servo/command</code> (std_msgs/Float64MultiArray)</li>
+              <li><code>/tf</code> and <code>/tf_static</code></li>
             </ul>
 
             <h4>Data Filtering and Usage</h4>
             <p>The raw sensor data undergoes processing within our nodes:</p>
             <ul>
               <li>
-                <strong>IMU Bias Removal:</strong> The
-                <code>pose_estimator_node</code> performs an initial calibration
-                to calculate accelerometer and gyroscope biases, which are then
-                subtracted from subsequent raw readings.
+                <strong>IMU Bias Removal:</strong> Initial calibration
+                calculates and subtracts biases.
               </li>
               <li>
-                <strong>IMU Filtering:</strong> Simple low-pass filtering (using
-                an exponential moving average with `alpha = 0.8`) is applied to
-                the bias-corrected accelerometer and gyroscope data within the
-                <code>pose_estimator_node</code> to reduce noise before
-                integration. Velocity estimates are also decayed over time to
-                mitigate drift.
+                <strong>IMU Filtering:</strong> Low-pass filtering applied;
+                velocity decayed.
               </li>
               <li>
-                <strong>Visual Pose Smoothing:</strong> The
-                <code>orb_pose_estimator_node</code> uses a Savitzky-Golay
-                filter (`savgol_filter` with window size 11, polynomial order 2)
-                on a buffer of recent translation estimates to smooth the output
-                visual pose (`/orb/pose`).
+                <strong>Visual Pose Smoothing:</strong> Savitzky-Golay filter
+                applied to translation estimates.
               </li>
               <li>
-                <strong>UI Plotting:</strong> The <code>plotter_node</code>
-                subscribes to most of the key topics (IMU data, servo states,
-                both pose estimates) and stores them in a buffer
-                (<code>shared_data</code>). The Flask web application
-                (<code>app.py</code>) serves this buffered data to the web UI
-                for real-time visualization.
+                <strong>UI Plotting:</strong> Key topics buffered for real-time
+                web UI visualization.
               </li>
               <li>
-                <strong>Pose Estimation:</strong> The filtered IMU data is
-                integrated in <code>pose_estimator_node</code> to produce
-                <code>/imu/pose_estimate</code>. Visual features and optical
-                flow are processed in <code>orb_pose_estimator_node</code> to
-                produce <code>/orb/pose</code>. These two estimates can be
-                compared (e.g., visually in the UI) to assess performance and
-                drift characteristics.
+                <strong>Pose Estimation Comparison:</strong> IMU-based and
+                visual-based poses published for analysis.
               </li>
             </ul>
-            <p>
-              Please refer to any accompanying
-              <a
-                href="https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01-code/blob/master/README.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                >README.md</a
-              >
-              files within the data repository for specific details about
-              individual datasets or recording conditions.
-            </p>
           </section>
+          <!-- End Data Access Section -->
+
+          <!-- ======================================= -->
+          <!-- === SECTION: Data Visualization === -->
+          <!-- ======================================= -->
+          <hr style="margin: 3em 0" />
+
+          <section id="data-visualization">
+            <!-- Added section tag -->
+            <header
+              class="major"
+              style="text-align: center; margin-bottom: 2em"
+            >
+              <!-- Centered Header -->
+              <h4>Data Visualization Examples</h4>
+              <p>
+                Examples of typical data plots generated from our experiments.
+              </p>
+            </header>
+
+            <!-- Gallery Container for Graphs -->
+            <div class="gallery-container">
+              <!-- Card 1: Position/Orientation -->
+              <div class="gallery-card">
+                <button class="card-close-btn" aria-label="Close">
+                  &times;
+                </button>
+                <div class="card-media-container">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1gmxFfolBEuKMv4cXu1FS8-vt8Zy80bkU&sz=w1000"
+                    alt="Position and Orientation Plots"
+                  />
+                </div>
+                <div class="card-content">
+                  <h4>Position and Orientation Plots</h4>
+                  <p>
+                    Plot shows the position and orientation estimates of servos
+                    and the IMU velocity and acceleration.
+                  </p>
+                  <!-- Added Button Back -->
+                </div>
+              </div>
+              <!-- End Card 1 -->
+
+              <!-- Card 2: Pose Estimates -->
+              <div class="gallery-card">
+                <button class="card-close-btn" aria-label="Close">
+                  &times;
+                </button>
+                <!-- Fixed stray '<' before class -->
+                <div class="card-media-container">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1JRc_J3VQ_9NNBFMtVJ7D69q3_N0ufPDD&sz=w1000"
+                    alt="Pose Estimates"
+                  />
+                </div>
+                <div class="card-content">
+                  <h4>Pose Estimates</h4>
+                  <p>
+                    Pose estimation comparison between IMU and visual odometry
+                    (using ORB and Optiflow).
+                  </p>
+                </div>
+              </div>
+              <!-- End Card 2 -->
+
+              <!-- Card 3: Ultrasonic -->
+              <div class="gallery-card">
+                <button class="card-close-btn" aria-label="Close">
+                  &times;
+                </button>
+                <div class="card-media-container">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=19G34Z8bHY2bREqN5DGH4phetbxRMj-dr&sz=w1000"
+                    alt="Ultrasonic Sensor"
+                  />
+                </div>
+                <div class="card-content">
+                  <h4>Ultrasonic Sensor</h4>
+                  <p>
+                    Ultrasonic sensor data showing the distance to the object.
+                  </p>
+                  <!-- Added Button Back -->
+                </div>
+              </div>
+              <!-- End Card 3 -->
+
+              <!-- Card 4: CPG Controller -->
+              <div class="gallery-card">
+                <button class="card-close-btn" aria-label="Close">
+                  &times;
+                </button>
+                <div class="card-media-container">
+                  <img
+                    src="https://drive.google.com/thumbnail?id=1Q0Kth4FhjTLJpTZVAYHrPrudJDvcfOvL&sz=w1000"
+                    alt="CPG Controller"
+                  />
+                </div>
+                <div class="card-content">
+                  <h4>CPG Controller</h4>
+                  <p>
+                    Controller for the CPG (Central Pattern Generator) to
+                    control the gait of the quadruped.
+                  </p>
+                </div>
+              </div>
+              <!-- End Card 4 -->
+            </div>
+            <!-- End Gallery Container -->
+          </section>
+          <!-- End Data Visualization Section -->
+          <!-- ======================================= -->
+          <!-- === END SECTION: Data Visualization === -->
+          <!-- ======================================= -->
+
+          <hr style="margin: 3em 0" />
+          <!-- Add a separator -->
+
+          <p>
+            Please refer to any accompanying
+            <a
+              href="https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01-code/blob/master/README.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              >README.md</a
+            >
+            files within the data repository for specific details about
+            individual datasets or recording conditions.
+          </p>
         </div>
         <!-- /container -->
       </section>
       <!-- /main -->
+
+      <!-- Previous/Next Buttons -->
       <ul class="actions special">
         <li>
           <a href="../gallery/code_explaination.html" class="button primary"
@@ -214,12 +288,12 @@
           >
         </li>
       </ul>
+
       <!-- NEW FOOTER -->
       <footer class="md-footer">
         <nav class="md-footer__inner md-grid" aria-label="Footer">
           <!-- Removed Previous/Next Links -->
         </nav>
-
         <div class="md-footer-meta md-typeset">
           <div class="md-footer-meta__inner md-grid">
             <div class="md-copyright">
@@ -243,7 +317,6 @@
     <script src="../static/assets/js/breakpoints.min.js"></script>
     <script src="../static/assets/js/util.js"></script>
     <script src="../static/assets/js/main.js"></script>
-    <!-- <script src="../static/assets/js/custom.js"></script> -->
-    <!-- Include if you have custom JS for this page -->
+    <script src="../static/assets/js/custom.js"></script>
   </body>
 </html>
