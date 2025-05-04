@@ -199,7 +199,7 @@ quad/
     Assuming the `quad` package shown in the tree is directly within the `project_code` repository:
     ```bash
     # Clone the main repository into your workspace's src directory
-    git clone https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01-code ~/ros2_ws
+    git clone https://github.com/RAS598-2025-S-Team01/RAS598-2025-S-Team01.github.io.git ~/ros2_ws
     ```
     *Adjust the clone command if the `quad` package is at the root of the repository.*
 
