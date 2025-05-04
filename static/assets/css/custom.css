@@ -360,6 +360,160 @@ ul.actions li a.button > i /* Target direct child <i> tags */ {
 }
 
 /* ================================================== */
+/* === Gantt Chart Styles === */
+/* ================================================== */
+
+.gantt-chart-container {
+  margin: 2em 0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1.5em;
+  overflow-x: auto; /* Allow horizontal scrolling on small screens */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+.gantt-header,
+.gantt-row {
+  display: flex;
+  align-items: stretch; /* Make columns equal height */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5em 0;
+}
+.gantt-header {
+  border-bottom-width: 2px; /* Thicker border for header */
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+  padding-bottom: 0.8em;
+  margin-bottom: 0.8em;
+  font-weight: bold;
+  position: sticky; /* Keep header visible when scrolling horizontally */
+  top: 0; /* Stick to the top of the container */
+  background-color: rgba(46, 49, 65, 0.9); /* Match theme bg, slightly opaque */
+  z-index: 10; /* Above rows */
+}
+.gantt-row:last-child {
+  border-bottom: none;
+}
+
+.gantt-task-header,
+.gantt-task-name {
+  flex: 0 0 35%; /* Fixed width for task name column */
+  padding-right: 1em;
+  word-wrap: break-word;
+  color: #ffffff; /* White text for tasks */
+  font-size: 0.95em;
+  display: flex; /* Center text vertically */
+  align-items: center;
+}
+.gantt-task-header {
+    font-size: 1em;
+}
+
+.gantt-weeks-header,
+.gantt-weeks {
+  flex: 1 1 auto; /* Take remaining space */
+  display: flex;
+  justify-content: space-around; /* Distribute weeks evenly */
+}
+
+.gantt-weeks-header span {
+  flex: 1; /* Each week number takes equal space */
+  text-align: center;
+  font-size: 0.8em;
+  color: rgba(255, 255, 255, 0.7);
+  min-width: 40px; /* Minimum width for readability */
+}
+
+.gantt-week {
+  flex: 1; /* Each week block takes equal space */
+  min-width: 40px; /* Match header min-width */
+  height: 1.8em; /* Height of the bar */
+  margin: 0 1px; /* Tiny space between weeks */
+  background-color: rgba(255, 255, 255, 0.08); /* Default week background */
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+  position: relative; /* For potential tooltips */
+}
+
+.gantt-week.completed {
+  background-color: #e44c65; /* Accent color for completed */
+  cursor: help; /* Indicate tooltip might be available */
+}
+
+/* Optional: Simple Tooltip on Hover for Completed */
+.gantt-week.completed::after {
+  content: attr(data-task); /* Use data-task attribute for text */
+  position: absolute;
+  bottom: 110%; /* Position above the block */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  z-index: 20; /* Above other elements */
+}
+
+.gantt-week.completed:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+.gantt-week.current {
+  background-color: green; /* Accent color for completed */
+  cursor: help; /* Indicate tooltip might be available */
+}
+
+/* Optional: Simple Tooltip on Hover for Completed */
+.gantt-week.current::after {
+  content: attr(data-task); /* Use data-task attribute for text */
+  position: absolute;
+  bottom: 110%; /* Position above the block */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  z-index: 20; /* Above other elements */
+}
+
+.gantt-week.current:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Responsive: Make task name smaller on very small screens if needed */
+@media screen and (max-width: 480px) {
+    .gantt-task-header,
+    .gantt-task-name {
+        flex-basis: 30%; /* Slightly less space for task name */
+        font-size: 0.85em;
+    }
+    .gantt-weeks-header span,
+    .gantt-week {
+        min-width: 30px; /* Smaller week blocks */
+    }
+    .gantt-week.completed::after {
+        font-size: 0.75em; /* Smaller tooltip */
+    }
+}
+
+/* ================================================== */
+/* === End Gantt Chart Styles === */
+/* ================================================== */
+
+
+/* ================================================== */
 /* === Styles for Diagram WITHIN CAROUSEL === */
 /* ================================================== */
 .carousel-container { position: relative; width: 100%; margin: 3em 0; background: #12121d; border-radius: 0; padding: 2.5rem; min-height: 700px; overflow: hidden; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); border: none; border-top: 1px solid rgba(45, 140, 255, 0.2); border-bottom: 1px solid rgba(45, 140, 255, 0.2); box-sizing: border-box; height: 1000px; }

@@ -321,101 +321,227 @@
 
           <!-- Section 3: Project Process / Workflow -->
           <!-- This section will be animated by custom.js -->
-          <section id="workflow">
-            <h3>3. Project Process / Workflow</h3>
-            <p>
-              Our project workflow follows an iterative development process
-              within the ROS 2 ecosystem. The high-level plan remains similar,
-              but the <em>focus</em> within the later weeks shifted towards
-              integration and UI development.
-            </p>
-            <p>
-              <strong>Note:</strong> While the overall weekly themes remain
-              similar to the initial plan, Weeks 12-15 saw an increased focus on
-              developing the <code>bridge_node</code> for parameter control, the
-              <code>ros2_flask_plotter</code> UI, and achieving the core
-              UR5-Quadruped automated reset loop, deferring deeper simulation
-              comparisons.
-            </p>
-
-            <h4>Project Timeline (Weeks 7-16)</h4>
-            <div class="table-wrapper">
-              <!-- Use table-wrapper for theme styling -->
-              <table>
-                <thead>
-                  <tr>
-                    <th>Week</th>
-                    <th>Task</th>
-                    <th>Status Notes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>7</td>
-                    <td>
-                      Initialize UR5 for positioning the quadruped at the start
-                      point
-                    </td>
-                    <td>Completed</td>
-                  </tr>
-                  <tr>
-                    <td>8</td>
-                    <td>Validate communication between UR5 and host machine</td>
-                    <td>Completed</td>
-                  </tr>
-                  <tr>
-                    <td>9</td>
-                    <td>Quadruped calibration and mobility tuning</td>
-                    <td>Completed</td>
-                  </tr>
-                  <tr>
-                    <td>10</td>
-                    <td>
-                      Initiate quadruped hardware setup; basic mobility tests
-                    </td>
-                    <td>Completed. Initial ROS topic publishing setup.</td>
-                  </tr>
-                  <tr>
-                    <td>11</td>
-                    <td>Fine-tune mechanical alignment and sensor mounts</td>
-                    <td>Completed. Focused on IMU/Camera mounting.</td>
-                  </tr>
-                  <tr>
-                    <td>12</td>
-                    <td>
-                      Quadruped ROS Node Dev (<code>/bridge_node</code>,
-                      parameters)
-                    </td>
-                    <td>Completed. Basic parameter control achieved.</td>
-                  </tr>
-                  <tr>
-                    <td>13</td>
-                    <td>
-                      Develop UI (<code>/ros2_flask_plotter</code>) & Pose
-                      Estimation
-                    </td>
-                    <td>Completed. UI plots data, basic control added.</td>
-                  </tr>
-                  <tr>
-                    <td>14</td>
-                    <td>Integrate UR5 control logic with Quadruped state</td>
-                    <td>Completed. Core automation loop functional.</td>
-                  </tr>
-                  <tr>
-                    <td>15</td>
-                    <td>Full system integration & robustness testing</td>
-                    <td>Completed. Tested walk-reset cycle multiple times.</td>
-                  </tr>
-                  <tr>
-                    <td>16</td>
-                    <td>Final Demo Prep, Documentation, Code Packaging</td>
-                    <td>Completed.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
+         
+                    <!-- Section 3: Project Process / Workflow -->
+                    <section id="workflow">
+                      <h3>3. Project Process / Workflow</h3>
+                      <p>
+                        Our project workflow follows an iterative development process
+                        within the ROS 2 ecosystem. The high-level plan remains similar,
+                        but the <em>focus</em> within the later weeks shifted towards
+                        integration and UI development.
+                      </p>
+                      <p>
+                        <strong>Note:</strong> While the overall weekly themes remain
+                        similar to the initial plan, Weeks 12-15 saw an increased focus on
+                        developing the <code>bridge_node</code> for parameter control, the
+                        <code>ros2_flask_plotter</code> UI, and achieving the core
+                        UR5-Quadruped automated reset loop, deferring deeper simulation
+                        comparisons.
+                      </p>
+          
+                      <h4>Project Timeline (Weeks 7-16)</h4>
+          
+                      <!-- START GANTT CHART -->
+                      <div class="gantt-chart-container">
+                        <div class="gantt-header">
+                          <div class="gantt-task-header">Task</div>
+                          <div class="gantt-weeks-header">
+                            <span>Wk 7</span>
+                            <span>Wk 8</span>
+                            <span>Wk 9</span>
+                            <span>Wk 10</span>
+                            <span>Wk 11</span>
+                            <span>Wk 12</span>
+                            <span>Wk 13</span>
+                            <span>Wk 14</span>
+                            <span>Wk 15</span>
+                            <span>Wk 16</span>
+                          </div>
+                        </div>
+          
+                        <!-- Task Rows -->
+                        <div class="gantt-row">
+                          <div class="gantt-task-name">Initialize UR5 for positioning</div>
+                          <div class="gantt-weeks">
+                            <div class="gantt-week week-7 completed" data-task="Initialize UR5"></div>
+                            <div class="gantt-week week-8"></div>
+                            <div class="gantt-week week-9"></div>
+                            <div class="gantt-week week-10"></div>
+                            <div class="gantt-week week-11"></div>
+                            <div class="gantt-week week-12"></div>
+                            <div class="gantt-week week-13"></div>
+                            <div class="gantt-week week-14"></div>
+                            <div class="gantt-week week-15"></div>
+                            <div class="gantt-week week-16"></div>
+                          </div>
+                        </div>
+          
+                        <div class="gantt-row">
+                          <div class="gantt-task-name">Validate UR5 Communication</div>
+                          <div class="gantt-weeks">
+                            <div class="gantt-week week-7 completed"></div>
+                            <div class="gantt-week week-8 completed" data-task="Validate UR5 Comm"></div>
+                            <div class="gantt-week week-9"></div>
+                            <div class="gantt-week week-10"></div>
+                            <div class="gantt-week week-11"></div>
+                            <div class="gantt-week week-12"></div>
+                            <div class="gantt-week week-13"></div>
+                            <div class="gantt-week week-14"></div>
+                            <div class="gantt-week week-15"></div>
+                            <div class="gantt-week week-16"></div>
+                          </div>
+                        </div>
+          
+                        <div class="gantt-row">
+                          <div class="gantt-task-name">Quadruped Calibration & Tuning</div>
+                          <div class="gantt-weeks">
+                            <div class="gantt-week week-7"></div>
+                            <div class="gantt-week week-8"></div>
+                            <div class="gantt-week week-9 completed" data-task="Quad Calib/Tune"></div>
+                            <div class="gantt-week week-10"></div>
+                            <div class="gantt-week week-11"></div>
+                            <div class="gantt-week week-12"></div>
+                            <div class="gantt-week week-13"></div>
+                            <div class="gantt-week week-14"></div>
+                            <div class="gantt-week week-15"></div>
+                            <div class="gantt-week week-16"></div>
+                          </div>
+                        </div>
+          
+                        <div class="gantt-row">
+                          <div class="gantt-task-name">Quad Hardware Setup & Mobility Tests</div>
+                          <div class="gantt-weeks">
+                            <div class="gantt-week week-7"></div>
+                            <div class="gantt-week week-8"></div>
+                            <div class="gantt-week week-9"></div>
+                            <div class="gantt-week week-10 completed" data-task="Quad Setup/Test"></div>
+                            <div class="gantt-week week-11 completed"></div>
+                            <div class="gantt-week week-12"></div>
+                            <div class="gantt-week week-13"></div>
+                            <div class="gantt-week week-14"></div>
+                            <div class="gantt-week week-15"></div>
+                            <div class="gantt-week week-16"></div>
+                          </div>
+                        </div>
+          
+                        <div class="gantt-row">
+                          <div class="gantt-task-name">Fine-tune Alignment & Sensor Mounts</div>
+                          <div class="gantt-weeks">
+                            <div class="gantt-week week-7"></div>
+                            <div class="gantt-week week-8"></div>
+                            <div class="gantt-week week-9"></div>
+                            <div class="gantt-week week-10"></div>
+                            <div class="gantt-week week-11 completed" data-task="Align/Mounts"></div>
+                            <div class="gantt-week week-12 completed"></div>
+                            <div class="gantt-week week-13"></div>
+                            <div class="gantt-week week-14"></div>
+                            <div class="gantt-week week-15"></div>
+                            <div class="gantt-week week-16"></div>
+                          </div>
+                        </div>
+          
+                        <div class="gantt-row">
+                          <div class="gantt-task-name">Quad ROS Node Dev (bridge_node)</div>
+                          <div class="gantt-weeks">
+                            <div class="gantt-week week-7"></div>
+                            <div class="gantt-week week-8"></div>
+                            <div class="gantt-week week-9"></div>
+                            <div class="gantt-week week-10"></div>
+                            <div class="gantt-week week-11"></div>
+                            <div class="gantt-week week-12 completed" data-task="Bridge Node Dev"></div>
+                            <div class="gantt-week week-13"></div>
+                            <div class="gantt-week week-14"></div>
+                            <div class="gantt-week week-15"></div>
+                            <div class="gantt-week week-16"></div>
+                          </div>
+                        </div>
+          
+                        <div class="gantt-row">
+                          <div class="gantt-task-name">Develop UI & Pose Estimation</div>
+                          <div class="gantt-weeks">
+                            <div class="gantt-week week-7"></div>
+                            <div class="gantt-week week-8"></div>
+                            <div class="gantt-week week-9"></div>
+                            <div class="gantt-week week-10 completed"></div>
+                            <div class="gantt-week week-11 completed"></div>
+                            <div class="gantt-week week-12 completed"></div>
+                            <div class="gantt-week week-13 completed" data-task="UI & Pose Est"></div>
+                            <div class="gantt-week week-14"></div>
+                            <div class="gantt-week week-15"></div>
+                            <div class="gantt-week week-16"></div>
+                          </div>
+                        </div>
+          
+                        <div class="gantt-row">
+                          <div class="gantt-task-name">Integrate UR5 Control Logic</div>
+                          <div class="gantt-weeks">
+                            <div class="gantt-week week-7"></div>
+                            <div class="gantt-week week-8"></div>
+                            <div class="gantt-week week-9"></div>
+                            <div class="gantt-week week-10"></div>
+                            <div class="gantt-week week-11"></div>
+                            <div class="gantt-week week-12"></div>
+                            <div class="gantt-week week-13 completed"></div>
+                            <div class="gantt-week week-14 completed" data-task="UR5 Logic Integ"></div>
+                            <div class="gantt-week week-15"></div>
+                            <div class="gantt-week week-16"></div>
+                          </div>
+                        </div>
+          
+                        <div class="gantt-row">
+                          <div class="gantt-task-name">Full System Integration & Testing</div>
+                          <div class="gantt-weeks">
+                            <div class="gantt-week week-7"></div>
+                            <div class="gantt-week week-8"></div>
+                            <div class="gantt-week week-9"></div>
+                            <div class="gantt-week week-10"></div>
+                            <div class="gantt-week week-11"></div>
+                            <div class="gantt-week week-12"></div>
+                            <div class="gantt-week week-13"></div>
+                            <div class="gantt-week week-14"></div>
+                            <div class="gantt-week week-15 completed" data-task="Full Integ/Test"></div>
+                            <div class="gantt-week week-16 completed"></div>
+                          </div>
+                        </div>
+          
+                        <div class="gantt-row">
+                          <div class="gantt-task-name">Final Demo Prep & Documentation</div>
+                          <div class="gantt-weeks">
+                            <div class="gantt-week week-7"></div>
+                            <div class="gantt-week week-8"></div>
+                            <div class="gantt-week week-9"></div>
+                            <div class="gantt-week week-10"></div>
+                            <div class="gantt-week week-11"></div>
+                            <div class="gantt-week week-12"></div>
+                            <div class="gantt-week week-13"></div>
+                            <div class="gantt-week week-14"></div>
+                            <div class="gantt-week week-15 completed"></div>
+                            <div class="gantt-week week-16 completed" data-task="Demo/Docs"></div>
+                          </div>
+                        </div>
+                        <div class="gantt-row">
+                          <div class="gantt-task-name">Submission</div>
+                          <div class="gantt-weeks">
+                            <div class="gantt-week week-7"></div>
+                            <div class="gantt-week week-8"></div>
+                            <div class="gantt-week week-9"></div>
+                            <div class="gantt-week week-10"></div>
+                            <div class="gantt-week week-11"></div>
+                            <div class="gantt-week week-12"></div>
+                            <div class="gantt-week week-13"></div>
+                            <div class="gantt-week week-14"></div>
+                            <div class="gantt-week week-15"></div>
+                            <div class="gantt-week week-16" data-task="Demo/Docs"></div>
+                            <div class="gantt-week week-16 completed current" data-task="Sumbission"></div>
+                          </div>
+                        </div>
+                        <!-- End Task Rows -->
+          
+                      </div>
+                      <!-- END GANTT CHART -->
+          
+                    </section>
           <!-- Section 4: Finalized ROS 2 Architecture -->
           <section id="ros">
             <h3>4. Finalized System & ROS 2 Architecture</h3>
