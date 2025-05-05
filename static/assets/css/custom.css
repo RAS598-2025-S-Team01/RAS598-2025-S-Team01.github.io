@@ -436,7 +436,7 @@ ul.actions li a.button > i /* Target direct child <i> tags */ {
 }
 
 .gantt-week.completed {
-  background-color: #e44c65; /* Accent color for completed */
+  background-color: rgb(0, 167, 0); /* Accent color for completed */
   cursor: help; /* Indicate tooltip might be available */
 }
 
@@ -464,7 +464,7 @@ ul.actions li a.button > i /* Target direct child <i> tags */ {
   visibility: visible;
 }
 .gantt-week.current {
-  background-color: green; /* Accent color for completed */
+  background-color: rgb(0, 167, 0); /* Accent color for completed */
   cursor: help; /* Indicate tooltip might be available */
 }
 
