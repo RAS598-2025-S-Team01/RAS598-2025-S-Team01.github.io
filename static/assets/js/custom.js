@@ -656,38 +656,42 @@ function stopDiagramAnimations() {
 }
 
 // --- Scroll Animation Logic ---
+// --- Scroll Animation Logic (Ensure it targets the right sections) ---
 function initializeScrollAnimations() {
   console.log("DEBUG: Initializing Scroll Animations...");
+  // Select sections in #main AND the specific ID sections outside #main
   const sections = document.querySelectorAll(
-    '#main.wrapper[class*="style"] .container > section'
+    '#main.wrapper .container > section, #course-info, #meet-the-team' // Updated selector
   );
   console.log(`DEBUG: Found ${sections.length} sections for scroll animation.`);
   if (!sections.length) return;
+
   sections.forEach((section) => {
-    section.classList.add("scroll-animate-init");
+    // Check if already animated (e.g., by previous page load if not SPA)
+    if (!section.classList.contains('animate-in')) {
+        section.classList.add("scroll-animate-init");
+    }
   });
-  const observerOptions = { root: null, rootMargin: "0px", threshold: 0.15 };
+
+  const observerOptions = { root: null, rootMargin: "0px", threshold: 0.15 }; // Trigger earlier if needed
   const observerCallback = (entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        console.log(
-          `DEBUG: Section ${entry.target.id || "without ID"} is intersecting.`
-        );
+        // console.log(`DEBUG: Section ${entry.target.id || "without ID"} is intersecting.`);
         entry.target.classList.add("animate-in");
-        observer.unobserve(entry.target);
+        observer.unobserve(entry.target); // Animate only once
       }
     });
   };
-  const scrollObserver = new IntersectionObserver(
-    observerCallback,
-    observerOptions
-  );
+  const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
   sections.forEach((section) => {
-    console.log(`DEBUG: Observing section: ${section.id || "without ID"}`);
-    scrollObserver.observe(section);
+    // Only observe if it hasn't already animated in
+     if (!section.classList.contains('animate-in')) {
+        // console.log(`DEBUG: Observing section: ${section.id || "without ID"}`);
+        scrollObserver.observe(section);
+     }
   });
 }
-
 // --- Tab Functionality ---
 window.openTab = function (evt, tabName) {
   var i, tabcontent, tablinks;
@@ -968,19 +972,17 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeGalleryExpansion(); // Call the function
 
   // --- Initialize Scroll Animations IF PRESENT ---
-  if (
-    document.querySelector('#main.wrapper[class*="style"] .container > section')
-  ) {
+  if (document.querySelector('#main.wrapper[class*="style"] .container > section, #course-info, #meet-the-team')) {
     console.log("DEBUG: Initializing Scroll Animations...");
-    if (typeof initializeScrollAnimations === "function") {
-      initializeScrollAnimations();
+    if (typeof initializeScrollAnimations === 'function') {
+        // Modify the selector inside the function if needed, or ensure
+        // the function correctly handles different potential targets
+        initializeScrollAnimations(); // Call the existing function
     }
   } else {
-    console.log(
-      "DEBUG: Scroll animation target structure not found on this page."
-    );
+    console.log("DEBUG: Scroll animation target structure not found on this page.");
   }
-
+  
   // --- Initialize Tabs IF PRESENT ---
   const defaultTabButton = document.getElementById("defaultOpen");
   if (defaultTabButton || document.querySelector(".tablinks")) {
