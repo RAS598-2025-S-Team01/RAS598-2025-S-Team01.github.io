@@ -62,264 +62,158 @@
           </ul>
         </nav>
       </header>
+<!-- === SIDEBAR === -->
+<aside id="sidebar">
+  <nav class="sidebar-nav">
+    <h4>Sections</h4>
+    <ul>
+      <li><a href="#description">1. Description & Scope</a></li>
+      <li><a href="#goals">2. Updated Goals</a></li>
+      <li><a href="#workflow">3. Workflow & Timeline</a></li>
+      <li><a href="#ros">4. ROS 2 Architecture</a></li>
+      <li><a href="#tradeoffs">5. Tradeoffs</a></li>
+    </ul>
+  </nav>
+</aside>
+<!-- === END SIDEBAR === -->
 
-      <!-- Main Content -->
-      <section id="main" class="wrapper style1">
-        <div class="container">
-          <header class="major">
-            <h2>About the Project: Fusion Robotics</h2>
-            <p>Detailed description of our Quadruped-UR5 Robotics Testbed.</p>
-          </header>
+<!-- Main Content -->
+<!-- Added class 'with-sidebar' -->
+<section id="main" class="wrapper style1 with-sidebar">
+  <div class="container">
+    <header class="major">
+      <h2>About the Project: Fusion Robotics</h2>
+      <p>Detailed description of our Quadruped-UR5 Robotics Testbed.</p>
+    </header>
 
-          <!-- Section 1: Updated Project Description -->
-          <!-- This section will be animated by custom.js -->
-          <section id="description">
-            <h3>1. Description & Scope</h3>
-            <p>
-              Our project, "Fusion Robotics," establishes an autonomous testbed
-              integrating a quadruped robot and a UR5 robotic arm, orchestrated
-              using ROS 2. The core objective is to create a repeatable,
-              automated workflow for testing quadruped locomotion, collecting
-              sensor data, and evaluating performance through a closed loop
-              involving real-world execution and analysis.
-            </p>
+    <!-- Section 1: Updated Project Description -->
+    <section id="description">
+      <h3>1. Description & Scope</h3>
+      <p>
+        Our project, "Fusion Robotics," establishes an autonomous testbed
+        integrating a quadruped robot and a UR5 robotic arm, orchestrated
+        using ROS 2. The core objective is to create a repeatable,
+        automated workflow for testing quadruped locomotion, collecting
+        sensor data, and evaluating performance through a closed loop
+        involving real-world execution and analysis.
+      </p>
+      <h4>1.1 Project Scoping and Evolution</h4>
+      <p>
+        Initially, our project broadly aimed to explore sensor fusion for
+        optimizing experimental setups. Through the initial development
+        cycles (Weeks 7-12), involving individual component testing (UR5
+        control, quadruped basic motion, sensor readings), we identified
+        the critical need to first solidify the core autonomous workflow.
+        Therefore, our scope refined to prioritize the seamless
+        integration and interaction between the UR5 and the quadruped for
+        the automated reset sequence. This became the primary milestone,
+        ensuring a stable platform before delving deeper into complex
+        simulation comparisons or advanced SLAM implementations initially
+        envisioned. The focus shifted towards robust hardware integration,
+        real-time control via a user interface, and reliable data
+        acquisition through ROS 2.
+      </p>
+      <h4>1.2 Data Collection Process</h4>
+      <p>
+        Our data collection process is central to the experimental loop:
+      </p>
+      <ol>
+        <li><strong>Initialization:</strong> The UR5 arm precisely places the quadruped robot at a designated starting position.</li>
+        <li><strong>Autonomous Locomotion:</strong> Triggered via our ROS 2 system (potentially through the UI), the quadruped begins walking forward based on pre-set or user-defined gait parameters (See Section 4).</li>
+        <li><strong>Real-time Sensing:</strong> As the quadruped moves, its onboard sensors (IMU, Camera - providing data for <code>/orb/pose</code>, Servo encoders) continuously publish data to respective ROS 2 topics.</li>
+        <li><strong>Data Logging & Visualization:</strong> A dedicated ROS 2 node (<code>/ros2_flask_plotter</code>) subscribes to these topics, logging the data and visualizing key metrics (IMU readings, pose estimates) in real-time via a web interface.</li>
+        <li><strong>Path Completion & Reset:</strong> Upon reaching a predefined distance or condition (monitored via pose estimation), the quadruped stops. A signal is sent (potentially automated or via UI) to the UR5 arm.</li>
+        <li><strong>Automated Reset:</strong> The UR5 executes a pre-programmed routine to pick up the quadruped and return it to the starting position.</li>
+        <li><strong>Iteration:</strong> The cycle repeats, allowing for continuous data collection under varying parameters or conditions.</li>
+      </ol>
+      <p>
+        Initial data collection involved testing sensors individually and
+        calibrating the quadruped's basic movements. This data was crucial
+        for tuning low-level controllers and identifying necessary
+        filtering techniques. We found raw IMU data too noisy due to motor
+        vibrations, necessitating filtering. Early camera pose tests
+        highlighted sensitivity to lighting, guiding our focus towards
+        robust estimation methods. This iterative process of
+        collect-analyze-refine was essential and required revisiting
+        initial data assumptions.
+      </p>
+      <h4>1.3 Pose Estimation and Model Fitting</h4>
+      <p>
+        Accurate pose estimation is vital for path completion detection
+        and performance analysis. We employ multiple approaches:
+      </p>
+      <ul>
+        <li><strong>IMU-based Pose Estimation:</strong> The <code>/pose_estimator_node</code> integrates data from <code>/imu/data</code> and <code>/imu/orientation</code> (likely using techniques like Kalman filtering or complementary filters) to produce <code>/imu/pose_estimate</code>. This provides a continuous estimate of the robot's orientation and potentially position relative to its start.</li>
+        <li><strong>Camera-based Pose Estimation:</strong> The <code>/optical_flow_pose_publisher</code> node processes camera data (likely visual features or optical flow) to publish pose information on the <code>/orb/pose</code> topic. This offers an alternative, potentially drift-correcting pose source, especially useful for tracking position over ground.</li>
+        <li><strong>Sensor Fusion (Implicit/Comparative):</strong> While the current ROS graph doesn't show explicit fusion of <code>/imu/pose_estimate</code> and <code>/orb/pose</code> into a single topic, our web interface plots both. This allows for direct comparison and validation. Future work could involve fusing these using filters (e.g., Extended Kalman Filter) for a more robust estimate. Data collected informs the tuning of these estimators (e.g., filter noise parameters).</li>
+      </ul>
+      <h4>1.4 Integration into ROS 2</h4>
+      <p>
+        The entire system is orchestrated using ROS 2 Humble. The
+        quadruped itself is integrated via the <code>/bridge_node</code>,
+        which translates high-level commands and parameter changes into
+        low-level <code>/servo/command</code> messages and publishes
+        <code>/servo/state</code>. Sensor data is published directly by
+        dedicated nodes or drivers (e.g., IMU node, camera node publishing
+        to <code>/orb/pose</code>). A Flask web server
+        (<code>/ros2_flask_plotter</code>) acts as the central UI,
+        subscribing to relevant topics for visualization and potentially
+        publishing commands or parameter updates. (See Section 4 for the
+        detailed architecture).
+      </p>
+      <h4>1.5 Validation and Success Metrics</h4>
+      <p>We quantify success through several metrics:</p>
+      <ul>
+        <li><strong>Workflow Completion:</strong> Successfully executing multiple consecutive cycles of the walk-and-reset loop autonomously.</li>
+        <li><strong>Pose Estimation Accuracy:</strong> Comparing <code>/imu/pose_estimate</code> and <code>/orb/pose</code>. While ground truth from OptiTrack (as mentioned in original goals) might not be fully integrated yet, we assess consistency, drift characteristics, and agreement between the methods. Graphical plots showing the time evolution of both estimates are used for visual validation.</li>
+        <li><strong>Control Responsiveness:</strong> Demonstrating real-time changes in quadruped gait parameters (Frequency, Duty Factor, Amplitudes, Offsets, Mode) via the web UI and observing the corresponding immediate change in locomotion.</li>
+        <li><strong>Data Integrity:</strong> Ensuring sensor data logged via the <code>/ros2_flask_plotter</code> is consistent and reflects the robot's state accurately.</li>
+      </ul>
+      <figure>
+        <img
+          class="responsive"
+          src="https://drive.google.com/thumbnail?id=1K5av9xoC7nrwIB3XXrLIk6M40THacZq-&sz=w1000"
+          alt="Web UI showing sensor data and pose estimates"
+        />
+        <figcaption>
+          Figure 1: Real-time visualization of IMU data and comparative
+          pose estimates via the web interface.
+        </figcaption>
+      </figure>
+    </section>
 
-            <h4>1.1 Project Scoping and Evolution</h4>
-            <p>
-              Initially, our project broadly aimed to explore sensor fusion for
-              optimizing experimental setups. Through the initial development
-              cycles (Weeks 7-12), involving individual component testing (UR5
-              control, quadruped basic motion, sensor readings), we identified
-              the critical need to first solidify the core autonomous workflow.
-              Therefore, our scope refined to prioritize the seamless
-              integration and interaction between the UR5 and the quadruped for
-              the automated reset sequence. This became the primary milestone,
-              ensuring a stable platform before delving deeper into complex
-              simulation comparisons or advanced SLAM implementations initially
-              envisioned. The focus shifted towards robust hardware integration,
-              real-time control via a user interface, and reliable data
-              acquisition through ROS 2.
-            </p>
-
-            <h4>1.2 Data Collection Process</h4>
-            <p>
-              Our data collection process is central to the experimental loop:
-            </p>
-            <ol>
-              <li>
-                <strong>Initialization:</strong> The UR5 arm precisely places
-                the quadruped robot at a designated starting position.
-              </li>
-              <li>
-                <strong>Autonomous Locomotion:</strong> Triggered via our ROS 2
-                system (potentially through the UI), the quadruped begins
-                walking forward based on pre-set or user-defined gait parameters
-                (See Section 4).
-              </li>
-              <li>
-                <strong>Real-time Sensing:</strong> As the quadruped moves, its
-                onboard sensors (IMU, Camera - providing data for
-                <code>/orb/pose</code>, Servo encoders) continuously publish
-                data to respective ROS 2 topics.
-              </li>
-              <li>
-                <strong>Data Logging & Visualization:</strong> A dedicated ROS 2
-                node (<code>/ros2_flask_plotter</code>) subscribes to these
-                topics, logging the data and visualizing key metrics (IMU
-                readings, pose estimates) in real-time via a web interface.
-              </li>
-              <li>
-                <strong>Path Completion & Reset:</strong> Upon reaching a
-                predefined distance or condition (monitored via pose
-                estimation), the quadruped stops. A signal is sent (potentially
-                automated or via UI) to the UR5 arm.
-              </li>
-              <li>
-                <strong>Automated Reset:</strong> The UR5 executes a
-                pre-programmed routine to pick up the quadruped and return it to
-                the starting position.
-              </li>
-              <li>
-                <strong>Iteration:</strong> The cycle repeats, allowing for
-                continuous data collection under varying parameters or
-                conditions.
-              </li>
-            </ol>
-            <p>
-              Initial data collection involved testing sensors individually and
-              calibrating the quadruped's basic movements. This data was crucial
-              for tuning low-level controllers and identifying necessary
-              filtering techniques. We found raw IMU data too noisy due to motor
-              vibrations, necessitating filtering. Early camera pose tests
-              highlighted sensitivity to lighting, guiding our focus towards
-              robust estimation methods. This iterative process of
-              collect-analyze-refine was essential and required revisiting
-              initial data assumptions.
-            </p>
-
-            <h4>1.3 Pose Estimation and Model Fitting</h4>
-            <p>
-              Accurate pose estimation is vital for path completion detection
-              and performance analysis. We employ multiple approaches:
-            </p>
-            <ul>
-              <li>
-                <strong>IMU-based Pose Estimation:</strong> The
-                <code>/pose_estimator_node</code> integrates data from
-                <code>/imu/data</code> and <code>/imu/orientation</code> (likely
-                using techniques like Kalman filtering or complementary filters)
-                to produce <code>/imu/pose_estimate</code>. This provides a
-                continuous estimate of the robot's orientation and potentially
-                position relative to its start.
-              </li>
-              <li>
-                <strong>Camera-based Pose Estimation:</strong> The
-                <code>/optical_flow_pose_publisher</code> node processes camera
-                data (likely visual features or optical flow) to publish pose
-                information on the <code>/orb/pose</code> topic. This offers an
-                alternative, potentially drift-correcting pose source,
-                especially useful for tracking position over ground.
-              </li>
-              <li>
-                <strong>Sensor Fusion (Implicit/Comparative):</strong> While the
-                current ROS graph doesn't show explicit fusion of
-                <code>/imu/pose_estimate</code> and <code>/orb/pose</code> into
-                a single topic, our web interface plots both. This allows for
-                direct comparison and validation. Future work could involve
-                fusing these using filters (e.g., Extended Kalman Filter) for a
-                more robust estimate. Data collected informs the tuning of these
-                estimators (e.g., filter noise parameters).
-              </li>
-            </ul>
-
-            <h4>1.4 Integration into ROS 2</h4>
-            <p>
-              The entire system is orchestrated using ROS 2 Humble. The
-              quadruped itself is integrated via the <code>/bridge_node</code>,
-              which translates high-level commands and parameter changes into
-              low-level <code>/servo/command</code> messages and publishes
-              <code>/servo/state</code>. Sensor data is published directly by
-              dedicated nodes or drivers (e.g., IMU node, camera node publishing
-              to <code>/orb/pose</code>). A Flask web server
-              (<code>/ros2_flask_plotter</code>) acts as the central UI,
-              subscribing to relevant topics for visualization and potentially
-              publishing commands or parameter updates. (See Section 4 for the
-              detailed architecture).
-            </p>
-
-            <h4>1.5 Validation and Success Metrics</h4>
-            <p>We quantify success through several metrics:</p>
-            <ul>
-              <li>
-                <strong>Workflow Completion:</strong> Successfully executing
-                multiple consecutive cycles of the walk-and-reset loop
-                autonomously.
-              </li>
-              <li>
-                <strong>Pose Estimation Accuracy:</strong> Comparing
-                <code>/imu/pose_estimate</code> and <code>/orb/pose</code>.
-                While ground truth from OptiTrack (as mentioned in original
-                goals) might not be fully integrated yet, we assess consistency,
-                drift characteristics, and agreement between the methods.
-                Graphical plots showing the time evolution of both estimates are
-                used for visual validation.
-              </li>
-              <li>
-                <strong>Control Responsiveness:</strong> Demonstrating real-time
-                changes in quadruped gait parameters (Frequency, Duty Factor,
-                Amplitudes, Offsets, Mode) via the web UI and observing the
-                corresponding immediate change in locomotion.
-              </li>
-              <li>
-                <strong>Data Integrity:</strong> Ensuring sensor data logged via
-                the <code>/ros2_flask_plotter</code> is consistent and reflects
-                the robot's state accurately.
-              </li>
-            </ul>
-            <figure>
-              <!-- [PLACEHOLDER: Insert screenshot of your web UI showing plots] -->
-              <img
-                class="responsive"
-                src="https://drive.google.com/thumbnail?id=1K5av9xoC7nrwIB3XXrLIk6M40THacZq-&sz=w1000"
-                alt="Web UI showing sensor data and pose estimates"
-              />
-
-              <figcaption>
-                Figure 1: Real-time visualization of IMU data and comparative
-                pose estimates via the web interface.
-              </figcaption>
-            </figure>
-          </section>
-
-          <!-- Section 2: Updated Project Goals -->
-          <!-- This section will be animated by custom.js -->
-          <section id="goals">
-            <h3>2. Updated Project Goals</h3>
-            <p>
-              Our core vision of creating an advanced, automated robotic testbed
-              remains. However, based on initial development and feasibility
-              assessments, our project goals have been refined since the
-              beginning:
-            </p>
-            <ul>
-              <li>
-                <strong>Original Goal:</strong> Develop a testbed optimizing
-                experimental accuracy via sensor fusion and simulation
-                comparisons.
-              </li>
-              <li>
-                <strong>Updated & Current Goals:</strong>
-                <ol>
-                  <li>
-                    <strong>Demonstrate a Fully Autonomous Workflow:</strong>
-                    Successfully implement and showcase the closed-loop system
-                    where the UR5 positions the quadruped, the quadruped walks
-                    autonomously while collecting data, and the UR5 resets it
-                    for continuous operation.
-                  </li>
-                  <li>
-                    <strong
-                      >Implement Real-Time Quadruped Control via UI:</strong
-                    >
-                    Provide a user-friendly web interface (Flask-based) that
-                    allows real-time monitoring of sensor data (IMU, Pose
-                    Estimates) and interactive control over the quadruped's gait
-                    parameters (Frequency, Duty Factor, Offsets, Amplitudes) and
-                    movement modes (Walk, Trot, Pronk, etc.).
-                  </li>
-                  <li>
-                    <strong
-                      >Integrate and Compare Pose Estimation Methods:</strong
-                    >
-                    Utilize and log pose estimates derived from the IMU
-                    (<code>/imu/pose_estimate</code>) and camera-based methods
-                    (<code>/orb/pose</code>), enabling comparison and analysis
-                    of their performance within our specific setup.
-                  </li>
-                  <li>
-                    <strong>Develop Robust ROS 2 Integration:</strong> Create a
-                    modular and reliable ROS 2 architecture connecting the UR5
-                    (control assumed via existing ROS drivers/custom scripts),
-                    the quadruped (via <code>/bridge_node</code>), sensors,
-                    estimation nodes, and the user interface.
-                  </li>
-                  <li>
-                    <strong>Provide Open Resources:</strong> Share our developed
-                    ROS 2 packages, setup instructions, and collected
-                    experimental data to benefit the robotics community (as
-                    originally planned).
-                  </li>
-                </ol>
-              </li>
-            </ul>
-            <p>
-              The emphasis has shifted from deep simulation integration within
-              this semester to proving the core hardware automation, real-time
-              control, and multi-sensor data handling pipeline first.
-            </p>
-          </section>
-
-          <!-- Section 3: Project Process / Workflow -->
+    <!-- Section 2: Updated Project Goals -->
+    <section id="goals">
+       <h3>2. Updated Project Goals</h3>
+      <p>
+        Our core vision of creating an advanced, automated robotic testbed
+        remains. However, based on initial development and feasibility
+        assessments, our project goals have been refined since the
+        beginning:
+      </p>
+      <ul>
+        <li>
+          <strong>Original Goal:</strong> Develop a testbed optimizing
+          experimental accuracy via sensor fusion and simulation
+          comparisons.
+        </li>
+        <li>
+          <strong>Updated & Current Goals:</strong>
+          <ol>
+            <li><strong>Demonstrate a Fully Autonomous Workflow:</strong> Successfully implement and showcase the closed-loop system where the UR5 positions the quadruped, the quadruped walks autonomously while collecting data, and the UR5 resets it for continuous operation.</li>
+            <li><strong>Implement Real-Time Quadruped Control via UI:</strong> Provide a user-friendly web interface (Flask-based) that allows real-time monitoring of sensor data (IMU, Pose Estimates) and interactive control over the quadruped's gait parameters (Frequency, Duty Factor, Offsets, Amplitudes) and movement modes (Walk, Trot, Pronk, etc.).</li>
+            <li><strong>Integrate and Compare Pose Estimation Methods:</strong> Utilize and log pose estimates derived from the IMU (<code>/imu/pose_estimate</code>) and camera-based methods (<code>/orb/pose</code>), enabling comparison and analysis of their performance within our specific setup.</li>
+            <li><strong>Develop Robust ROS 2 Integration:</strong> Create a modular and reliable ROS 2 architecture connecting the UR5 (control assumed via existing ROS drivers/custom scripts), the quadruped (via <code>/bridge_node</code>), sensors, estimation nodes, and the user interface.</li>
+            <li><strong>Provide Open Resources:</strong> Share our developed ROS 2 packages, setup instructions, and collected experimental data to benefit the robotics community (as originally planned).</li>
+          </ol>
+        </li>
+      </ul>
+      <p>
+        The emphasis has shifted from deep simulation integration within
+        this semester to proving the core hardware automation, real-time
+        control, and multi-sensor data handling pipeline first.
+      </p>
+    </section>          <!-- Section 3: Project Process / Workflow -->
           <!-- This section will be animated by custom.js -->
          
                     <!-- Section 3: Project Process / Workflow -->

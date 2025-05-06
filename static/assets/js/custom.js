@@ -806,7 +806,85 @@ function initializeStickyHeader() {
     { passive: true }
   );
 }
+function initializeSidebarHighlighting() {
+  const sidebar = document.getElementById('sidebar');
+  const mainContent = document.getElementById('main'); // Target the main content area
 
+  // Check if sidebar and main content exist on the page
+  if (!sidebar || !mainContent) {
+      // console.log("DEBUG: Sidebar or main content not found, skipping highlighting init.");
+      return;
+  }
+  console.log("DEBUG: Initializing Sidebar Highlighting...");
+
+  const navLinks = sidebar.querySelectorAll('.sidebar-nav a[href^="#"]'); // Select only internal links
+  const sections = [];
+  navLinks.forEach(link => {
+      const sectionId = link.getAttribute('href').substring(1); // Get ID from href
+      const section = document.getElementById(sectionId);
+      if (section) {
+          sections.push(section);
+      } else {
+          console.warn(`Sidebar link points to non-existent section: #${sectionId}`);
+      }
+  });
+
+  if (sections.length === 0) {
+      console.warn("DEBUG: No sections found for sidebar highlighting.");
+      return;
+  }
+
+  let scrollTimeout;
+  const offset = 150; // Pixels offset from top to trigger highlight change
+
+  function highlightLink() {
+      let currentSectionId = '';
+      const scrollPosition = window.scrollY + offset;
+
+      // Iterate backwards to find the last section whose top is above the scroll position
+      for (let i = sections.length - 1; i >= 0; i--) {
+          if (sections[i].offsetTop <= scrollPosition) {
+              currentSectionId = sections[i].id;
+              break; // Found the current section
+          }
+      }
+
+      // If scrolled past the last section, keep the last one active
+      const bottomScrollPosition = document.documentElement.scrollHeight - window.innerHeight;
+      if (window.scrollY >= bottomScrollPosition - offset && sections.length > 0) {
+           currentSectionId = sections[sections.length - 1].id;
+      }
+
+
+      navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${currentSectionId}`) {
+              link.classList.add('active');
+          }
+      });
+  }
+
+  // Initial highlight on load
+  highlightLink();
+
+  // Highlight on scroll (debounced)
+  window.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(highlightLink, 50); // Adjust debounce time if needed
+  }, { passive: true });
+
+   // Highlight on sidebar link click (for smooth scroll)
+   navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+          // Remove active class immediately for visual feedback
+          navLinks.forEach(l => l.classList.remove('active'));
+          // Add active class to the clicked link
+          link.classList.add('active');
+          // Note: The actual scroll happens due to the href="#...",
+          // the highlightLink on scroll will confirm later.
+      });
+  });
+}
 // --- Initialization --- //
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM Content Loaded - Initializing Custom JS Features...");
@@ -955,7 +1033,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Initialize Sticky Header ---
   initializeStickyHeader(); // Call the function
-
+  initializeSidebarHighlighting();
   // --- Resize Listener for Animation Handling ---
   let resizeTimeout;
   window.addEventListener("resize", () => {

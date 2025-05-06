@@ -360,6 +360,123 @@ ul.actions li a.button > i /* Target direct child <i> tags */ {
 }
 
 /* ================================================== */
+/* === Sticky Sidebar Navigation (About Page) === */
+/* ================================================== */
+
+/* Adjust page wrapper when sidebar is present */
+#page-wrapper.with-sidebar {
+  position: relative;
+}
+
+/* Sidebar container */
+#sidebar {
+  position: fixed;
+  left: 0;
+  top: 0; /* Start at the very top */
+  width: 250px; /* Slightly wider */
+  height: 100vh;
+  background-color: #1f212b; /* Darker, matching footer example */
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2em 1.5em; /* More padding */
+  padding-top: 6em; /* INCREASED: More space below fixed header */
+  overflow-y: auto;
+  z-index: 9999; /* Below header (10000), above overlay */
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Adjust main content area when sidebar is visible */
+#main.with-sidebar > .container {
+  margin-left: 250px; /* Match sidebar width */
+  max-width: calc(100% - 250px); /* Adjust max-width */
+  padding-left: 3em; /* More space between sidebar and content */
+  padding-right: 2em; /* Keep right padding */
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
+}
+
+/* Sidebar Navigation List */
+.sidebar-nav h4 {
+  color: #e44c65; /* Accent color */
+  margin-top: 0; /* Remove default top margin */
+  margin-bottom: 1.2em;
+  font-size: 1.2em; /* Slightly larger */
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 0.6em;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: 0.4em; /* Increased space between links */
+  padding-bottom: 0;
+}
+/* Remove default list markers from sidebar nav */
+.sidebar-nav ul > li::before {
+    display: none !important; /* Ensure no other list styles interfere */
+    content: none !important;
+}
+
+.sidebar-nav a {
+  display: block;
+  padding: 0.7em 1em; /* Increased padding */
+  color: rgba(255, 255, 255, 0.75); /* Slightly brighter inactive text */
+  text-decoration: none;
+  border-radius: 5px; /* Slightly more rounded */
+  transition: background-color 0.2s ease, color 0.2s ease, border-left 0.2s ease;
+  font-size: 0.95em; /* Slightly larger font */
+  border-left: 4px solid transparent; /* Indicator for active state */
+}
+
+.sidebar-nav a:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-left: 4px solid rgba(232, 90, 79, 0.5); /* Subtle border on hover */
+}
+
+/* Active link style */
+.sidebar-nav a.active {
+  background-color: rgba(232, 90, 79, 0.15);
+  color: #ffffff;
+  font-weight: 600;
+  border-left: 4px solid #e44c65; /* Highlight with accent color */
+}
+
+/* Responsive: Hide sidebar on smaller screens */
+@media screen and (max-width: 980px) {
+  #sidebar {
+    display: none; /* Hide sidebar */
+  }
+
+  #main.with-sidebar > .container {
+    margin-left: 0; /* Reset margin */
+    max-width: 100%; /* Allow content full width */
+    padding-left: 1em; /* Reset padding */
+    padding-right: 1em;
+  }
+   /* Ensure page wrapper padding is removed if header hides on mobile */
+   #page-wrapper {
+       /* This padding adjustment depends on whether #header is fixed on mobile */
+       /* If header IS fixed on mobile, keep JS calculation or set fixed value */
+       /* If header is NOT fixed on mobile, set padding-top: 0; */
+       /* Assuming header is NOT fixed on mobile based on template behavior */
+       padding-top: 0 !important;
+   }
+   #header {
+       /* Assuming header is NOT fixed on mobile */
+       position: absolute !important;
+   }
+}
+
+/* ================================================== */
+/* === End Sidebar Styles === */
+/* ================================================== */
+
+/* ================================================== */
 /* === Gantt Chart Styles === */
 /* ================================================== */
 
