@@ -733,15 +733,75 @@ ul.actions li a.button > i /* Target direct child <i> tags */ {
     color: #e44c65; /* Accent color for labels */
 }
 
+/* ================================================== */
+/* === Landing Page Enhancements === */
+/* ================================================== */
+
+/* --- Banner Animations --- */
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes fadeInDelay {
+  0% { opacity: 0; }
+  50% { opacity: 0; } /* Start fade after delay */
+  100% { opacity: 1; }
+}
+@keyframes scaleIn {
+   0% { opacity: 0; transform: scale(0.9); }
+   100% { opacity: 1; transform: scale(1); }
+}
+
+/* Apply animations to banner elements */
+#banner .content h2 {
+  animation: popIn 0.8s 0.2s ease-out forwards;
+  opacity: 0; /* Start hidden */
+}
+#banner .content p {
+  animation: fadeInDelay 1.2s 0.5s ease-out forwards;
+   opacity: 0; /* Start hidden */
+}
+#banner .image { /* Target the span containing the image */
+  animation: scaleIn 0.8s 0.4s ease-out forwards;
+  opacity: 0; /* Start hidden */
+  display: inline-block; /* Needed for transform */
+}
+#banner .image img {
+    border-radius: 8px; /* Optional: Rounded corners for banner image */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* --- Course Info Section Styling --- */
+/* Uses style2 from theme, but ensure text is readable */
+#course-info {
+  /* background: #2a2d3a; */ /* Already set inline, but good for reference */
+  color: rgba(255, 255, 255, 0.9);
+  padding: 5em 0; /* More padding */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+#course-info h2 {
+  color: #ffffff;
+}
+#course-info p {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.7;
+}
+#course-info strong {
+    color: #e44c65; /* Accent color for labels */
+}
+
 /* --- Meet the Team Section Styling --- */
 #meet-the-team {
     padding: 6em 0; /* More padding */
     background-color: #1f212b; /* Match footer background */
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Add separator */
 }
 
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+  /* Create 3 columns on medium screens and up, 1 on small */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2.5em; /* Space between team members */
   margin-top: 3em;
 }
@@ -758,7 +818,7 @@ ul.actions li a.button > i /* Target direct child <i> tags */ {
 
 .team-member:hover {
   transform: translateY(-8px);
-  box-shadow: 0 10px 25px rgba(255, 45, 209, 0.2); /* Subtle blue glow */
+  box-shadow: 0 10px 25px rgba(138, 7, 94, 0.2); /* Subtle blue glow */
 }
 
 .team-image-container {
@@ -782,11 +842,10 @@ ul.actions li a.button > i /* Target direct child <i> tags */ {
   font-size: 1.4em;
   color: #ffffff;
 }
-/* Remove underline from h3 */
+/* Remove default underline from h3 if present */
 .team-member h3::after {
     display: none;
 }
-
 
 .team-member p {
   font-size: 0.95em;
@@ -812,29 +871,36 @@ ul.actions li a.button > i /* Target direct child <i> tags */ {
     font-size: 1.5em; /* Make icon slightly larger */
     margin-top: 0.5em;
     display: inline-block;
+    color: rgba(255, 255, 255, 0.7); /* Match footer icon color */
+}
+.team-member a.icon:hover {
+    color: #ffffff; /* White on hover */
 }
 .team-member a.icon .label { /* Hide the text label for the icon */
     display: none;
 }
 
-
-/* --- Scroll Animation Classes (Ensure these are defined) --- */
+/* --- Scroll Animation Classes --- */
 .scroll-animate-init {
     opacity: 0;
     transform: translateY(40px); /* Start slightly lower */
     transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 }
-#main .container > section.animate-in, /* Target sections in #main */
+/* Target specific sections for animation */
+#main .container > section.animate-in, /* Sections on other pages */
 #course-info.animate-in,
 #meet-the-team.animate-in {
   opacity: 1;
   transform: translateY(0);
 }
-/* Add delay for staggered effect if desired */
+/* Add delay for staggered effect */
 #meet-the-team.animate-in {
     transition-delay: 0.1s;
 }
+
 /* ================================================== */
+/* === End Landing Page Enhancements === */
+/* ================================================== *//* ================================================== */
 /* === Footer Adjustments === */
 /* ================================================== */
 .md-footer { background-color: #1f212b; color: rgba(255, 255, 255, 0.7); padding: 2em 0; font-size: 0.9em; }

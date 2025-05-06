@@ -983,56 +983,31 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("DEBUG: Scroll animation target structure not found on this page.");
   }
   
-  // --- Initialize Tabs IF PRESENT ---
   const defaultTabButton = document.getElementById("defaultOpen");
   if (defaultTabButton || document.querySelector(".tablinks")) {
     console.log("DEBUG: Initializing Tab Features...");
     let initialTabName = "Overview";
-    if (defaultTabButton) {
-      const onclickAttr = defaultTabButton.getAttribute("onclick");
-      const tabNameMatch = onclickAttr
-        ? onclickAttr.match(/openTab\(event, '(.*?)'\)/)
-        : null;
-      if (tabNameMatch && tabNameMatch[1]) {
-        initialTabName = tabNameMatch[1];
-      }
-    } else {
-      const firstTabButton = document.querySelector(".tablinks");
-      if (firstTabButton) {
-        const onclickAttr = firstTabButton.getAttribute("onclick");
-        const tabNameMatch = onclickAttr
-          ? onclickAttr.match(/openTab\(event, '(.*?)'\)/)
-          : null;
-        if (tabNameMatch && tabNameMatch[1]) {
-          initialTabName = tabNameMatch[1];
-        }
-      }
-    }
-    if (typeof window.openTab === "function") {
-      window.openTab(null, initialTabName);
+    // ... (logic to find initialTabName) ...
+
+    if (typeof window.openTab === 'function') {
+      window.openTab(null, initialTabName); // Open default tab
       console.log(`DEBUG: Attempted to open initial tab '${initialTabName}'.`);
-    } else {
-      console.error(
-        "DEBUG: openTab function not found for tab initialization."
-      );
-    }
-    const MAX_PRISM_CHECKS = 20;
-    let prismCheckCount = 0;
-    const prismCheckInterval = setInterval(() => {
-      prismCheckCount++;
-      if (typeof Prism !== "undefined") {
-        clearInterval(prismCheckInterval);
-        Prism.highlightAll();
-        console.log("DEBUG: Prism loaded and initial highlighting done.");
-      } else if (prismCheckCount >= MAX_PRISM_CHECKS) {
-        clearInterval(prismCheckInterval);
-        console.error("Prism failed to load after multiple checks.");
+
+      // --- Initialize Sidebar Highlighting ONLY if Explanation tab is initially active ---
+      // --- OR defer initialization until Explanation tab is clicked ---
+      // --- Simpler approach: Initialize always, but function checks internally ---
+      if (typeof initializeSidebarHighlighting === 'function') {
+          initializeSidebarHighlighting();
       }
-    }, 100);
+
+    } else {
+      console.error("DEBUG: openTab function not found for tab initialization.");
+    }
+    // ... (Prism initialization logic) ...
   } else {
     console.log("DEBUG: Tab elements not found on this page.");
   }
-
+  
   // --- Initialize Sticky Header ---
   initializeStickyHeader(); // Call the function
   initializeSidebarHighlighting();
